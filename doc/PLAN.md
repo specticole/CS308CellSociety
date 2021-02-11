@@ -9,11 +9,11 @@ Cole Spector (cgs26)
 Franklin Wei (fw67)
 
 ## Introduction
-The problem our program is trying to solve is to have the ability to load in and display any 2D CA simulation. The primary design goal is to make our Model and View as flexible as possible, allowing for any set of rules and any cell types in a simulation. Therefore, the classes responsible for simulation, configuration, and display should be abstract base classes, closed for modification but open for extension to support new types of simulations.
+The problem our program is trying to solve is to have the ability to load in and display any 2D CA simulation. The primary design goal is to make our Model and cellsociety.view as flexible as possible, allowing for any set of rules and any cell types in a simulation. Therefore, the classes responsible for simulation, configuration, and display should be abstract base classes, closed for modification but open for extension to support new types of simulations.
 
 ## Overview
 
-At the highest level, our program will be built around the Model-View-Controller (MVC) design pattern -- the model will hold the state of the simulation, in isolation from either the view or the controller. The model will expose the necessary interface for the view to display a visual representation of the simulation, and for the controller to interact with the model to update its state in a permissible manner.
+At the highest level, our program will be built around the Model-cellsociety.view-Controller (MVC) design pattern -- the model will hold the state of the simulation, in isolation from either the view or the controller. The model will expose the necessary interface for the view to display a visual representation of the simulation, and for the controller to interact with the model to update its state in a permissible manner.
 
 ### Major Design Decisions
 
@@ -23,7 +23,7 @@ There are several major design decisions that present themselves:
 
 * **Grid representation** -- on this front it's important to make things generalizable: we want to make it possible to support not only conventional rectangular grids, but also unforeseen requirements such as hex grids, rhombitrihexagonal tilings, or perhaps even aperiodic Penrose tilings. Such a diverse range of possible "grids" means that our method of representing the abstract notion of a "grid" must be extremely general. This led us to the conclusion that the interface that must be implemented by an abstract grid consists of: 1) iteration over Cells, and 2) retrieval of the neighbors of cells (both immediate neighbors, and perhaps neighbors within a certain "distance metric" -- either Euclidean or Manhattan distance, or perhaps "hops" along an undirected graph). With this in mind, we considered the following two options for grid representation: 1) a simple 2D array representation, and 2) an adjacent-list (graph) representation. The 2D array is self-explanatory, but the adjacency is more generalizable: the CellGrid class would hold a collection of Cells in a Map<CellCoordinates, Cell>, and each Cell would have a list of its own neighbors. Our choice of functionality exposed by CellGrid can be used to implement both the array and graph-based representation. A graph-based representation would need to provide its own implementation of CellCoordinates (which may lose any geometric meaning), as well as CellGrid. Our interface is general enough that both alternatives can be implemented as subclasses.
 
-* **Types of Views** -- We wanted our definition of the View base class to be generalizable to different types of views. To this extent, we considered the following types of views: 1) A 2D grid-based view, and 2) a time-domain plot-based view showing "populations" of each CellState. To implement a 2D grid view, we decided that it would be necessary for us to provide a different implementation of CellularAutomatonGridView for each possible grid layout -- rectangular, hex, or trihexagonal. This was a compromise we reached after trying, and failing, to find a sufficiently general interface for the CellGrid component of the model that could accommodate both rectangular and hexagonal grids.
+* **Types of Views** -- We wanted our definition of the cellsociety.view base class to be generalizable to different types of views. To this extent, we considered the following types of views: 1) A 2D grid-based view, and 2) a time-domain plot-based view showing "populations" of each CellState. To implement a 2D grid view, we decided that it would be necessary for us to provide a different implementation of CellularAutomatonGridView for each possible grid layout -- rectangular, hex, or trihexagonal. This was a compromise we reached after trying, and failing, to find a sufficiently general interface for the CellGrid component of the model that could accommodate both rectangular and hexagonal grids.
 
 ### Proposed Class Hierarchy
 
@@ -31,7 +31,7 @@ There are several major design decisions that present themselves:
 
 ### class CellularAutomaton:
 
-This class is the top level of the Model. It contains a CellGrid, handles updates and collaborates with the View to show the simulation.
+This class is the top level of the Model. It contains a CellGrid, handles updates and collaborates with the cellsociety.view to show the simulation.
 
 Variables:
 
@@ -234,20 +234,20 @@ Finally, the view category has one abstract class: CellularAutomatonView.  This 
 
 ## Use Cases
 1.
-    Move to the prior generation: revert all cells in a simulation from their current state to their previous state and display the result graphically. To do this, our Controller will call updateViews() with the new display time. updateViews() will then call setDisplayTime() on all child Views of the Controller, passing the child View the new time which should be displayed. The View then uses this time to retrieve the cell states corresponding to the given time when redrawing the grid (in the case of a PlotView, a thin vertical line, called a "time cursor," may be drawn to indicate the display time).
+    Move to the prior generation: revert all cells in a simulation from their current state to their previous state and display the result graphically. To do this, our Controller will call updateViews() with the new display time. updateViews() will then call setDisplayTime() on all child Views of the Controller, passing the child cellsociety.view the new time which should be displayed. The cellsociety.view then uses this time to retrieve the cell states corresponding to the given time when redrawing the grid (in the case of a PlotView, a thin vertical line, called a "time cursor," may be drawn to indicate the display time).
 
 2. Set simulation speed: The Controller will have a slider which, when augmented, will call changeAnimationRate() on the Controller, which will change the rate at which JavaFX callbacks are made to step().
 
 3. Set a simulation parameter: In the CellularAutomatonController class, loadConfigurationFile() will be called (probably from GUI code) with the name of an XML config file. From this XML file, the value of a certain parameter (such as probcatch) can be retrieved using a conventional DOM parser.
 
 4.
-    Switch simulations: the user can enter a filename in a textbox in the UI, which will call loadConfigurationFile() with the new XML filename. This method will stop the current running simulation, clear the View, and start the new simulation.
+    Switch simulations: the user can enter a filename in a textbox in the UI, which will call loadConfigurationFile() with the new XML filename. This method will stop the current running simulation, clear the cellsociety.view, and start the new simulation.
 
 5.
-    Pause the simulation: there will be a button on the UI labeled "pause." When this button is pushed, the CellularAutomatonController.pauseSimulation() method is called, which stops updating the Model and View. If the simulation is already paused, this method call has no effect.
+    Pause the simulation: there will be a button on the UI labeled "pause." When this button is pushed, the CellularAutomatonController.pauseSimulation() method is called, which stops updating the Model and cellsociety.view. If the simulation is already paused, this method call has no effect.
 
 6.
-    Resume the simulation: there will be a button on the UI labeled "resume." When this button is pushed, the CellularAutomatonController.resumeSimulation() method is called, which continues updating the Model and View at the current frame rate. If the simulation is already playing, this method call has no effect.
+    Resume the simulation: there will be a button on the UI labeled "resume." When this button is pushed, the CellularAutomatonController.resumeSimulation() method is called, which continues updating the Model and cellsociety.view at the current frame rate. If the simulation is already playing, this method call has no effect.
 
 7.
 Reset the simulation: pressing "reset" on the UI will call the updateViews() method in the CellularAutomaton class with time = 0 as the parameter to get the state of the simulation at time = 0.
@@ -269,9 +269,9 @@ Move to the next generation: Clicking the step button on the UI will call the st
 13. Create a random simulation: The user specifies a type and size of grid, and rule set to the Controller. A new CellGrid is created by the Controller, and is populated with random CellStates. This new CellGrid is then loaded into the Model.
 
 ## Design Considerations
-One major design decision we grappled with was how to represent cell states over time, and which object should have the responsibility of updating a cell. One alternative we considered was having the CellularAutomaton class store an instance variable of a List of CellGrids, indexed by time. Cell objects would hold a reference to their parent CellGrid, and updating the grid would entail creating a new CellGrid, populating it with Cells that have updated CellStates, and appending it to the list. While this idea may be better for the View, which needs the CellGrid at a given time for visual output, it results in unnecessary copying of data. Since CellStates are the only object that change over time, we decided to have each Cell store a List of CellStates, indexed by time. Hence, there would only be one CellGrid object per simulation, and the View has to check the CellState for each Cell at a given time for visual output.
+One major design decision we grappled with was how to represent cell states over time, and which object should have the responsibility of updating a cell. One alternative we considered was having the CellularAutomaton class store an instance variable of a List of CellGrids, indexed by time. Cell objects would hold a reference to their parent CellGrid, and updating the grid would entail creating a new CellGrid, populating it with Cells that have updated CellStates, and appending it to the list. While this idea may be better for the cellsociety.view, which needs the CellGrid at a given time for visual output, it results in unnecessary copying of data. Since CellStates are the only object that change over time, we decided to have each Cell store a List of CellStates, indexed by time. Hence, there would only be one CellGrid object per simulation, and the cellsociety.view has to check the CellState for each Cell at a given time for visual output.
 
-Another design decision we made was not entirely separating the Model and View. Instead, the Controller is responsible for loading configuration files, updating cell states by calling methods in the Model, and handling user inputs to change the View. However, the View updates its visual output by directly obtaining updated cell states from the Model. We chose this structure since the Model will return a standardized format for the CellGrid, which can be interpreted by the View without an intermediary. However, by doing so we have introduced a dependency between the Model and the View, which may limit the flexibility of these components.
+Another design decision we made was not entirely separating the Model and cellsociety.view. Instead, the Controller is responsible for loading configuration files, updating cell states by calling methods in the Model, and handling user inputs to change the cellsociety.view. However, the cellsociety.view updates its visual output by directly obtaining updated cell states from the Model. We chose this structure since the Model will return a standardized format for the CellGrid, which can be interpreted by the cellsociety.view without an intermediary. However, by doing so we have introduced a dependency between the Model and the cellsociety.view, which may limit the flexibility of these components.
 
 ## Team Responsibilities
 
@@ -279,8 +279,8 @@ Another design decision we made was not entirely separating the Model and View. 
 
  * Patrick Liu - Controller
 
- * Bill Guo - View
+ * Bill Guo - cellsociety.view
 
  * Cole Spector - Model
 
-Rough timeline: Subteams will work individually until Wednesday, implementing features that can be abstracted and do not rely on other classes. Model subteam will aim to have modules completed by Wednesday, giving View and Controller ample time to test functionality between them.
+Rough timeline: Subteams will work individually until Wednesday, implementing features that can be abstracted and do not rely on other classes. Model subteam will aim to have modules completed by Wednesday, giving cellsociety.view and Controller ample time to test functionality between them.
