@@ -2,20 +2,24 @@ package cellsociety.states;
 
 import cellsociety.CellState;
 
-public enum GameOfLifeState {
+public class GameOfLifeState extends CellState {
 
-  DEAD(),
-  ALIVE();
+  private enum StateEnum {
+    DEAD,
+    ALIVE
+  }
+
+  StateEnum state;
 
   GameOfLifeState(){
-
+    state = DEAD;
   }
 
   public String toString() {
-    return null;
+    return state.toString();
   }
 
-  public CellState fromString(String str) {
-    return null;
+  public static CellState fromString(String str) {
+    return StateEnum.valueOf(str);
   }
 }

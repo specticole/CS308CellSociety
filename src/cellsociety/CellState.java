@@ -1,12 +1,9 @@
 package cellsociety;
 
 public abstract class CellState {
-
-  public CellState(){
-
-  }
+  public abstract static Collection<String> availableStates();
 
   public abstract String toString();
 
-  public abstract CellState fromString(String str);
+  public static abstract CellState fromString(String str);
 }
