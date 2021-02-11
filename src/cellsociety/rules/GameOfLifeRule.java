@@ -41,7 +41,6 @@ public class GameOfLifeRule implements CellStateRule {
   /**
    * This method gets the specific rule set for the game of live variation, in the form of B<int><int>.../S<int><int>...
    */
-  @Override
   public void getGameSpecifics() {
     //this will change to read in from the xml
     Integer[] born = {3};

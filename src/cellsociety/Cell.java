@@ -4,29 +4,29 @@ import cellsociety.rules.GameOfLifeRule;
 import cellsociety.states.GameOfLifeState;
 
 public class Cell {
-  String gameType;
-  CellState states;
-  CellStateRule rules;
-  public Cell(String gameType){
+  private CellState states;
+  private CellStateList priorStates;
+  public Cell(){
     //setGameType(gameType);
-    setGameType("GameOfLife"); //will swap with above once we are actively creating cells
+    priorStates = new CellStateList();
 
   }
 
-  private void setGameType(String gameType){
-    this.gameType = gameType;
-    if(gameType.equals("GameOfLife")){
-      states = new GameOfLifeState();
-      rules = new GameOfLifeRule();
-    }
-  }
-
+  /**
+   * This method sets the state of the current cell
+   *
+   * @param state the string name of the state which to set the state to
+   */
   public void setState(String state){
+    priorStates.addState(state);
     states.fromString(state);
   }
 
 
-
+  /**
+   * This method returns the current state as a string
+   * @return the current state as a string
+   */
   public String getState(){
     return states.toString();
   }

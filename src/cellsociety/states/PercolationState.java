@@ -6,19 +6,20 @@ import cellsociety.CellState;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class GameOfLifeState extends CellState {
+public class PercolationState extends CellState {
 
   private enum StateEnum {
-    DEAD,
-    ALIVE
+    BLOCKED,
+    OPEN,
+    PERCOLATING
   }
 
-  StateEnum state;
+  PercolationState.StateEnum state;
   private ArrayList<String> availableStates;
 
 
-  public GameOfLifeState(){
-    state = StateEnum.DEAD;
+  public PercolationState(){
+    state = StateEnum.OPEN;
     availableStates = new ArrayList<>();
     for(StateEnum state : StateEnum.values()){
       availableStates.add(state.toString());
