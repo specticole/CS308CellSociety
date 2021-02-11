@@ -43,12 +43,17 @@ public class PercolationState extends CellState {
     return state.toString();
   }
 
+  @Override
+  public Object fromString(String str) {
+    return StateEnum.valueOf(str);
+  }
+
   /**
    * Sets the current state
    * @param str the String name of the desired state
    */
   @Override
-  public void fromString(String str) {
+  public void setState(String str) {
     if(availableStates.contains(str)){
       state = StateEnum.valueOf(str);
     } else {
