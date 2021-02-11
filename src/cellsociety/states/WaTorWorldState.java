@@ -1,6 +1,7 @@
 package cellsociety.states;
 
 import cellsociety.CellState;
+import java.util.Collection;
 
 public class WaTorWorldState extends CellState {
 
@@ -14,14 +15,26 @@ public class WaTorWorldState extends CellState {
   int turnsSurvived;
 
   WaTorWorldState(){
-    state = DEAD;
+    state = StateEnum.EMPTY;
+  }
+
+  @Override
+  public Collection<String> getAvailableStates() {
+    return null;
   }
 
   public String toString() {
     return state.toString();
   }
 
-  public static CellState fromString(String str) {
+  @Override
+  public Object fromString(String str) {
     return StateEnum.valueOf(str);
   }
+
+  @Override
+  public void setState(String str) {
+    state = StateEnum.valueOf(str);
+  }
+
 }
