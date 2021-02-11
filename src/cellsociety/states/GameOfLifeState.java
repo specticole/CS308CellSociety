@@ -1,6 +1,8 @@
 package cellsociety.states;
 
 import cellsociety.CellState;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class GameOfLifeState extends CellState {
 
@@ -10,16 +12,34 @@ public class GameOfLifeState extends CellState {
   }
 
   StateEnum state;
+  private ArrayList<String> availableStates;
 
-  GameOfLifeState(){
-    state = DEAD;
+
+  public GameOfLifeState(){
+    state = StateEnum.DEAD;
+    availableStates = new ArrayList<>();
+    for(StateEnum state : StateEnum.values()){
+      availableStates.add(state.toString());
+    }
   }
 
+  @Override
+  public Collection<String> getAvailableStates() {
+    return availableStates;
+  }
+
+  @Override
   public String toString() {
     return state.toString();
   }
 
-  public static CellState fromString(String str) {
-    return StateEnum.valueOf(str);
+  @Override
+  public String getState(){
+    return state.toString();
+  }
+
+  @Override
+  public void fromString(String str) {
+    state = StateEnum.valueOf(str);
   }
 }

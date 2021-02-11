@@ -1,9 +1,14 @@
 package cellsociety;
 
+import java.util.Collection;
+import cellsociety.CellState;
+
 public abstract class CellState {
-  public abstract static Collection<String> availableStates();
+  public abstract Collection<String> getAvailableStates();
 
   public abstract String toString();
 
-  public static abstract CellState fromString(String str);
+  public abstract void fromString(String str);
+
+  public abstract String getState();
 }
