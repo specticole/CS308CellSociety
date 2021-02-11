@@ -24,19 +24,22 @@ public class GameOfLifeState extends CellState {
   }
 
   @Override
+  /**
+   * returns all possible states for this CA variation
+   */
   public Collection<String> getAvailableStates() {
     return availableStates;
   }
 
+  /**
+   *
+   * @return the current state name as a string
+   */
   @Override
   public String toString() {
     return state.toString();
   }
 
-  @Override
-  public String getState(){
-    return state.toString();
-  }
 
   @Override
   public void fromString(String str) {

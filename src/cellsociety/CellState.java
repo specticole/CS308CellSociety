@@ -10,5 +10,4 @@ public abstract class CellState {
 
   public abstract void fromString(String str);
 
-  public abstract String getState();
 }

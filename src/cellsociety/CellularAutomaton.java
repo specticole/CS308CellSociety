@@ -20,7 +20,7 @@ public class CellularAutomaton {
   /**
    *
    */
-  public setRule(CellStateRule rule) {
+  public void setRule(CellStateRule rule) {
     myRule = rule;
   }
 

@@ -28,6 +28,6 @@ public class Cell {
 
 
   public String getState(){
-    return states.getState();
+    return states.toString();
   }
 }

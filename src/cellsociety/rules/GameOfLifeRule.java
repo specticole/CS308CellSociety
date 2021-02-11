@@ -11,6 +11,13 @@ public class GameOfLifeRule implements CellStateRule {
   public ArrayList<Integer> bornNums;
   public ArrayList<Integer> surviveNums;
 
+
+  /**
+   * This method is called every step, and updates the cell's state under certain conditions
+   *
+   * @param cell this is the cell which's state will be updated
+   * @param neighbors this is all 8 neighbors of cell
+   */
   @Override
   public void nextCellState(Cell cell, List<Cell> neighbors) {
     int aliveNeighbors = 0;
@@ -32,7 +39,7 @@ public class GameOfLifeRule implements CellStateRule {
   }
 
   /**
-   * This method gets the specific rule set for the game of live variation, in the form of Bab/Scd
+   * This method gets the specific rule set for the game of live variation, in the form of B<int><int>.../S<int><int>...
    */
   @Override
   public void getGameSpecifics() {
