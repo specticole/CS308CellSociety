@@ -36,5 +36,9 @@ abstract public class CellGrid implements java.lang.Iterable {
     currentTime++;
   }
 
-
+  public void copyState() {
+    for(Cell c : this) {
+      c.copyState();
+    }
+  }
 }
