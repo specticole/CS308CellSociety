@@ -26,6 +26,7 @@ public class RectangularGridStyle extends GridStyle{
 
   @Override
   public void createGrid(int numRows, int numCols) {
+    pane.getStyleClass().add("my-grid-pane");
     grid = new Rectangle[numRows][numCols];
     double rectangleWidth = calculateRectangleWidth(numCols);
     double rectangleHeight = calculateRectangleHeight(numRows);
@@ -35,8 +36,6 @@ public class RectangularGridStyle extends GridStyle{
         pane.add(grid[i][j], j, i);
       }
     }
-    pane.getStyleClass().add("my-grid-pane");
-    pane.setAlignment(Pos.TOP_CENTER);
   }
 
   private double calculateRectangleWidth(int numCols){
