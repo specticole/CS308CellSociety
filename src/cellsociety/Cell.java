@@ -33,8 +33,8 @@ public class Cell {
    * @param state the string name of the state which to set the CellState to
    */
   public void setState(String state){
-    priorStates.addState(state);
-    this.state.fromString(state);
+    int newTime = parentGrid.getCurrentTime() + 1;
+    priorStates.addState(newTime, this.state.fromString(state));
   }
 
 

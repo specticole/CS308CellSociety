@@ -1,6 +1,9 @@
 package cellsociety;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * An (important) utility class that keeps track of the past
@@ -12,14 +15,14 @@ import java.util.ArrayList;
  * @author Cole Spector
  */
 public class CellStateList {
-  private static final INFINITE_STATES = 0;
-  private static final DEFAULT_STATES_TO_KEEP = INFINITE_STATES;
+  private static final int INFINITE_STATES = 0;
+  private static final int DEFAULT_STATES_TO_KEEP = INFINITE_STATES;
 
   private Map<Integer, CellState> timeToState;
   private int statesToKeep;
 
   public CellStateList(int statesToKeep) {
-    timeToState = new Map<>();
+    timeToState = new HashMap<>();
     this.statesToKeep = statesToKeep;
   }
 
@@ -38,7 +41,7 @@ public class CellStateList {
    * [ time_end - statesToKeep + 1 .. time_end ]
    */
   private boolean checkIntegrity() {
-    Set<> keySet = statesToKeep.keySet();
+    Set<Integer> keySet = timeToState.keySet();
     int min = Collections.min(keySet);
     int max = Collections.max(keySet);
 
@@ -47,8 +50,17 @@ public class CellStateList {
       valid &= keySet.contains(i);
     }
 
+    return valid;
 
+  }
 
+  /**
+   * Gets the latest time associated with a CellState
+   * @return the latest time associated with a CellState as an Integer
+   */
+  public int getLatestTime(){
+    Set<Integer> keySet = timeToState.keySet();
+    return Collections.max(keySet);
   }
 
   /**
@@ -66,5 +78,6 @@ public class CellStateList {
    */
   public CellState getState(int time) {
     assert(time >= 0);
+    return null;
   }
 }

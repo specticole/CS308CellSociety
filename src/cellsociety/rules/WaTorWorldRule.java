@@ -25,7 +25,9 @@ public class WaTorWorldRule implements CellStateRule {
   private void swapLogic(Cell currentCell, Cell otherCell){
     int currentTime = currentCell.getParentGrid().getCurrentTime();
     if(otherCell.getState().getStateAsString().equals("OPEN")){
-      if(otherCell.getPriorStates())
+      if(otherCell.getPriorStates().getLatestTime() == currentTime){
+
+      }
     }
   }
 }

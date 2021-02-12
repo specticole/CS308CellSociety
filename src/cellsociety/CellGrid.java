@@ -21,6 +21,16 @@ abstract public class CellGrid implements java.lang.Iterable {
     this.currentTime = 0;
   }
 
+  /**
+   * Neighbor index layout:
+   *
+   *    0  1  2
+   *    3     4
+   *    5  6  7
+   *
+   * @param cell
+   * @return
+   */
   abstract public List getNeighbors(Cell cell);
 
   @Override
