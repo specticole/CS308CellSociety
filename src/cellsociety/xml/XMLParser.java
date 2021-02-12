@@ -49,6 +49,10 @@ public class XMLParser {
     return simulationMetadata;
   }
 
+  public String getSimulationType() {
+    return root.getAttribute("rules");
+  }
+
   public String getGridType() {
     return getAttribute("grid", "type");
   }
