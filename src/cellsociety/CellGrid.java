@@ -1,5 +1,8 @@
 package cellsociety;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * A CellGrid is an abstract collection of Cells laid out on a certain
  * geometric pattern. Derived classes will define the geometric layout
@@ -11,7 +14,7 @@ package cellsociety;
  * @author Franklin Wei
  */
 abstract public class CellGrid implements java.lang.Iterable {
-  protected List<Cell> cells;
+  protected List<Cell> myCells;
   private int currentTime;
 
   public CellGrid() {
@@ -29,7 +32,7 @@ abstract public class CellGrid implements java.lang.Iterable {
     return currentTime;
   }
 
-  public int advanceCurrentTime() {
+  public void advanceCurrentTime() {
     currentTime++;
   }
 
