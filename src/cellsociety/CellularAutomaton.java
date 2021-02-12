@@ -32,7 +32,7 @@ public class CellularAutomaton {
    * generations of this CellularAutomaton. Previous generations are
    * not affected.
    */
-  public setRule(CellStateRule rule) {
+  public void setRule(CellStateRule rule) {
     this.rule = rule;
   }
 
@@ -47,9 +47,9 @@ public class CellularAutomaton {
     // contents can "move" from one cell to the next.
 
 
-    for(Cell c : grid) {
+    //for(Cell c : grid) {
 
-    }
+    //}
 
     grid.advanceCurrentTime();
   }

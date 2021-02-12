@@ -12,7 +12,7 @@ public class RectangularGridStyle extends GridStyle{
 
   public Rectangle createRectangleCell(double width, double height, double xPos, double yPos, Color color){
     Rectangle cell = new Rectangle(width, height);
-
+    return cell;
   }
 
   @Override
