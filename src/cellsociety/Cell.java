@@ -15,32 +15,56 @@ import cellsociety.states.GameOfLifeState;
  * can query its parent CellGrid for a List of its neighbors.
  *
  * @author Franklin Wei
+ * @author Cole Spector
  */
 public class Cell {
-  private CellState states;
+  private CellState state;
   private CellStateList priorStates;
-  public Cell(){
-    //setGameType(gameType);
+  private CellGrid parentGrid;
+  public Cell(CellGrid parentGrid){
+    this.parentGrid = parentGrid;
     priorStates = new CellStateList();
 
   }
 
   /**
-   * This method sets the state of the current cell
+   * This method sets the CellState of the current Cell
    *
-   * @param state the string name of the state which to set the state to
+   * @param state the string name of the state which to set the CellState to
    */
   public void setState(String state){
     priorStates.addState(state);
-    states.fromString(state);
+    this.state.fromString(state);
   }
 
 
   /**
-   * This method returns the current state as a string
-   * @return the current state as a string
+   * This method returns the current CellState as a string
+   * @return the current CellState as a string
    */
-  public String getState(){
-    return states.toString();
+  public CellState getState(){
+    return state;
+  }
+
+
+  /**
+   * This method returns the CellStateList of all prior states for this Cell
+   * @return the CellStateList for this Cell
+   */
+  public CellStateList getPriorStates(){
+    return priorStates;
+  }
+
+  public void swapCells(Cell otherCell){
+    //TODO: have this cell swap all info but prior states with otherCell
+  }
+
+
+  /**
+   * This method returns the CellGrid the Cell is a part of
+   * @return the CellGrid the Cell is a part of
+   */
+  public CellGrid getParentGrid(){
+    return parentGrid;
   }
 }

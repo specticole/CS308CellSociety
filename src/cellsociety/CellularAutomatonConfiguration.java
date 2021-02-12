@@ -1,7 +1,7 @@
 package cellsociety;
 
 import cellsociety.rules.GameOfLifeRule;
-import cellsociety.rules.PercolationRules;
+import cellsociety.rules.PercolationRule;
 import cellsociety.xml.XMLParser;
 import java.awt.Color;
 import java.util.List;
@@ -46,7 +46,7 @@ public class CellularAutomatonConfiguration {
         ruleSet = new GameOfLifeRule();
         break;
       case "percolation":
-        ruleSet = new PercolationRules();
+        ruleSet = new PercolationRule();
         break;
     }
   }

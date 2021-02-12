@@ -11,8 +11,8 @@ public class WaTorWorldState extends CellState {
     SHARK
   }
 
-  StateEnum state;
-  int turnsSurvived;
+  private StateEnum state;
+  private int turnsSurvived;
 
   WaTorWorldState(){
     state = StateEnum.EMPTY;
@@ -23,6 +23,7 @@ public class WaTorWorldState extends CellState {
     return null;
   }
 
+  @Override
   public String toString() {
     return state.toString();
   }
@@ -36,5 +37,16 @@ public class WaTorWorldState extends CellState {
   public void setState(String str) {
     state = StateEnum.valueOf(str);
   }
+
+  @Override
+  public String getStateAsString() {
+    return state.toString();
+  }
+
+  public int getTurnsSurvived(){
+    return turnsSurvived;
+  }
+
+
 
 }

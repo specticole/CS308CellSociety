@@ -23,4 +23,5 @@ public abstract class CellState {
 
   public abstract void setState(String str);
 
+  public abstract String getStateAsString();
 }

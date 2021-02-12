@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * CellStates of a Cell.
  *
  * @author Franklin Wei
+ * @author Cole Spector
  */
 public class CellStateList {
 

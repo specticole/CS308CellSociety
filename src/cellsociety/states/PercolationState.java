@@ -61,4 +61,9 @@ public class PercolationState extends CellState {
       exit(0);
     }
   }
+
+  @Override
+  public String getStateAsString() {
+    return state.toString();
+  }
 }
