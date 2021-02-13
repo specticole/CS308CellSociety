@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class GameOfLifeRule implements CellularAutomatonRule {
 
-  public ArrayList<Integer> bornNums;
-  public ArrayList<Integer> surviveNums;
+  private Set<Integer> bornNums;
+  private Set<Integer> surviveNums;
 
 
   /**
@@ -24,10 +24,10 @@ public class GameOfLifeRule implements CellularAutomatonRule {
    * @param neighbors this is all 8 neighbors of cell
    */
   @Override
-  public void nextCellState(Cell cell, List<Cell> neighbors) {
+  public void advanceCellState(Cell cell, List<Cell> neighbors) {
     int aliveNeighbors = 0;
     for(Cell neighbor : neighbors){
-      if(neighbor.getState().equals("ALIVE")){
+      if(neighbor.getState(0).equals("ALIVE")){
         aliveNeighbors++;
       }
     }
@@ -57,6 +57,5 @@ public class GameOfLifeRule implements CellularAutomatonRule {
     for(Integer i : survive){
       surviveNums.add(i);
     }
-
   }
 }
