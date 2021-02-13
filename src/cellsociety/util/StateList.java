@@ -155,6 +155,19 @@ public class StateList<T> {
   }
 
   /**
+   * Modify an existing state at time `time', which must already be
+   * present in the state list (enforced by assertion).
+   *
+   * @param time Time to modify.
+   * @param newstate New state at time `time'.
+   */
+  public void setState(int time, T newState) {
+    assert(timeToState.containsKey(time));
+
+    timeToState.replace(time, newState);
+  }
+
+  /**
    * Retrieve a state associated with a time.
    *
    * @return State associated with time.
