@@ -165,6 +165,20 @@ public class StateList<T> {
     return timeToState.get(time);
   }
 
+  /**
+   * Retrieve the latest state in this list. If the list is empty,
+   * this method returns null.
+   *
+   * @return Latest state, or null if empty.
+   */
+  public T getLatestState() {
+    int latestTime = getLatestTime();
+    if(latestTime < 0)
+      return null;
+    return timeToState.get(latestTime);
+  }
+
+  @Override
   public String toString() {
     return timeToState.toString();
   }
