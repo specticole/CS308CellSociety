@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public class PercolationState extends CellState {
 
-  private enum StateEnum {
+  public enum StateEnum {
     BLOCKED,
     OPEN,
     PERCOLATING
@@ -44,9 +44,10 @@ public class PercolationState extends CellState {
   }
 
   @Override
-  public Object fromString(String str) {
-    return StateEnum.valueOf(str);
+  public CellState fromString(String str) {
+    return null;
   }
+
 
   /**
    * Sets the current state

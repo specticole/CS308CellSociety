@@ -1,7 +1,6 @@
 package cellsociety;
 
 import java.util.Collection;
-import cellsociety.CellState;
 
 public abstract class CellState {
   /**
@@ -18,6 +17,7 @@ public abstract class CellState {
   /**
    * Sets the current state
    * @param str the String name of the desired state
+   * @return
    */
   public abstract CellState fromString(String str);
 
