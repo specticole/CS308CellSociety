@@ -19,8 +19,9 @@ public abstract class CellState {
    * Sets the current state
    * @param str the String name of the desired state
    */
-  public abstract Object fromString(String str);
+  public abstract CellState fromString(String str);
 
   public abstract void setState(String str);
 
+  public abstract String getStateAsString();
 }

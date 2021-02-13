@@ -37,7 +37,8 @@ public class CellularAutomaton {
   }
 
   /**
-   * Simulate one generation of the CellularAutomaton on `grid' by applying the `rule' to each Cell of the Grid.
+   * Simulate one generation of the CellularAutomaton on `grid' by
+   * applying the `rule' to each Cell of the Grid.
    */
   public void step() {
     // First copy all cell states from time T to T + 1. This is
@@ -45,9 +46,11 @@ public class CellularAutomaton {
     // have been "claimed" as movement destinations for other cells,
     // something that matters in games such as Wa-Tor World where cell
     // contents can "move" from one cell to the next.
+    grid.copyState();
 
+    //for(Cell c : grid) {
 
-
+    //}
     grid.advanceCurrentTime();
   }
 

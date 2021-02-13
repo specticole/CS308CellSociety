@@ -5,7 +5,7 @@ import cellsociety.CellState;
 import cellsociety.CellStateRule;
 import java.util.List;
 
-public class PercolationRules implements CellStateRule {
+public class PercolationRule implements CellStateRule {
 
   @Override
   public void nextCellState(Cell cell, List<Cell> neighbors) {

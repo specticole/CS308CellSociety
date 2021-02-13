@@ -60,4 +60,9 @@ public class GameOfLifeState extends CellState {
       exit(0);
     }
   }
+
+  @Override
+  public String getStateAsString() {
+    return state.toString();
+  }
 }

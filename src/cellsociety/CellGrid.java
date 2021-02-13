@@ -14,18 +14,28 @@ import java.util.List;
  * @author Franklin Wei
  */
 abstract public class CellGrid implements java.lang.Iterable {
-  protected List<Cell> cells;
+  protected List<Cell> myCells;
   private int currentTime;
 
   public CellGrid() {
     this.currentTime = 0;
   }
 
+  /**
+   * Neighbor index layout:
+   *
+   *    0  1  2
+   *    3     4
+   *    5  6  7
+   *
+   * @param cell
+   * @return
+   */
   abstract public List getNeighbors(Cell cell);
 
   @Override
   public Iterator iterator() {
-    return cells.iterator();
+    return myCells.iterator();
   }
 
   public int getCurrentTime() {
@@ -37,5 +47,9 @@ abstract public class CellGrid implements java.lang.Iterable {
     return currentTime;
   }
 
-
+  public void copyState() {
+    //for(Cell c : this) {
+    //  c.copyState();
+    //}
+  }
 }
