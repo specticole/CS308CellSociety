@@ -35,21 +35,21 @@ abstract public class CellGrid implements java.lang.Iterable {
 
   @Override
   public Iterator iterator() {
-    return cells.iterator();
+    return myCells.iterator();
   }
 
   public int getCurrentTime() {
     return currentTime;
   }
 
-  public void advanceCurrentTime() {
+  public int advanceCurrentTime() {
     currentTime++;
     return currentTime;
   }
 
   public void copyState() {
-    for(Cell c : this) {
-      c.copyState();
-    }
+    //for(Cell c : this) {
+    //  c.copyState();
+    //}
   }
 }
