@@ -21,7 +21,12 @@ public class CellularAutomatonConfiguration {
   private int gridHeight;
   private Map<String, Color> cellStyles;
   private Map<String, String> simulationParameters;
+  private List<List<String>> initialStates;
 
+  /**
+   * Parses through configuration file and stores relevant information
+   * @param configFileName - String filename for XML configuration file
+   */
   public CellularAutomatonConfiguration (String configFileName) {
     XMLParser docParser = new XMLParser(configFileName);
     simulationMetadata = docParser.getMetadata();
@@ -29,7 +34,7 @@ public class CellularAutomatonConfiguration {
     gridHeight = docParser.getGridHeight();
     cellStyles = docParser.getCellStyles();
     simulationParameters = docParser.getParameters();
-    List<List<String>> initialStates = docParser.getInitialStates();
+    initialStates = docParser.getInitialStates();
     String gridType = docParser.getGridType();
     String simulationType = docParser.getSimulationType();
     makeGrid(gridType, initialStates);
@@ -72,8 +77,24 @@ public class CellularAutomatonConfiguration {
     return gridHeight;
   }
 
+  /**
+   * Returns mappings from cell states to colors for display
+   * @return - Map from Strings representing states to Color objects
+   */
   public Map<String, Color> getCellStyles() {
     return cellStyles;
+  }
+
+  /**
+   * Returns the initial configuration of states for display
+   * @return - 2D ArrayList of cell states as Strings
+   */
+  public List<List<String>> getInitialStates() {
+    return initialStates;
+  }
+
+  public Map<String, String> getSimulationParameters() {
+    return simulationParameters;
   }
 
 }

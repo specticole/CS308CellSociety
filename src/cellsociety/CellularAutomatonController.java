@@ -8,15 +8,14 @@ package cellsociety;
  * @author Patrick Liu
  */
 public class CellularAutomatonController {
-  private String configFileName;
 
-  public CellularAutomatonController(String configFileName) {
-    this.configFileName = configFileName;
+  public CellularAutomatonController() {
+
   }
 
   // uses mkyong.com as reference
-  public void loadConfigFile() {
-
+  public CellularAutomatonConfiguration loadConfigFile(String configFileName) {
+    return new CellularAutomatonConfiguration(configFileName);
   }
 
   public void playSimulation() {
