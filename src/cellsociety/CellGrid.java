@@ -32,9 +32,9 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
    * classes should define the neighbor index layout.
    *
    * @param cell central cell
-   * @return list of neighbors of `xcell'
+   * @return list of neighbors of `cell'
    */
-  abstract public List getNeighbors(Cell cell);
+  abstract public List<Cell> getNeighbors(Cell cell);
 
   @Override
   public Iterator<Cell> iterator() {
