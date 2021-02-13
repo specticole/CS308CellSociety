@@ -2,6 +2,15 @@ package cellsociety;
 
 import java.util.List;
 
+/**
+ * Interface that must be implemented
+ */
 public interface CellularAutomatonRule {
-  public abstract CellState advanceCellState(Cell cell);
+  /**
+   * This method is called every step, and updates the cell's state under certain conditions
+   *
+   * @param cell this is the cell which's state will be updated
+   * @param neighbors this is all 8 neighbors of cell
+   */
+  public abstract void advanceCellState(Cell cell, List<Cell> neighbors);
 }

@@ -1,12 +1,17 @@
 package cellsociety.rules;
+
 import cellsociety.Cell;
 import cellsociety.CellState;
 import cellsociety.states.GameOfLifeState;
 import cellsociety.CellStateRule;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameOfLifeRule implements CellStateRule {
+/**
+ *
+ */
+public class GameOfLifeRule implements CellularAutomatonRule {
 
   public ArrayList<Integer> bornNums;
   public ArrayList<Integer> surviveNums;
