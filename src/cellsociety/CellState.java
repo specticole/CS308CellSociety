@@ -1,7 +1,6 @@
 package cellsociety;
 
 import java.util.*;
-import cellsociety.CellState;
 
 /**
  * An immutable abstract type that represents the state of a single
