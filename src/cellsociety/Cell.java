@@ -36,7 +36,7 @@ public class Cell {
    *
    * @param state the string name of the state which to set the CellState
    */
-  public void setState(int delta, String state) {
+  public void setState(int delta, CellState state) {
     states.setState(parentGrid.getCurrentTime() + delta, state);
   }
 
@@ -55,7 +55,7 @@ public class Cell {
    * @return the current CellState as a string
    */
   public CellState getState(int delta){
-    return states.getState(parentGrid().getCurrentTime() + delta);
+    return states.getState(parentGrid.getCurrentTime() + delta);
   }
 
   /**
