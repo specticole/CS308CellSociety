@@ -3,8 +3,8 @@ package cellsociety.states;
 import static java.lang.System.exit;
 
 import cellsociety.CellState;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameOfLifeState extends CellState {
 
@@ -13,16 +13,18 @@ public class GameOfLifeState extends CellState {
     ALIVE
   }
 
-  StateEnum state;
-  private ArrayList<String> availableStates;
+  private StateEnum state;
 
+  private GameOfLifeState(StateEnum s) {
+    this.state = s;
+  }
 
   public GameOfLifeState(){
-    state = StateEnum.DEAD;
-    availableStates = new ArrayList<>();
-    for(StateEnum state : StateEnum.values()){
-      availableStates.add(state.toString());
-    }
+    this(StateEnum.DEAD);
+  }
+
+  public GameOfLifeState(String str) {
+    this(StateEnum.valueOf(str));
   }
 
   /**
@@ -30,7 +32,7 @@ public class GameOfLifeState extends CellState {
    */
   @Override
   public Collection<String> getAvailableStates() {
-    return availableStates;
+    return super.enumToStringList(StateEnum.class);
   }
 
   /**
@@ -39,30 +41,6 @@ public class GameOfLifeState extends CellState {
    */
   @Override
   public String toString() {
-    return state.toString();
-  }
-
-  @Override
-  public Object fromString(String str) {
-    return StateEnum.valueOf(str);
-  }
-
-  /**
-   * Sets the current state
-   * @param str the String name of the desired state
-   */
-  @Override
-  public void setState(String str) {
-    if(availableStates.contains(str)){
-      state = StateEnum.valueOf(str);
-    } else {
-      System.out.printf("Input state %s is invalid, please input a valid state", str);
-      exit(0);
-    }
-  }
-
-  @Override
-  public String getStateAsString() {
     return state.toString();
   }
 }
