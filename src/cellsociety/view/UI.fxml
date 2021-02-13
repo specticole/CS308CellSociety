@@ -30,9 +30,11 @@
   </HBox>
 
   <HBox GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER" spacing="8">
-    <Button fx:id="startResetButton" text="%StartButtonLabel" onAction="#startButtonClick"></Button>
-    <Button text="%PauseButtonLabel" onAction="#pauseButtonClick"></Button>
-    <Button text="%StepButtonLabel"></Button>
+    <Button fx:id="startResetButton" text="%StartButtonLabel"
+      onAction="#startResetButtonClick"></Button>
+    <Button fx:id="pauseResumeButton" text="%ResumeButtonLabel"
+      onAction="#pauseResumeButtonClick"></Button>
+    <Button text="%StepButtonLabel" onAction="#stepButtonClick"></Button>
   </HBox>
 
   <HBox GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="TOP_CENTER">

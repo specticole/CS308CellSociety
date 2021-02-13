@@ -1,7 +1,10 @@
 package cellsociety.view;
 
 import cellsociety.CellGrid;
+import java.util.List;
+import java.util.Map;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 
 public abstract class GridStyle {
@@ -10,6 +13,6 @@ public abstract class GridStyle {
 
   public abstract void createGrid(int width, int height);
 
-  public abstract void updateGrid(CellGrid cellGrid, int time);
+  public abstract void updateGrid(List<List<String>> listOfCells, Map<String, Color> stateToColor);
 
 }

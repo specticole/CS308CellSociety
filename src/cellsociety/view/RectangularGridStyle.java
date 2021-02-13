@@ -1,6 +1,7 @@
 package cellsociety.view;
 
-import cellsociety.CellGrid;
+import java.util.List;
+import java.util.Map;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -31,7 +32,7 @@ public class RectangularGridStyle extends GridStyle{
     double rectangleHeight = calculateRectangleHeight(numRows);
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numCols; j++) {
-        grid[i][j] = createRectangleCell(rectangleWidth, rectangleHeight, Color.ORANGE);
+        grid[i][j] = createRectangleCell(rectangleWidth, rectangleHeight, Color.WHITE);
         pane.add(grid[i][j], j, i);
       }
     }
@@ -50,7 +51,11 @@ public class RectangularGridStyle extends GridStyle{
   }
 
   @Override
-  public void updateGrid(CellGrid cellGrid, int time) {
-
+  public void updateGrid(List<List<String>> listOfStates, Map<String, Color> stateToColor) {
+    for (int i = 0; i < listOfStates.size(); i++) {
+      for (int j = 0; j < listOfStates.get(0).size(); j++) {
+        grid[i][j].setFill(stateToColor.get(listOfStates.get(i).get(j)));
+      }
+    }
   }
 }
