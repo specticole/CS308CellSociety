@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -23,6 +24,8 @@ public class CellularAutomatonView {
   private Button startResetButton;
   @FXML
   private Button pauseResumeButton;
+  @FXML
+  private Slider speedSlider;
 
   private boolean started;
   private boolean paused;
@@ -94,5 +97,9 @@ public class CellularAutomatonView {
     started = true;
     paused = true;
     updateButtonLabels();
+  }
+
+  public void speedButtonClick() {
+    controller.changeAnimationRate(speedSlider.getValue());
   }
 }
