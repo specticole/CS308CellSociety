@@ -35,7 +35,7 @@ abstract public class CellGrid implements java.lang.Iterable {
 
   @Override
   public Iterator iterator() {
-    return myCells.iterator();
+    return cells.iterator();
   }
 
   public int getCurrentTime() {
@@ -44,6 +44,7 @@ abstract public class CellGrid implements java.lang.Iterable {
 
   public void advanceCurrentTime() {
     currentTime++;
+    return currentTime;
   }
 
   public void copyState() {

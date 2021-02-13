@@ -51,7 +51,6 @@ public class CellularAutomaton {
     //for(Cell c : grid) {
 
     //}
-
     grid.advanceCurrentTime();
   }
 

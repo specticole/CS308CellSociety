@@ -1,0 +1,7 @@
+.my-grid-pane {
+    -fx-background-color: black;
+    -fx-vgap: 1;
+    -fx-hgap: 1;
+    -fx-padding: 1;
+    -fx-alignment: top-center;
+}
