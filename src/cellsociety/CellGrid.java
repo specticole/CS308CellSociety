@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Franklin Wei
  */
-public abstract class CellGrid implements java.lang.Iterable {
+public abstract class CellGrid implements java.lang.Iterable<Cell> {
   protected List<Cell> myCells;
   private int currentTime;
 
@@ -37,8 +37,8 @@ public abstract class CellGrid implements java.lang.Iterable {
   abstract public List getNeighbors(Cell cell);
 
   @Override
-  public Iterator iterator() {
-    return cells.iterator();
+  public Iterator<Cell> iterator() {
+    return myCells.iterator();
   }
 
   /**
@@ -55,7 +55,6 @@ public abstract class CellGrid implements java.lang.Iterable {
    */
   public void advanceCurrentTime() {
     currentTime++;
-    return currentTime;
   }
 
   /**
