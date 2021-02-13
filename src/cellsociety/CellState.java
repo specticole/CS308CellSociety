@@ -12,26 +12,40 @@ import cellsociety.CellState;
  * String. Internally, CellStates may choose to represent their state
  * as an enum type.
  */
-public abstract class CellState {
+public abstract class CellState<E extends Enum<E>> {
+  private final E state;
+
+  protected CellState(E s) {
+    this.state = s;
+  }
+
+  protected CellState(Class<E> cl, String str) {
+    this(Enum.valueOf(cl, str));
+  }
+
   /**
    * Returns a Collection of all possible states for this CA
    * variation. Ideally, we'd make this an abstract static method, but
    * Java doesn't support such a thing (for no good reason, really --
-   * it's a useful construct).
+   * it's a useful construct). So to use this, you need to instantiate
+   * a default subclass (i.e. new GameOfLifeState()) and call
+   * .getAvailableStates(), like this:
+   *
+   * Collection<String> states = new GameOfLifeState().getAvailableStates();
    */
-  public abstract Collection<String> getAvailableStates();
+  public Collection<String> getAvailableStates() {
+    return Arrays.asList(Arrays.stream(state.getDeclaringClass().getEnumConstants()).map(Enum::name).toArray(String[]::new));
+  }
 
   /**
    * @return the current state name as a string
    */
   @Override
-  public abstract String toString();
+  public String toString() {
+    return state.toString();
+  }
 
-  /**
-   * Convert an enum type to collection of strings.
-   */
-  protected static Collection<String> enumToStringList(Class<? extends Enum<?>> e) {
-    // from https://stackoverflow.com/questions/13783295/getting-all-names-in-an-enum-as-a-string
-    return Arrays.asList(Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new));
+  public E getState() {
+    return state;
   }
 }

@@ -6,41 +6,22 @@ import cellsociety.CellState;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GameOfLifeState extends CellState {
+public class GameOfLifeState extends CellState<GameOfLifeState.States> {
 
-  private enum StateEnum {
+  public enum States {
     DEAD,
     ALIVE
   }
 
-  private StateEnum state;
-
-  private GameOfLifeState(StateEnum s) {
-    this.state = s;
+  public GameOfLifeState(States s) {
+    super(s);
   }
 
   public GameOfLifeState(){
-    this(StateEnum.DEAD);
+    this(States.DEAD);
   }
 
   public GameOfLifeState(String str) {
-    this(StateEnum.valueOf(str));
-  }
-
-  /**
-   * returns all possible states for this CA variation
-   */
-  @Override
-  public Collection<String> getAvailableStates() {
-    return super.enumToStringList(StateEnum.class);
-  }
-
-  /**
-   *
-   * @return the current state name as a string
-   */
-  @Override
-  public String toString() {
-    return state.toString();
+    super(States.class, str);
   }
 }
