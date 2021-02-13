@@ -19,15 +19,17 @@ import cellsociety.util.*;
  */
 public class Cell {
   private StateList<CellState> states;
-  private CellGrid parentGrid;
-  private GridCoordinates coordinates;
+  private final CellGrid parentGrid;
+  private final GridCoordinates coordinates;
 
   /**
-   * Initialize a Cell with a given parent grid.
+   * Initialize a Cell with a given parent grid, and an empty
+   * StateList.
    */
-  public Cell(CellGrid parentGrid){
+  public Cell(CellGrid parentGrid, GridCoordinates coordinates){
     this.parentGrid = parentGrid;
     this.states = new StateList<>();
+    this.coordinates = coordinates;
   }
 
   /**
@@ -86,5 +88,9 @@ public class Cell {
    */
   public CellGrid getParentGrid(){
     return parentGrid;
+  }
+
+  public GridCoordinates getCoordinates() {
+    return coordinates;
   }
 }
