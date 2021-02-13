@@ -30,8 +30,8 @@
   </HBox>
 
   <HBox GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER" spacing="8">
-    <Button text="%StartButtonLabel"></Button>
-    <Button text="%StopButtonLabel"></Button>
+    <Button fx:id="startResetButton" text="%StartButtonLabel" onAction="#startButtonClick"></Button>
+    <Button text="%PauseButtonLabel" onAction="#pauseButtonClick"></Button>
     <Button text="%StepButtonLabel"></Button>
   </HBox>
 
