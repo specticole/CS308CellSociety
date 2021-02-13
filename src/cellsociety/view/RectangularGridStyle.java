@@ -1,7 +1,6 @@
 package cellsociety.view;
 
 import cellsociety.CellGrid;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;

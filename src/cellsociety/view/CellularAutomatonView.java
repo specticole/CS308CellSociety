@@ -1,19 +1,20 @@
 package cellsociety.view;
 
-import javafx.scene.layout.StackPane;
+import javafx.fxml.FXML;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+
 
 public class CellularAutomatonView {
 
-  StackPane stackPane;
-  GridStyle gridStyle;
+  @FXML
+  private GridPane masterLayout;
+  @FXML
+  private GridPane mainGrid;
 
-  public CellularAutomatonView(GridStyle gridStyle){
-    stackPane = new StackPane();
-    this.gridStyle = gridStyle;
+
+  public void initialize(){
+    RectangularGridStyle grid = new RectangularGridStyle(mainGrid);
+    grid.createGrid(100,100);
   }
-
-  public StackPane getPane(){
-    return stackPane;
-  }
-
 }
