@@ -8,12 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class stores all the information read in from the configuration file,
- * to be passed to the Model and View.
+ * This class stores all the information read in from the configuration file, to be passed to the
+ * Model and View.
  *
  * @author Patrick Liu
  */
 public class CellularAutomatonConfiguration {
+
   private CellStateRule ruleSet;
   private CellGrid grid;
   private Map<String, String> simulationMetadata;
@@ -25,9 +26,10 @@ public class CellularAutomatonConfiguration {
 
   /**
    * Parses through configuration file and stores relevant information
+   *
    * @param configFileName - String filename for XML configuration file
    */
-  public CellularAutomatonConfiguration (String configFileName) {
+  public CellularAutomatonConfiguration(String configFileName) {
     XMLParser docParser = new XMLParser(configFileName);
     simulationMetadata = docParser.getMetadata();
     gridWidth = docParser.getGridWidth();
@@ -41,11 +43,11 @@ public class CellularAutomatonConfiguration {
     makeRules(simulationType);
   }
 
-  private void makeGrid (String gridType, List<List<String>> initialStates) {
+  private void makeGrid(String gridType, List<List<String>> initialStates) {
 
   }
 
-  private void makeRules (String simulationType) {
+  private void makeRules(String simulationType) {
     switch (simulationType) {
       case "gameoflife":
         ruleSet = new GameOfLifeRule();
@@ -79,6 +81,7 @@ public class CellularAutomatonConfiguration {
 
   /**
    * Returns mappings from cell states to colors for display
+   *
    * @return - Map from Strings representing states to Color objects
    */
   public Map<String, Color> getCellStyles() {
@@ -87,6 +90,7 @@ public class CellularAutomatonConfiguration {
 
   /**
    * Returns the initial configuration of states for display
+   *
    * @return - 2D ArrayList of cell states as Strings
    */
   public List<List<String>> getInitialStates() {
