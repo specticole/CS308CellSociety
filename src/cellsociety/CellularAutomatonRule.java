@@ -1,11 +1,18 @@
 package cellsociety;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface that must be implemented
  */
-public interface CellularAutomatonRule {
+public abstract class CellularAutomatonRule {
+  protected Map<String, String> parameters;
+
+  public CellularAutomatonRule(Map<String, String> params) {
+    this.parameters = params;
+  }
+
   /**
    * This method is called every step, and updates the cell's state under certain conditions
    *
