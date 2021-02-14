@@ -14,9 +14,14 @@ public class WaTorWorldState extends CellState<WaTorWorldState.States> {
   private int turnsSurvived;
   private boolean eaten = false;
 
-  public WaTorWorldState(States s) {
+
+  public WaTorWorldState(States s, int survived) {
     super(s);
-    turnsSurvived = 0;
+    turnsSurvived = survived;
+  }
+
+  public WaTorWorldState(States s) {
+    this(s, 0);
   }
 
   public WaTorWorldState(){
@@ -25,14 +30,6 @@ public class WaTorWorldState extends CellState<WaTorWorldState.States> {
 
   public WaTorWorldState(String str) {
     super(States.class, str);
-  }
-
-  public void survivedRound(){
-    turnsSurvived++;
-  }
-
-  public void died(){
-    turnsSurvived = 0;
   }
 
   public int getTurnsSurvived(){
