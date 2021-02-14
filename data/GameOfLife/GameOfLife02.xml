@@ -60,6 +60,6 @@
     <cellstate type="ALIVE"><r>0</r><g>0</g><b>0</b></cellstate>
   </cellstyle>
   <config_parameters>
-
+    <parameter name="rules" value="B3/S23"></parameter>
   </config_parameters>
 </simulation>
