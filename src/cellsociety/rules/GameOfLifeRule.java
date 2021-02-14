@@ -18,7 +18,7 @@ public class GameOfLifeRule extends CellularAutomatonRule {
   public GameOfLifeRule(Map<String, String> params) {
     super(params);
 
-    setGameSpecifics();
+    setGameSpecifics(params);
   }
 
   /**
@@ -54,11 +54,19 @@ public class GameOfLifeRule extends CellularAutomatonRule {
 
   /**
    * This method gets the specific rule set for the game of live variation, in the form of B<int><int>.../S<int><int>...
+   * @param params
    */
-  public void setGameSpecifics() {
-    //this will change to read in from the xml
-    Integer[] born = {3};
-    Integer[] survive = {2, 3};
+  public void setGameSpecifics(Map<String, String> params) {
+    List<Integer> born = new ArrayList<>();
+    List<Integer> survive = new ArrayList<>();
+    String rules = params.get("rules");
+    String[] rulesSplit = rules.split("/");
+    for (int i = 1; i < rulesSplit[0].length(); i++) {
+      born.add(Integer.valueOf(rulesSplit[0].substring(i, i + 1)));
+    }
+    for (int i = 1; i < rulesSplit[1].length(); i++) {
+      survive.add(Integer.valueOf(rulesSplit[1].substring(i, i + 1)));
+    }
 
     bornNums = new HashSet<>();
     surviveNums = new HashSet<>();
