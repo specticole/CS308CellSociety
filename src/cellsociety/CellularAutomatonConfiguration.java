@@ -47,9 +47,12 @@ public class CellularAutomatonConfiguration {
   }
 
   private CellState makeState(String simulationType, String contents) {
+    // TODO: refactor
     switch(simulationType) {
       case "gameoflife":
         return new GameOfLifeState(contents);
+      case "percolation":
+        return new PercolationState(contents);
       default:
         return null;
     }
