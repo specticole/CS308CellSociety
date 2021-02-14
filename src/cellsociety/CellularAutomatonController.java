@@ -55,7 +55,7 @@ public class CellularAutomatonController {
   }
 
   private void changeAnimationRate(double rate) {
-    frame = new KeyFrame(Duration.seconds(rate), e -> step());
+    frame = new KeyFrame(Duration.seconds(rate), e -> step(currentTime));
   }
 
   public void changeRateSlider(int sliderPos) {
@@ -65,10 +65,21 @@ public class CellularAutomatonController {
   private void step(int time) {
     // call Model method to get updated states (or at time t)
     // for now, just choose a random cell and change its state
-    
+    int changeRow = (int) (Math.random() * myStates.size());
+    int changeCol = (int) (Math.random() * myStates.get(0).size());
+    String targetState = myStates.get(changeRow).get(changeCol);
+    if (targetState.equals("A")) {
+      myStates.get(changeRow).set(changeCol, "D");
+    }
+    else {
+      myStates.get(changeRow).set(changeCol, "A");
+    }
+    // send updated states to View
+    updateViews();
+    currentTime++;
   }
 
-  public void updateViews(int newTime) {
+  private void updateViews() {
 
   }
 

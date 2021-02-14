@@ -89,7 +89,7 @@ public class XMLParser {
       String cellType = stateElement.getAttribute("type");
       cellStyleMap.put(cellType, new Color(Integer.valueOf(stateElement.getElementsByTagName("r").item(0).getTextContent()) / 255.0,
           Integer.valueOf(stateElement.getElementsByTagName("g").item(0).getTextContent()) / 255.0,
-          Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent()) / 255.0, 1.0);
+          Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent()) / 255.0, 1.0));
     }
     return cellStyleMap;
   }

@@ -43,8 +43,8 @@ public class GameOfLifeState extends CellState {
   }
 
   @Override
-  public Object fromString(String str) {
-    return StateEnum.valueOf(str);
+  public CellState fromString(String str) {
+    return null;
   }
 
   /**
