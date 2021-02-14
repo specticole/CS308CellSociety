@@ -21,9 +21,9 @@ public class SegregationRule extends CellularAutomatonRule {
 
   @Override
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
-    ArrayList<Cell> populatedNeighbors = getPopulatedNeighbors(neighbors);
-    ArrayList<Cell> similarNeighbors = getSimilarNeighbors(populatedNeighbors,
-        (States) cell.getState(Cell.CURRENT_TIME).getState());
+    ArrayList<Cell> populatedNeighbors = getUsefulNeighbors(neighbors, States.OPEN, true);
+    ArrayList<Cell> similarNeighbors = getUsefulNeighbors(populatedNeighbors,
+        (States) cell.getState(Cell.CURRENT_TIME).getState(), false);
 
     if(needsToMove(populatedNeighbors, similarNeighbors)){
       move(cell);
@@ -54,26 +54,15 @@ public class SegregationRule extends CellularAutomatonRule {
     return (populatedNeighbors.size()/similarNeighbors.size() >= neighborsNeeded);
   }
 
-  private ArrayList<Cell> getPopulatedNeighbors(List<Cell> neighbors){
-    ArrayList<Cell> populatedNeighbors = new ArrayList<>();
-    for(Cell neighbor : neighbors){
-      if(neighbor.getState(Cell.CURRENT_TIME).getState() != States.OPEN){
-        populatedNeighbors.add(neighbor);
-      }
-    }
-    return populatedNeighbors;
-  }
-
-  private ArrayList<Cell> getSimilarNeighbors(List<Cell> neighbors, SegregationState.States state){
+  private ArrayList<Cell> getUsefulNeighbors(List<Cell> neighbors, SegregationState.States state, boolean different){
     ArrayList<Cell> usefulNeighbors = new ArrayList<>();
-    for (Cell neighbor : neighbors) {
-      if(neighbor.getState(Cell.CURRENT_TIME).getState() == state){
+    for(Cell neighbor : neighbors){
+      if((neighbor.getState(Cell.CURRENT_TIME).getState() == state) ^ different){
         usefulNeighbors.add(neighbor);
       }
     }
     return usefulNeighbors;
   }
-
 
 
   /**
