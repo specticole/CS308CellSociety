@@ -33,22 +33,58 @@ public class WaTorWorldRule extends CellularAutomatonRule {
       if(!findFish(neighbors)){
         swapLogic(cell, neighbors);
       }
+    }
+
+    breed(cell.getState(Cell.CURRENT_TIME), neighbors);
+
+
+
+
+
+  }
+
+  private void breed(CellState cellState, List<Cell> neighbors){
+    WaTorWorldState state = (WaTorWorldState) cellState;
+    ArrayList<Cell> possibleSpawn = new ArrayList<>();
+    possibleSpawn = getUsefulNeighbors(neighbors, WaTorWorldState.States.EMPTY);
+
+    if(possibleSpawn.size() > 0){
+      Random rand = new Random();
+      Cell spawn = possibleSpawn.get(rand.nextInt(possibleSpawn.size()));
+
+      if(state.getState() == States.FISH){
+        if(state.getTurnsSurvived() >= fishRoundsToBreed){
+          spawn.appendState(new WaTorWorldState(States.FISH));
+        }
+      } else if(state.getState() == States.SHARK){
+        if(state.getTurnsSurvived() >= sharkRoundsToBreed){
+          spawn.appendState(new WaTorWorldState(States.SHARK));
+        }
+      }
 
     }
+
+
+  }
+
+  private ArrayList<Cell> getUsefulNeighbors(List<Cell> neighbors, WaTorWorldState.States state){
+    ArrayList<Cell> emptyNeighbors = new ArrayList<>();
+    for (int neighborIndex : usedNeighbors) {
+      Cell neighbor = neighbors.get(neighborIndex);
+      if(neighbor.getState(Cell.CURRENT_TIME).getState() == state){
+        emptyNeighbors.add(neighbor);
+      }
+    }
+    return emptyNeighbors;
   }
 
   private Boolean findFish(List<Cell> neighbors){
     ArrayList<Cell> possibleFood = new ArrayList<>();
-    for (int neighborIndex : usedNeighbors) {
-      Cell neighbor = neighbors.get(neighborIndex);
-      if(neighbor.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.FISH){
-        possibleFood.add(neighbor);
-      }
-    }
+    possibleFood = getUsefulNeighbors(neighbors, WaTorWorldState.States.FISH);
 
     if(possibleFood.size() > 0){
       Random rand = new Random();
-      possibleFood.get(rand.nextInt(possibleFood.size())).appendState(new WaTorWorldState());
+      possibleFood.get(rand.nextInt(possibleFood.size())).appendState(new WaTorWorldState(States.EMPTY));
       return true;
     }
     return false;
@@ -62,6 +98,8 @@ public class WaTorWorldRule extends CellularAutomatonRule {
       if(neighbor.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.EMPTY){
         int currentTime = currentCell.getParentGrid().getCurrentTime();
         if(neighbor.getStates().getLatestTime() == currentTime){
+          possibleSwaps.add(neighbor);
+        } else if (neighbor.getState(Cell.NEXT_TIME).getState() == WaTorWorldState.States.EMPTY){
           possibleSwaps.add(neighbor);
         }
       }
