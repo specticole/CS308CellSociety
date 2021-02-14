@@ -46,6 +46,14 @@
       <gridcell>ALIVE</gridcell>
       <gridcell>ALIVE</gridcell>
     </gridrow>
+    <gridrow>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
+    </gridrow>
   </grid>
   <cellstyle>
     <cellstate type="DEAD"><r>255</r><g>255</g><b>255</b></cellstate>
