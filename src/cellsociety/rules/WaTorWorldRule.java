@@ -27,20 +27,23 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.FISH){
       swapLogic(cell, neighbors);
+      updateTurnsSurvived(cell.getState(Cell.CURRENT_TIME));
     }
 
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.SHARK){
       if(!findFish(neighbors)){
         swapLogic(cell, neighbors);
       }
+      updateTurnsSurvived(cell.getState(Cell.CURRENT_TIME));
     }
 
     breed(cell.getState(Cell.CURRENT_TIME), neighbors);
 
+  }
 
-
-
-
+  private void updateTurnsSurvived(CellState cellState){
+    WaTorWorldState state = (WaTorWorldState) cellState;
+    state.survivedRound();
   }
 
   private void breed(CellState cellState, List<Cell> neighbors){
@@ -84,7 +87,9 @@ public class WaTorWorldRule extends CellularAutomatonRule {
 
     if(possibleFood.size() > 0){
       Random rand = new Random();
-      possibleFood.get(rand.nextInt(possibleFood.size())).appendState(new WaTorWorldState(States.EMPTY));
+      Cell food = possibleFood.get(rand.nextInt(possibleFood.size()));
+      food.appendState(new WaTorWorldState(States.EMPTY));
+      food.getState(Cell.NEXT_TIME);
       return true;
     }
     return false;
