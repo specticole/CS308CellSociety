@@ -14,7 +14,12 @@ import java.util.Random;
 
 public class WaTorWorldRule extends CellularAutomatonRule {
 
-  private int[] usedNeighbors = {1,3,4,6};
+  private static final int TOP_NEIGHBOR = 1;
+  private static final int LEFT_NEIGHBOR = 3;
+  private static final int RIGHT_NEIGHBOR = 4;
+  private static final int BOTTOM_NEIGHBOR = 6;
+
+  private int[] usedNeighbors = {TOP_NEIGHBOR,LEFT_NEIGHBOR,RIGHT_NEIGHBOR,BOTTOM_NEIGHBOR};
   private int sharkRoundsToBreed;
   private int fishRoundsToBreed;
 
