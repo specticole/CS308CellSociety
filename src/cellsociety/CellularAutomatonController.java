@@ -69,6 +69,10 @@ public class CellularAutomatonController {
   // replaces the current KeyFrame object in order to change the animation rate
   private void changeAnimationRate(double rate) {
     frame = new KeyFrame(Duration.seconds(rate), e -> step(currentTime));
+    animation.stop();
+    animation.getKeyFrames().clear();
+    animation.getKeyFrames().add(frame);
+    animation.play();
   }
 
   /**
@@ -92,6 +96,7 @@ public class CellularAutomatonController {
    * Resets the simulation by changing the instance time variable to 0
    */
   public void resetSimulation() {
+    animation.pause();
     currentTime = 0;
     // step method will get states at time t = 0
   }
@@ -109,12 +114,8 @@ public class CellularAutomatonController {
       myStates.get(changeRow).set(changeCol, "A");
     }
     // send updated states to View
-    updateViews();
+    myView.updateView(myStates);
     currentTime++;
-  }
-
-  private void updateViews() {
-
   }
 
 }

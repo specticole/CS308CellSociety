@@ -3,6 +3,7 @@ package cellsociety.view;
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -32,19 +33,19 @@ public class CellularAutomatonView {
 
   ResourceBundle bundle;
   CellularAutomatonController controller;
+  Map<String, Color> cellStyles;
+  RectangularGridStyle grid;
 
   public void initialize(){
     Locale locale = new Locale("en", "US");
     bundle = ResourceBundle.getBundle("labels", locale);
 
-    controller = new CellularAutomatonController();
+    controller = new CellularAutomatonController(this);
     CellularAutomatonConfiguration config = controller.loadConfigFile("ControllerTest.xml");
-    RectangularGridStyle grid = new RectangularGridStyle(mainGrid);
+    grid = new RectangularGridStyle(mainGrid);
+    cellStyles = config.getCellStyles();
     grid.createGrid(config.getGridHeight(),config.getGridWidth());
-    Map<String, Color> dummyMap = new HashMap<>();
-    dummyMap.put("A", Color.BLACK);
-    dummyMap.put("D", Color.NAVAJOWHITE);
-    grid.updateGrid(config.getInitialStates(), dummyMap);
+    grid.updateGrid(config.getInitialStates(), cellStyles);
 
     started = false;
     paused = true;
@@ -63,6 +64,7 @@ public class CellularAutomatonView {
     else{
       pauseResumeButton.setText(bundle.getString("PauseButtonLabel"));
     }
+    System.out.println(started + " " + paused);
   }
 
   public void startResetButtonClick() {
@@ -81,12 +83,12 @@ public class CellularAutomatonView {
 
   public void pauseResumeButtonClick() {
     if(paused){
-      controller.pauseSimulation();
+      controller.playSimulation();
       started = true;
       paused = false;
     }
     else{
-      controller.playSimulation();
+      controller.pauseSimulation();
       paused = true;
     }
     updateButtonLabels();
@@ -101,5 +103,9 @@ public class CellularAutomatonView {
 
   public void speedButtonClick() {
     controller.changeRateSlider((int) speedSlider.getValue());
+  }
+
+  public void updateView(List<List<String>> myStates){
+    grid.updateGrid(myStates, cellStyles);
   }
 }
