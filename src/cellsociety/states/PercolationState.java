@@ -45,7 +45,7 @@ public class PercolationState extends CellState {
 
   @Override
   public CellState fromString(String str) {
-    return null; //StateEnum.valueOf(str);
+    return null;
   }
 
   /**
