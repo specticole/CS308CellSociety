@@ -1,5 +1,6 @@
 package cellsociety.xml;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,15 @@ public class XMLParser {
   /**
    * Create parser for XML files of given type.
    */
+
   public XMLParser (String fileName) throws XMLException {
     DOCUMENT_BUILDER = getDocumentBuilder();
     root = getRootElement(this.getClass().getClassLoader().getResourceAsStream(fileName));
+  }
+
+  public XMLParser (File file) throws XMLException {
+    DOCUMENT_BUILDER = getDocumentBuilder();
+    root = getRootElement(this.getClass().getClassLoader().getResourceAsStream(file.getName()));
   }
 
   public Map<String, String> getMetadata () {

@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
+import cellsociety.xml.XMLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -41,14 +42,19 @@ public class CellularAutomatonView {
     bundle = ResourceBundle.getBundle("labels", locale);
 
     controller = new CellularAutomatonController(this);
-    CellularAutomatonConfiguration config = controller.loadConfigFile("ControllerTest.xml");
+    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("ControllerTest"
+        + ".xml");
+    updateXML(config);
+
+    started = false;
+    paused = true;
+  }
+
+  public void updateXML(CellularAutomatonConfiguration config){
     grid = new RectangularGridStyle(mainGrid);
     cellStyles = config.getCellStyles();
     grid.createGrid(config.getGridHeight(),config.getGridWidth());
     grid.updateGrid(config.getInitialStates(), cellStyles);
-
-    started = false;
-    paused = true;
   }
 
   private void updateButtonLabels(){
@@ -64,7 +70,6 @@ public class CellularAutomatonView {
     else{
       pauseResumeButton.setText(bundle.getString("PauseButtonLabel"));
     }
-    System.out.println(started + " " + paused);
   }
 
   public void startResetButtonClick() {
@@ -103,6 +108,13 @@ public class CellularAutomatonView {
 
   public void speedButtonClick() {
     controller.changeRateSlider((int) speedSlider.getValue());
+  }
+
+  public void loadFileClick() {
+    CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
+    if(config != null){
+      updateXML(config);
+    }
   }
 
   public void updateView(List<List<String>> myStates){
