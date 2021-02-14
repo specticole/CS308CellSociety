@@ -8,7 +8,7 @@ import cellsociety.CellularAutomatonRule;
 import java.util.*;
 
 /**
- *
+ * Implementation of Conway's Game of Life's next state logic.
  */
 public class GameOfLifeRule extends CellularAutomatonRule {
 
