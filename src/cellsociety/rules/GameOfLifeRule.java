@@ -34,7 +34,7 @@ public class GameOfLifeRule extends CellularAutomatonRule {
       }
     }
 
-    if(cell.getState(0).equals("ALIVE")){
+    if(cell.getState(0).getState()  == GameOfLifeState.States.ALIVE){
       if(!surviveNums.contains(aliveNeighbors)){
         cell.setState(0, new GameOfLifeState(GameOfLifeState.States.DEAD));
       }
