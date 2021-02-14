@@ -66,7 +66,7 @@ public class Cell {
    *
    * @return the StateList for this Cell
    */
-  public StateList<CellState> getStates(){
+  public StateList<CellState> getStates() {
     return states;
   }
 
@@ -76,10 +76,26 @@ public class Cell {
 
   /**
    * Duplicate the latest state in our state list.
+   *
+   * It is _critically important_ that this is only called once per
+   * time step of the parent grid's simulation time.
    */
   public void copyState() {
     states.addState(parentGrid.getCurrentTime() + 1,
                     states.getLatestState());
+  }
+
+  /**
+   * Append a new CellState to our state list.
+   *
+   * It is _critically important_ that this is only called once per
+   * time step of the parent grid's simulation time.
+   *
+   * @param state State to append.
+   */
+  public void appendState(CellState state) {
+    states.addState(parentGrid.getCurrentTime() + 1,
+                    state);
   }
 
   /**
