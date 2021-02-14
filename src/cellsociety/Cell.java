@@ -18,9 +18,14 @@ import cellsociety.util.*;
  * @author Cole Spector
  */
 public class Cell {
+
+  public final static int CURRENT_TIME = 0;
+  public final static int NEXT_TIME = 1;
+
   private StateList<CellState> states;
   private final CellGrid parentGrid;
   private final GridCoordinates coordinates;
+
 
   /**
    * Initialize a Cell with a given parent grid, and an empty

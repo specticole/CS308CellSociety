@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class GameOfLifeRule extends CellularAutomatonRule {
 
+
   private Set<Integer> bornNums;
   private Set<Integer> surviveNums;
 
@@ -31,21 +32,21 @@ public class GameOfLifeRule extends CellularAutomatonRule {
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
     int aliveNeighbors = 0;
     for(Cell neighbor : neighbors){
-      if(neighbor.getState(0).getState() == GameOfLifeState.States.ALIVE){
+      if(neighbor.getState(cell.CURRENT_TIME).getState() == GameOfLifeState.States.ALIVE){
         aliveNeighbors++;
       }
     }
 
     //System.out.printf("Alive count: %d ", aliveNeighbors);
 
-    if(cell.getState(0).getState()  == GameOfLifeState.States.ALIVE){
+    if(cell.getState(cell.CURRENT_TIME).getState()  == GameOfLifeState.States.ALIVE){
       if(!surviveNums.contains(aliveNeighbors)){
-        cell.setState(1, new GameOfLifeState(GameOfLifeState.States.DEAD));
+        cell.setState(cell.NEXT_TIME, new GameOfLifeState(GameOfLifeState.States.DEAD));
         //System.out.printf("-> die");
       }
     } else {
       if(bornNums.contains(aliveNeighbors)){
-        cell.setState(1, new GameOfLifeState(GameOfLifeState.States.ALIVE));
+        cell.setState(cell.NEXT_TIME, new GameOfLifeState(GameOfLifeState.States.ALIVE));
         //Systemout.printf("-> born");
       }
     }
