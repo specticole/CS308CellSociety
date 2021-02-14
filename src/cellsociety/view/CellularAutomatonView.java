@@ -42,15 +42,17 @@ public class CellularAutomatonView {
     bundle = ResourceBundle.getBundle("labels", locale);
 
     controller = new CellularAutomatonController(this);
-    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("ControllerTest"
-        + ".xml");
-    updateXML(config);
+    // CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("ControllerTest"
+    // + ".xml");
+    // updateXML(config);
 
     started = false;
     paused = true;
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
+    controller.initializeForConfig(config);
+
     mainGrid.getChildren().clear();
     grid = new RectangularGridStyle(mainGrid);
     cellStyles = config.getCellStyles();
