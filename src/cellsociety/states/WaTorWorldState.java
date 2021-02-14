@@ -1,16 +1,7 @@
 package cellsociety.states;
 
 import cellsociety.CellState;
-import cellsociety.states.GameOfLifeState.States;
 
-
-
-
-    import static java.lang.System.exit;
-
-    import cellsociety.CellState;
-    import java.util.*;
-    import java.util.stream.Collectors;
 
 public class WaTorWorldState extends CellState<WaTorWorldState.States> {
 
@@ -20,8 +11,11 @@ public class WaTorWorldState extends CellState<WaTorWorldState.States> {
     SHARK
   }
 
+  private int turnsSurvived;
+
   public WaTorWorldState(States s) {
     super(s);
+    turnsSurvived = 0;
   }
 
   public WaTorWorldState(){
@@ -30,5 +24,17 @@ public class WaTorWorldState extends CellState<WaTorWorldState.States> {
 
   public WaTorWorldState(String str) {
     super(States.class, str);
+  }
+
+  public void survivedRound(){
+    turnsSurvived++;
+  }
+
+  public void died(){
+    turnsSurvived = 0;
+  }
+
+  public int getTurnsSurvived(){
+    return turnsSurvived;
   }
 }

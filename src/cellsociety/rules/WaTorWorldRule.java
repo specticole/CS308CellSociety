@@ -62,11 +62,11 @@ public class WaTorWorldRule extends CellularAutomatonRule {
 
       if(state.getState() == States.FISH){
         if(state.getTurnsSurvived() >= fishRoundsToBreed){
-          spawn.appendState(new WaTorWorldState(States.FISH));
+          spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.FISH));
         }
       } else if(state.getState() == States.SHARK){
         if(state.getTurnsSurvived() >= sharkRoundsToBreed){
-          spawn.appendState(new WaTorWorldState(States.SHARK));
+          spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.SHARK));
         }
       }
 
@@ -93,7 +93,7 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     if(possibleFood.size() > 0){
       Random rand = new Random();
       Cell food = possibleFood.get(rand.nextInt(possibleFood.size()));
-      food.appendState(new WaTorWorldState(States.EMPTY));
+      food.setState(Cell.NEXT_TIME, new WaTorWorldState(States.EMPTY));
       food.getState(Cell.NEXT_TIME);
       return true;
     }

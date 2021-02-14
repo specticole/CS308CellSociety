@@ -76,7 +76,8 @@ public class Cell {
   }
 
   public void swapCells(Cell otherCell){
-    //TODO: have this cell swap all info but prior states with otherCell
+    Cell tempCell = this;
+
   }
 
   /**

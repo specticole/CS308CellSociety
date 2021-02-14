@@ -17,10 +17,10 @@ public class PercolationRule extends CellularAutomatonRule {
 
   @Override
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
-    if(cell.getState(0).getState() == PercolationState.States.OPEN){
+    if(cell.getState(cell.CURRENT_TIME).getState() == PercolationState.States.OPEN){
       for(Cell neighbor : neighbors){
-        if(neighbor.getState(0).getState() == PercolationState.States.PERCOLATED){
-          cell.setState(1, new PercolationState(PercolationState.States.PERCOLATED));
+        if(neighbor.getState(cell.CURRENT_TIME).getState() == PercolationState.States.PERCOLATED){
+          cell.setState(cell.NEXT_TIME, new PercolationState(PercolationState.States.PERCOLATED));
           break;
         }
       }
