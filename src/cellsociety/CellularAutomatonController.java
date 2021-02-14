@@ -59,7 +59,6 @@ public class CellularAutomatonController {
   public CellularAutomatonConfiguration loadConfigFile (GridPane masterLayout){
     FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document","*.xml"));
-    fileChooser.setInitialDirectory(new File("data"));
     File file = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     try{
       return loadConfigFile(file.getName());
