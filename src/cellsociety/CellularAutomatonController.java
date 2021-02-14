@@ -56,12 +56,19 @@ public class CellularAutomatonController {
     return simulationConfig;
   }
 
+  /**
+   * Loads a file based on user selection in a visual file chooser
+   * @param masterLayout - the GridPane that the View holds
+   * @return - object that stores data relevant to the Model and the View
+   */
   public CellularAutomatonConfiguration loadConfigFile (GridPane masterLayout){
     FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document","*.xml"));
     File file = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     try{
-      return loadConfigFile(file.getName());
+      CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
+      myStates = simulationConfig.getInitialStates();
+      return simulationConfig;
     }
     catch (NullPointerException n){
       return null;
