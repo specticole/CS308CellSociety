@@ -17,6 +17,8 @@ public class GameOfLifeRule extends CellularAutomatonRule {
 
   public GameOfLifeRule(Map<String, String> params) {
     super(params);
+
+    getGameSpecifics();
   }
 
   /**
@@ -52,6 +54,9 @@ public class GameOfLifeRule extends CellularAutomatonRule {
     //this will change to read in from the xml
     Integer[] born = {3};
     Integer[] survive = {2, 3};
+
+    bornNums = new HashSet<>();
+    surviveNums = new HashSet<>();
 
     for(Integer i : born){
       bornNums.add(i);
