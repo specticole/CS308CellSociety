@@ -14,12 +14,12 @@ import java.util.Random;
 
 public class WaTorWorldRule extends CellularAutomatonRule {
 
-  private static final int TOP_NEIGHBOR = 1;
-  private static final int LEFT_NEIGHBOR = 3;
-  private static final int RIGHT_NEIGHBOR = 4;
-  private static final int BOTTOM_NEIGHBOR = 6;
+  //private static final int TOP_NEIGHBOR = 1;
+  //private static final int LEFT_NEIGHBOR = 3;
+  //private static final int RIGHT_NEIGHBOR = 4;
+  //private static final int BOTTOM_NEIGHBOR = 6;
 
-  private int[] usedNeighbors = {TOP_NEIGHBOR,LEFT_NEIGHBOR,RIGHT_NEIGHBOR,BOTTOM_NEIGHBOR};
+  //private int[] usedNeighbors = {TOP_NEIGHBOR,LEFT_NEIGHBOR,RIGHT_NEIGHBOR,BOTTOM_NEIGHBOR};
   private int sharkRoundsToBreed;
   private int fishRoundsToBreed;
 
@@ -88,6 +88,11 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   private Boolean findFish(List<Cell> neighbors){
     ArrayList<Cell> possibleFood = new ArrayList<>();
     possibleFood = getUsefulNeighbors(neighbors, WaTorWorldState.States.FISH);
+    for(Cell food : possibleFood){
+      if(food.getState(Cell.NEXT_TIME).getState() == States.EMPTY){
+        possibleFood.remove(food);
+      }
+    }
 
     if(possibleFood.size() > 0){
       Random rand = new Random();
