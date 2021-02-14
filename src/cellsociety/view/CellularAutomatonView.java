@@ -51,6 +51,7 @@ public class CellularAutomatonView {
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
+    System.out.printf("Update XML\n");
     controller.initializeForConfig(config);
 
     mainGrid.getChildren().clear();
