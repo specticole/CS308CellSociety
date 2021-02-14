@@ -1,16 +1,23 @@
 package cellsociety.rules;
+
 import cellsociety.Cell;
 import cellsociety.CellState;
 import cellsociety.states.GameOfLifeState;
-import cellsociety.CellStateRule;
-import java.util.ArrayList;
-import java.util.List;
+import cellsociety.CellularAutomatonRule;
 
-public class GameOfLifeRule implements CellStateRule {
+import java.util.*;
 
-  public ArrayList<Integer> bornNums;
-  public ArrayList<Integer> surviveNums;
+/**
+ *
+ */
+public class GameOfLifeRule extends CellularAutomatonRule {
 
+  private Set<Integer> bornNums;
+  private Set<Integer> surviveNums;
+
+  public GameOfLifeRule(Map<String, String> params) {
+    super(params);
+  }
 
   /**
    * This method is called every step, and updates the cell's state under certain conditions
@@ -19,21 +26,21 @@ public class GameOfLifeRule implements CellStateRule {
    * @param neighbors this is all 8 neighbors of cell
    */
   @Override
-  public void nextCellState(Cell cell, List<Cell> neighbors) {
+  public void advanceCellState(Cell cell, List<Cell> neighbors) {
     int aliveNeighbors = 0;
     for(Cell neighbor : neighbors){
-      if(neighbor.getState().equals("ALIVE")){
+      if(neighbor.getState(0).getState() == GameOfLifeState.States.ALIVE){
         aliveNeighbors++;
       }
     }
 
-    if(cell.getState().equals("ALIVE")){
+    if(cell.getState(0).getState()  == GameOfLifeState.States.ALIVE){
       if(!surviveNums.contains(aliveNeighbors)){
-        cell.setState("DEAD");
+        cell.setState(0, new GameOfLifeState(GameOfLifeState.States.DEAD));
       }
     } else {
       if(bornNums.contains(aliveNeighbors)){
-        cell.setState("ALIVE");
+        cell.setState(0, new GameOfLifeState(GameOfLifeState.States.ALIVE));
       }
     }
   }
@@ -52,6 +59,5 @@ public class GameOfLifeRule implements CellStateRule {
     for(Integer i : survive){
       surviveNums.add(i);
     }
-
   }
 }

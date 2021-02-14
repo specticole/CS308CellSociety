@@ -1,9 +1,9 @@
 package cellsociety.xml;
 
-import java.awt.Color;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.paint.Color;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -87,9 +87,9 @@ public class XMLParser {
     for (int state = 0; state < styleList.getLength(); state++) {
       Element stateElement = (Element) styleList.item(state);
       String cellType = stateElement.getAttribute("type");
-      cellStyleMap.put(cellType, new Color(Integer.valueOf(stateElement.getElementsByTagName("r").item(0).getTextContent()),
-          Integer.valueOf(stateElement.getElementsByTagName("g").item(0).getTextContent()),
-          Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent())));
+      cellStyleMap.put(cellType, new Color(Integer.valueOf(stateElement.getElementsByTagName("r").item(0).getTextContent()) / 255.0,
+          Integer.valueOf(stateElement.getElementsByTagName("g").item(0).getTextContent()) / 255.0,
+          Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent()) / 255.0, 1.0));
     }
     return cellStyleMap;
   }
