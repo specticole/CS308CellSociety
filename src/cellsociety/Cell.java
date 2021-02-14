@@ -82,8 +82,8 @@ public class Cell {
    */
   public void swapCells(Cell otherCell){
     CellState tempState = this.getState(CURRENT_TIME);
-    setState(CURRENT_TIME, otherCell.getState(CURRENT_TIME));
-    otherCell.setState(CURRENT_TIME, tempState);
+    setState(NEXT_TIME, otherCell.getState(CURRENT_TIME));
+    otherCell.setState(NEXT_TIME, tempState);
   }
 
   /**
