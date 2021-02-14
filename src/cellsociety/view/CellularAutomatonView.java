@@ -51,6 +51,7 @@ public class CellularAutomatonView {
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
+    mainGrid.getChildren().clear();
     grid = new RectangularGridStyle(mainGrid);
     cellStyles = config.getCellStyles();
     grid.createGrid(config.getGridHeight(),config.getGridWidth());
@@ -108,12 +109,19 @@ public class CellularAutomatonView {
 
   public void speedButtonClick() {
     controller.changeRateSlider((int) speedSlider.getValue());
+    started = true;
+    paused = false;
+    updateButtonLabels();
   }
 
   public void loadFileClick() {
     CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
     if(config != null){
       updateXML(config);
+      controller.pauseSimulation();
+      started = false;
+      paused = true;
+      updateButtonLabels();
     }
   }
 

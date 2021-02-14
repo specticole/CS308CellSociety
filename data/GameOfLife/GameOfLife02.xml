@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simulation rules="gameoflife">
+  <meta>
+    <title>Conway's Game of Life</title>
+    <author>Bill Guo</author>
+    <description>4 blocks on corners, should not move</description>
+  </meta>
+  <grid type="rectangular" width="6" height="6">
+    <gridrow>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>DEAD</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
+    </gridrow>
+  </grid>
+  <cellstyle>
+    <cellstate type="DEAD"><r>255</r><g>255</g><b>255</b></cellstate>
+    <cellstate type="ALIVE"><r>0</r><g>0</g><b>0</b></cellstate>
+  </cellstyle>
+  <config_parameters>
+
+  </config_parameters>
+</simulation>
