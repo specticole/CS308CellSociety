@@ -23,12 +23,14 @@ public class CellularAutomatonController {
   private Timeline animation;
   private KeyFrame frame;
   private CellularAutomatonView myView;
-  private List<List<String>> myStates;
-  private int currentTime;
+  private CellularAutomaton myModel;
+
+  //private List<List<String>> myStates;
+  //private int currentTime;
 
   public CellularAutomatonController() {
-    currentTime = 0;
-    frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step(currentTime));
+    //currentTime = 0;
+    frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
     animation.getKeyFrames().add(frame);
@@ -45,6 +47,13 @@ public class CellularAutomatonController {
   }
 
   /**
+   * Initialize the CellularAutomaton given a configuration object.
+   */
+  public void initializeForConfig(CellularAutomatonConfiguration config) {
+    myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
+  }
+
+  /**
    * Takes in a filename and returns an object that stores all relevant information for
    * the simulation in convenient data structures
    * @param configFileName - the name of the configuration file
@@ -52,7 +61,9 @@ public class CellularAutomatonController {
    */
   public CellularAutomatonConfiguration loadConfigFile(String configFileName) {
     CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(configFileName);
-    myStates = simulationConfig.getInitialStates();
+
+    initializeForConfig(simulationConfig);
+
     return simulationConfig;
   }
 
@@ -84,7 +95,7 @@ public class CellularAutomatonController {
 
   // replaces the current KeyFrame object in order to change the animation rate
   private void changeAnimationRate(double rate) {
-    frame = new KeyFrame(Duration.seconds(rate), e -> step(currentTime));
+    frame = new KeyFrame(Duration.seconds(rate), e -> step());
     animation.stop();
     animation.getKeyFrames().clear();
     animation.getKeyFrames().add(frame);
@@ -104,8 +115,8 @@ public class CellularAutomatonController {
    */
   public void stepOnce() {
     animation.pause();
-    currentTime++;
-    step(currentTime);
+    //currentTime++;
+    step();
   }
 
   /**
@@ -113,25 +124,31 @@ public class CellularAutomatonController {
    */
   public void resetSimulation() {
     animation.pause();
-    currentTime = 0;
+    //currentTime = 0;
     // step method will get states at time t = 0
   }
 
   private void step(int time) {
+    myModel.step();
+
+    CellState currentState[][] = ((Dense2DCellGrid)myModel.getGrid()).extractStates(0);
+
+    // TODO: patrick
+
     // call Model method to get updated states (or at time t)
     // for now, just choose a random cell and change its state
-    int changeRow = (int) (Math.random() * myStates.size());
-    int changeCol = (int) (Math.random() * myStates.get(0).size());
-    String targetState = myStates.get(changeRow).get(changeCol);
-    if (targetState.equals("A")) {
-      myStates.get(changeRow).set(changeCol, "D");
-    }
-    else {
-      myStates.get(changeRow).set(changeCol, "A");
-    }
-    // send updated states to View
-    myView.updateView(myStates);
-    currentTime++;
+    // int changeRow = (int) (Math.random() * myStates.size());
+    // int changeCol = (int) (Math.random() * myStates.get(0).size());
+    // String targetState = myStates.get(changeRow).get(changeCol);
+    // if (targetState.equals("A")) {
+    //   myStates.get(changeRow).set(changeCol, "D");
+    // }
+    // else {
+    //   myStates.get(changeRow).set(changeCol, "A");
+    // }
+    // // send updated states to View
+    // myView.updateView(myStates);
+    // currentTime++;
   }
 
 }
