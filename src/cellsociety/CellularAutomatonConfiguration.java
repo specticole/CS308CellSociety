@@ -3,9 +3,9 @@ package cellsociety;
 import cellsociety.rules.GameOfLifeRule;
 import cellsociety.rules.PercolationRule;
 import cellsociety.xml.XMLParser;
-import java.awt.Color;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.paint.Color;
 
 /**
  * This class stores all the information read in from the configuration file, to be passed to the
