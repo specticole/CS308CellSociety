@@ -79,7 +79,7 @@ public abstract class Dense2DCellGrid extends CellGrid {
       y = ((y % height) + height) % height;
     }
 
-    return cells[coords.getY()][coords.getX()];
+    return cells[y][x];
   }
 
   @Override
