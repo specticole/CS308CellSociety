@@ -43,6 +43,25 @@ public abstract class Dense2DCellGrid extends CellGrid {
    */
   @Override
   public Cell getCell(GridCoordinates coords) {
+    int x = coords.getX();
+    int y = coords.getY();
+
+    boolean inBounds = (0 <= x && x < width) && (0 <= y && y < height);
+
+    if(!inBounds) {
+      if(!wrapping)
+        return null;
+
+      // Java's modulus yields a negative value when x is negative; see:
+      //
+      // https://stackoverflow.com/questions/4403542/how-does-java-do-modulus-calculations-with-negative-numbers
+      //
+      // To fix this we add width and modulo again to get it into the
+      // range [0, width).
+      x = ((x % width) + width) % width;
+      y = ((y % height) + height) % height;
+    }
+
     return cells[coords.getY()][coords.getX()];
   }
 
