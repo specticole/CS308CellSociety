@@ -53,6 +53,12 @@ public class CellularAutomatonConfiguration {
         return new GameOfLifeState(contents);
       case "percolation":
         return new PercolationState(contents);
+      case "fire":
+        break;
+      case "wator":
+        break;
+      case "segregation":
+        break;
       default:
         return null;
     }
@@ -84,6 +90,12 @@ public class CellularAutomatonConfiguration {
         break;
       case "percolation":
         ruleSet = new PercolationRule(simulationParameters);
+        break;
+      case "fire":
+        break;
+      case "wator":
+        break;
+      case "segregation":
         break;
     }
   }
