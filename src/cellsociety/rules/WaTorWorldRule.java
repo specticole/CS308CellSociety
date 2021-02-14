@@ -33,23 +33,25 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.FISH){
       swapLogic(cell, neighbors);
-      updateTurnsSurvived(cell.getState(Cell.CURRENT_TIME));
+      updateTurnsSurvived(cell, States.FISH);
     }
 
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.SHARK){
       if(!findFish(neighbors)){
         swapLogic(cell, neighbors);
       }
-      updateTurnsSurvived(cell.getState(Cell.CURRENT_TIME));
+      updateTurnsSurvived(cell, States.SHARK);
     }
 
     breed(cell.getState(Cell.CURRENT_TIME), neighbors);
 
   }
 
-  private void updateTurnsSurvived(CellState cellState){
-    WaTorWorldState state = (WaTorWorldState) cellState;
-    state.survivedRound();
+  private void updateTurnsSurvived(Cell cell, WaTorWorldState.States state){
+    WaTorWorldState currentState = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
+    int newTurnsSurvived = currentState.getTurnsSurvived() + 1;
+    cell.setState(Cell.CURRENT_TIME, new WaTorWorldState(state, newTurnsSurvived));
+
   }
 
   private void breed(CellState cellState, List<Cell> neighbors){
@@ -90,7 +92,7 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     ArrayList<Cell> possibleFood = new ArrayList<>();
     possibleFood = getUsefulNeighbors(neighbors, WaTorWorldState.States.FISH);
     for(Cell food : possibleFood){
-      if(food.getState(Cell.NEXT_TIME).getState() == States.EMPTY){
+      if(food.getState(Cell.NEXT_TIME).getState() != States.EMPTY){
         possibleFood.remove(food);
       }
     }
@@ -99,8 +101,6 @@ public class WaTorWorldRule extends CellularAutomatonRule {
       Random rand = new Random();
       Cell food = possibleFood.get(rand.nextInt(possibleFood.size()));
       food.setState(Cell.CURRENT_TIME, new WaTorWorldState(States.EMPTY));
-      WaTorWorldState state = (WaTorWorldState) food.getState(Cell.CURRENT_TIME);
-      state.died();
       return true;
     }
     return false;
