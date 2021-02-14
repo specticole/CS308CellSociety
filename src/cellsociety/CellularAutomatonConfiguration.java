@@ -68,11 +68,11 @@ public class CellularAutomatonConfiguration {
       case "percolation":
         return new PercolationState(contents);
       case "fire":
-        break;
+        return null;
       case "wator":
-        break;
+        return null;
       case "segregation":
-        break;
+        return null;
       default:
         return null;
     }
