@@ -75,9 +75,15 @@ public class Cell {
     return states;
   }
 
-  public void swapCells(Cell otherCell){
-    Cell tempCell = this;
 
+  /**
+   * This method swaps the current state of two Cells
+   * @param otherCell the other Cell to be swapped with
+   */
+  public void swapCells(Cell otherCell){
+    CellState tempState = this.getState(CURRENT_TIME);
+    setState(CURRENT_TIME, otherCell.getState(CURRENT_TIME));
+    otherCell.setState(CURRENT_TIME, tempState);
   }
 
   /**

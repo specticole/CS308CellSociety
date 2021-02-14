@@ -28,8 +28,6 @@ public class CellularAutomatonController {
   private CellularAutomatonView myView;
   private CellularAutomaton myModel;
 
-  private List<List<String>> myStates;
-
   public CellularAutomatonController() {
     //currentTime = 0;
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
@@ -84,7 +82,6 @@ public class CellularAutomatonController {
     File file = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     try {
       CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
-      myStates = simulationConfig.getInitialStates();
       initializeForConfig(simulationConfig);
       return simulationConfig;
     } catch (NullPointerException n) {
