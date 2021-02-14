@@ -1,7 +1,5 @@
 package cellsociety;
 
-import cellsociety.rules.GameOfLifeRule;
-import cellsociety.rules.PercolationRule;
 import cellsociety.xml.XMLParser;
 import java.io.File;
 import java.util.List;
@@ -10,6 +8,7 @@ import javafx.scene.paint.Color;
 
 import cellsociety.states.*;
 import cellsociety.grids.*;
+import cellsociety.rules.*;
 
 /**
  * This class stores all the information read in from the configuration file, to be passed to the
@@ -74,10 +73,11 @@ public class CellularAutomatonConfiguration {
       case "fire":
         return null;
       case "wator":
-        return null;
+        return new WaTorWorldState(contents);
       case "segregation":
         return null;
       default:
+        assert(false);
         return null;
     }
   }
@@ -91,7 +91,10 @@ public class CellularAutomatonConfiguration {
         CellState initialState[][] = new CellState[gridHeight][gridWidth];
         for(int y = 0; y < gridHeight; y++) {
           for(int x = 0; x < gridWidth; x++ ) {
-            initialState[y][x] = makeState(simulationType, initialStates.get(y).get(x));
+            CellState state = makeState(simulationType, initialStates.get(y).get(x));
+            initialState[y][x] = state;
+            //System.out.printf("%s\n", state.toString());
+            assert(state != null);
           }
         }
 
@@ -112,9 +115,12 @@ public class CellularAutomatonConfiguration {
       case "fire":
         break;
       case "wator":
+        ruleSet = new WaTorWorldRule(simulationParameters);
         break;
       case "segregation":
         break;
+      default:
+        assert(false);
     }
   }
 
