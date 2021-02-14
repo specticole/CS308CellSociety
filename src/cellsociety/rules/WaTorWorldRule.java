@@ -108,11 +108,10 @@ public class WaTorWorldRule extends CellularAutomatonRule {
 
   private void swapLogic(Cell currentCell, List<Cell> neighbors) {
     ArrayList<Cell> possibleSwaps = new ArrayList<>();
-    for (Cell neighbor : neighbors) {
-      if(neighbor.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.EMPTY){
-        if (neighbor.getState(Cell.NEXT_TIME).getState() == WaTorWorldState.States.EMPTY){
-          possibleSwaps.add(neighbor);
-        }
+    possibleSwaps = getUsefulNeighbors(neighbors, WaTorWorldState.States.EMPTY);
+    for (Cell neighbor : possibleSwaps) {
+      if (neighbor.getState(Cell.NEXT_TIME).getState() != WaTorWorldState.States.EMPTY){
+        possibleSwaps.remove(neighbor);
       }
     }
     if(possibleSwaps.size() > 0){
