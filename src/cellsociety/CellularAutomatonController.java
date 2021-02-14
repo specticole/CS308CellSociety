@@ -128,7 +128,6 @@ public class CellularAutomatonController {
    */
   public void stepOnce() {
     animation.pause();
-    //currentTime++;
     step();
   }
 
