@@ -28,7 +28,7 @@ public class CellularAutomatonController {
   private CellularAutomatonView myView;
   private CellularAutomaton myModel;
 
-    public CellularAutomatonController() {
+  public CellularAutomatonController() {
     //currentTime = 0;
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
     animation = new Timeline();
