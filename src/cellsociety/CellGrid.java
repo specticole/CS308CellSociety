@@ -19,10 +19,10 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
   private int currentTime;
 
   /**
-   * Initialize an empty grid at time T=0.
+   * Initialize an empty grid at time T=-1.
    */
   public CellGrid() {
-    this.currentTime = 0;
+    this.currentTime = -1;
   }
 
   /**

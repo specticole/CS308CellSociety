@@ -17,6 +17,8 @@ public class GameOfLifeRule extends CellularAutomatonRule {
 
   public GameOfLifeRule(Map<String, String> params) {
     super(params);
+
+    getGameSpecifics();
   }
 
   /**
@@ -34,15 +36,20 @@ public class GameOfLifeRule extends CellularAutomatonRule {
       }
     }
 
+    //System.out.printf("Alive count: %d ", aliveNeighbors);
+
     if(cell.getState(0).getState()  == GameOfLifeState.States.ALIVE){
       if(!surviveNums.contains(aliveNeighbors)){
-        cell.setState(0, new GameOfLifeState(GameOfLifeState.States.DEAD));
+        cell.setState(1, new GameOfLifeState(GameOfLifeState.States.DEAD));
+        //System.out.printf("-> die");
       }
     } else {
       if(bornNums.contains(aliveNeighbors)){
-        cell.setState(0, new GameOfLifeState(GameOfLifeState.States.ALIVE));
+        cell.setState(1, new GameOfLifeState(GameOfLifeState.States.ALIVE));
+        //Systemout.printf("-> born");
       }
     }
+    //System.out.println("");
   }
 
   /**
@@ -52,6 +59,9 @@ public class GameOfLifeRule extends CellularAutomatonRule {
     //this will change to read in from the xml
     Integer[] born = {3};
     Integer[] survive = {2, 3};
+
+    bornNums = new HashSet<>();
+    surviveNums = new HashSet<>();
 
     for(Integer i : born){
       bornNums.add(i);
