@@ -54,4 +54,36 @@ public abstract class Dense2DCellGrid extends CellGrid {
         .filter(cell -> cell != null)
         .collect(Collectors.toList());
   }
+
+  private class Dense2DGridIterator implements Iterator<Cell> {
+    private final Cell grid[][];
+    private int index = 0;
+    private final int total;
+
+    public Dense2DGridIterator(Cell grid[][]) {
+      this.grid = grid;
+      this.index = 0;
+      this.total = grid.length * grid[0].length;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return index < total;
+    }
+
+    @Override
+    public void remove() {
+      index++;
+    }
+
+    @Override
+    public Cell next() {
+      return grid[index / grid[0].length][index % grid[0].length];
+    }
+  }
+
+  @Override
+  public Iterator<Cell> iterator() {
+    return new Dense2DGridIterator(cells);
+  }
 }

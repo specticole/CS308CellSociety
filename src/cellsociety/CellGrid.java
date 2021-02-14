@@ -16,7 +16,6 @@ import java.util.*;
  * @author Franklin Wei
  */
 public abstract class CellGrid implements java.lang.Iterable<Cell> {
-  protected List<Cell> myCells;
   private int currentTime;
 
   /**
@@ -44,11 +43,6 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
    *
    */
   abstract public Cell getCell(GridCoordinates coords);
-
-  @Override
-  public Iterator<Cell> iterator() {
-    return myCells.iterator();
-  }
 
   /**
    * Retrieve the current generation time (starting from zero).
