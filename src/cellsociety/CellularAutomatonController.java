@@ -1,7 +1,9 @@
 package cellsociety;
 
+import cellsociety.grids.Dense2DCellGrid;
 import cellsociety.view.CellularAutomatonView;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,6 +20,7 @@ import javafx.util.Duration;
  * @author Patrick Liu
  */
 public class CellularAutomatonController {
+
   public static final double[] STEP_SIZES = {1.0, 1.0 / 5, 1.0 / 10, 1.0 / 20, 1.0 / 60};
 
   private Timeline animation;
@@ -25,8 +28,7 @@ public class CellularAutomatonController {
   private CellularAutomatonView myView;
   private CellularAutomaton myModel;
 
-  //private List<List<String>> myStates;
-  //private int currentTime;
+  private List<List<String>> myStates;
 
   public CellularAutomatonController() {
     //currentTime = 0;
@@ -37,8 +39,9 @@ public class CellularAutomatonController {
   }
 
   /**
-   * Creates a Controller object that stores a myView object, will pass updated states
-   * from the Model to the View
+   * Creates a Controller object that stores a myView object, will pass updated states from the
+   * Model to the View
+   *
    * @param myView - the View object for this simulation
    */
   public CellularAutomatonController(CellularAutomatonView myView) {
@@ -54,27 +57,36 @@ public class CellularAutomatonController {
   }
 
   /**
-   * Takes in a filename and returns an object that stores all relevant information for
-   * the simulation in convenient data structures
+   * Takes in a filename and returns an object that stores all relevant information for the
+   * simulation in convenient data structures
+   *
    * @param configFileName - the name of the configuration file
    * @return - object that stores data relevant to the Model and the View
    */
   public CellularAutomatonConfiguration loadConfigFile(String configFileName) {
-    CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(configFileName);
+    CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(
+        configFileName);
 
     initializeForConfig(simulationConfig);
 
     return simulationConfig;
   }
 
-  public CellularAutomatonConfiguration loadConfigFile (GridPane masterLayout){
+  /**
+   * Loads a file based on user selection in a visual file chooser
+   *
+   * @param masterLayout - the GridPane that the View holds
+   * @return - object that stores data relevant to the Model and the View
+   */
+  public CellularAutomatonConfiguration loadConfigFile(GridPane masterLayout) {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document","*.xml"));
+    fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
     File file = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
-    try{
-      return loadConfigFile(file.getName());
-    }
-    catch (NullPointerException n){
+    try {
+      CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
+      myStates = simulationConfig.getInitialStates();
+      return simulationConfig;
+    } catch (NullPointerException n) {
       return null;
     }
   }
@@ -104,6 +116,7 @@ public class CellularAutomatonController {
 
   /**
    * Changes the animation rate based on a five-position slider
+   *
    * @param sliderPos - the new position of the slider
    */
   public void changeRateSlider(int sliderPos) {
@@ -115,40 +128,27 @@ public class CellularAutomatonController {
    */
   public void stepOnce() {
     animation.pause();
-    //currentTime++;
     step();
   }
 
-  /**
-   * Resets the simulation by changing the instance time variable to 0
-   */
+  // may be implemented in Complete
   public void resetSimulation() {
-    animation.pause();
-    //currentTime = 0;
-    // step method will get states at time t = 0
+
   }
 
-  private void step(int time) {
+  private void step() {
     myModel.step();
 
-    CellState currentState[][] = ((Dense2DCellGrid)myModel.getGrid()).extractStates(0);
-
-    // TODO: patrick
-
-    // call Model method to get updated states (or at time t)
-    // for now, just choose a random cell and change its state
-    // int changeRow = (int) (Math.random() * myStates.size());
-    // int changeCol = (int) (Math.random() * myStates.get(0).size());
-    // String targetState = myStates.get(changeRow).get(changeCol);
-    // if (targetState.equals("A")) {
-    //   myStates.get(changeRow).set(changeCol, "D");
-    // }
-    // else {
-    //   myStates.get(changeRow).set(changeCol, "A");
-    // }
-    // // send updated states to View
-    // myView.updateView(myStates);
-    // currentTime++;
+    CellState currentState[][] = ((Dense2DCellGrid) myModel.getGrid()).extractStates(0);
+    List<List<String>> updatedStateStrings = new ArrayList<>();
+    for (int row = 0; row < currentState.length; row++) {
+      ArrayList<String> rowUpdatedStates = new ArrayList<>();
+      for (int col = 0; col < currentState[0].length; col++) {
+        rowUpdatedStates.add(currentState[row][col].toString());
+      }
+      updatedStateStrings.add(rowUpdatedStates);
+    }
+    myView.updateView(updatedStateStrings);
   }
 
 }

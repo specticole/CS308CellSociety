@@ -35,17 +35,21 @@ public class XMLParser {
 
 
   /**
-   * Create parser for XML files of given type.
+   * Create parser for XML file specifically in the data folder for testing
    */
-
   public XMLParser (String fileName) throws XMLException {
     DOCUMENT_BUILDER = getDocumentBuilder();
     root = getRootElement(this.getClass().getClassLoader().getResourceAsStream(fileName));
   }
 
+  /**
+   * Create parser for any XML file input
+   * @param file - XML configuration file
+   * @throws XMLException
+   */
   public XMLParser (File file) throws XMLException {
     DOCUMENT_BUILDER = getDocumentBuilder();
-    root = getRootElement(this.getClass().getClassLoader().getResourceAsStream(file.getName()));
+    root = getRootElement(file);
   }
 
   public Map<String, String> getMetadata () {
@@ -116,6 +120,17 @@ public class XMLParser {
 
   // get root element of an XML file
   private Element getRootElement (InputStream xmlFile) throws XMLException {
+    try {
+      DOCUMENT_BUILDER.reset();
+      Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
+      return xmlDocument.getDocumentElement();
+    }
+    catch (SAXException | IOException e) {
+      throw new XMLException(e);
+    }
+  }
+
+  private Element getRootElement (File xmlFile) throws XMLException {
     try {
       DOCUMENT_BUILDER.reset();
       Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);

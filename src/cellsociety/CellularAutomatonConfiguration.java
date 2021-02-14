@@ -3,6 +3,7 @@ package cellsociety;
 import cellsociety.rules.GameOfLifeRule;
 import cellsociety.rules.PercolationRule;
 import cellsociety.xml.XMLParser;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.paint.Color;
@@ -28,12 +29,25 @@ public class CellularAutomatonConfiguration {
   private List<List<String>> initialStates;
 
   /**
-   * Parses through configuration file and stores relevant information
+   * Stores relevant information given filename in data folder - for testing
    *
    * @param configFileName - String filename for XML configuration file
    */
   public CellularAutomatonConfiguration(String configFileName) {
     XMLParser docParser = new XMLParser(configFileName);
+    parseXMLFile(docParser);
+  }
+
+  /**
+   * Stores relevant information given any XML file
+   * @param configFile - XML configuration file
+   */
+  public CellularAutomatonConfiguration(File configFile) {
+    XMLParser docParser = new XMLParser(configFile);
+    parseXMLFile(docParser);
+  }
+
+  private void parseXMLFile(XMLParser docParser) {
     simulationMetadata = docParser.getMetadata();
     gridWidth = docParser.getGridWidth();
     gridHeight = docParser.getGridHeight();
@@ -54,11 +68,11 @@ public class CellularAutomatonConfiguration {
       case "percolation":
         return new PercolationState(contents);
       case "fire":
-        break;
+        return null;
       case "wator":
-        break;
+        return null;
       case "segregation":
-        break;
+        return null;
       default:
         return null;
     }

@@ -1,10 +1,7 @@
 package cellsociety.states;
 
-import static java.lang.System.exit;
 
 import cellsociety.CellState;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class GameOfLifeState extends CellState<GameOfLifeState.States> {
 
