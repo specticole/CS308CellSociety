@@ -32,44 +32,67 @@ public class CellularAutomatonController {
     animation.getKeyFrames().add(frame);
   }
 
+  /**
+   * Creates a Controller object that stores a myView object, will pass updated states
+   * from the Model to the View
+   * @param myView - the View object for this simulation
+   */
   public CellularAutomatonController(CellularAutomatonView myView) {
     this();
     this.myView = myView;
   }
 
-  // uses mkyong.com as reference
+  /**
+   * Takes in a filename and returns an object that stores all relevant information for
+   * the simulation in convenient data structures
+   * @param configFileName - the name of the configuration file
+   * @return - object that stores data relevant to the Model and the View
+   */
   public CellularAutomatonConfiguration loadConfigFile(String configFileName) {
     CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(configFileName);
     myStates = simulationConfig.getInitialStates();
     return simulationConfig;
   }
 
-  public void startSimulation() {
-    animation.play();
-  }
-
+  /**
+   * Starts or resumes the simulation by resuming the Timeline object
+   */
   public void playSimulation() {
     animation.play();
   }
 
+  /**
+   * Pauses the simulation by pausing the Timeline object
+   */
   public void pauseSimulation() {
     animation.pause();
   }
 
+  // replaces the current KeyFrame object in order to change the animation rate
   private void changeAnimationRate(double rate) {
     frame = new KeyFrame(Duration.seconds(rate), e -> step(currentTime));
   }
 
+  /**
+   * Changes the animation rate based on a five-position slider
+   * @param sliderPos - the new position of the slider
+   */
   public void changeRateSlider(int sliderPos) {
     changeAnimationRate(STEP_SIZES[sliderPos - 1]);
   }
 
+  /**
+   * Pauses the simulation and increments the time by one
+   */
   public void stepOnce() {
     animation.pause();
     currentTime++;
     step(currentTime);
   }
 
+  /**
+   * Resets the simulation by changing the instance time variable to 0
+   */
   public void resetSimulation() {
     currentTime = 0;
     // step method will get states at time t = 0
