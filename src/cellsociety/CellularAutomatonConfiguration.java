@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.paint.Color;
 
+import cellsociety.states.*;
+import cellsociety.grids.*;
+
 /**
  * This class stores all the information read in from the configuration file, to be passed to the
  * Model and View.
@@ -39,12 +42,36 @@ public class CellularAutomatonConfiguration {
     initialStates = docParser.getInitialStates();
     String gridType = docParser.getGridType();
     String simulationType = docParser.getSimulationType();
-    makeGrid(gridType, initialStates);
+    makeGrid(simulationType, gridType, initialStates);
     makeRules(simulationType, simulationParameters);
   }
 
-  private void makeGrid(String gridType, List<List<String>> initialStates) {
+  private CellState makeState(String simulationType, String contents) {
+    switch(simulationType) {
+      case "gameoflife":
+        return new GameOfLifeState(contents);
+      default:
+        return null;
+    }
+  }
 
+  private void makeGrid(String simulationType, String gridType, List<List<String>> initialStates) {
+    switch(gridType) {
+      case "rectangular":
+        grid = new RectangularCellGrid(gridWidth, gridHeight, false, 8);
+
+        // populate our new grid
+        CellState initialState[][] = new CellState[gridHeight][gridWidth];
+        for(int y = 0; y < gridHeight; y++) {
+          for(int x = 0; x < gridWidth; x++ ) {
+            initialState[y][x] = makeState(simulationType, initialStates.get(y).get(x));
+          }
+        }
+
+        ((Dense2DCellGrid)grid).appendStates(initialState);
+
+        break;
+    }
   }
 
   private void makeRules(String simulationType, Map<String, String> simulationParameters) {
