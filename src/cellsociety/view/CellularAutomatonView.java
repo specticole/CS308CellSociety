@@ -42,9 +42,9 @@ public class CellularAutomatonView {
     bundle = ResourceBundle.getBundle("labels", locale);
 
     controller = new CellularAutomatonController(this);
-    // CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("ControllerTest"
-    // + ".xml");
-    // updateXML(config);
+    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("GameOfLife/GameOfLife01"
+                                                                               + ".xml");
+    updateXML(config);
 
     started = false;
     paused = true;
