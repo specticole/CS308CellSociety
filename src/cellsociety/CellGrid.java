@@ -1,7 +1,6 @@
 package cellsociety;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * A CellGrid is an abstract collection of Cells laid out on a certain
@@ -36,6 +35,14 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
    */
   abstract public List<Cell> getNeighbors(Cell cell);
 
+  /**
+   *
+   */
+  abstract protected Collection<GridCoordinates> getNeighborCoordinates(GridCoordinates coords);
+
+  /**
+   *
+   */
   abstract public Cell getCell(GridCoordinates coords);
 
   @Override

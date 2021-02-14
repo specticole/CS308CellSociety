@@ -13,7 +13,7 @@ import java.util.*;
  * and Hex grids, for example, interpret the same GridCoordinates
  * slightly differently.
  */
-public abstract class GridCoordinates {
+public class GridCoordinates {
   final int x, y;
 
   /**
@@ -46,10 +46,13 @@ public abstract class GridCoordinates {
   }
 
   /**
-   * Compute the coordinates of cells immediately adjacent to this
-   * one.
+   * Add a GridCoordinates vector to this vector component-wise.
    *
-   * @return Collection of immediately adjacent coordinates.
+   * @param rhs Other coordinates.
+   * @return Sum of rhs + this.
    */
-  public abstract Collection<GridCoordinates> getNeighbors();
+  public GridCoordinates add(GridCoordinates rhs) {
+    return new GridCoordinates(this.getX() + rhs.getX(),
+                               this.getY() + rhs.getY());
+  }
 }
