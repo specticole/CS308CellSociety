@@ -62,6 +62,12 @@ public class CellularAutomatonController {
     changeAnimationRate(STEP_SIZES[sliderPos - 1]);
   }
 
+  public void stepOnce() {
+    animation.pause();
+    currentTime++;
+    step(currentTime);
+  }
+
   private void step(int time) {
     // call Model method to get updated states (or at time t)
     // for now, just choose a random cell and change its state
