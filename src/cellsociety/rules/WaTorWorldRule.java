@@ -26,6 +26,7 @@ public class WaTorWorldRule extends CellularAutomatonRule {
 
   public WaTorWorldRule(Map<String, String> params) {
     super(params);
+    setGameSpecifics(params);
   }
 
   @Override
@@ -124,11 +125,12 @@ public class WaTorWorldRule extends CellularAutomatonRule {
    * This method gets the specific rule set for the game of live variation, in the form of F<int>.../S<int>...
    * where F is the number of rounds a fish needs to survive in order to breed
    * where S is the number of rounds a shark needs to survive in order to breed
+   * @param params
    */
-  public void setGameSpecifics() {
-    //this will change to read in from the xml
-
-    sharkRoundsToBreed = 3;
-    fishRoundsToBreed = 3;
+  public void setGameSpecifics(Map<String, String> params) {
+    String rules = params.get("rules");
+    String[] rulesSplit = rules.split("/");
+    fishRoundsToBreed = Integer.valueOf(rulesSplit[0].substring(1));
+    sharkRoundsToBreed = Integer.valueOf(rulesSplit[1].substring(1));
   }
 }
