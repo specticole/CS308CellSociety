@@ -37,7 +37,7 @@ public class CellularAutomatonConfiguration {
 
   /**
    * Stores relevant information given any XML file
-   * @param configFile - XML configuration file 
+   * @param configFile - XML configuration file
    */
   public CellularAutomatonConfiguration(File configFile) {
     XMLParser docParser = new XMLParser(configFile);
