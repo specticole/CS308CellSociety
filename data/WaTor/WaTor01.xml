@@ -5,7 +5,7 @@
     <author>Franklin Wei</author>
     <description></description>
   </meta>
-  <grid type="rectangular" width="10" height="10" neighbors="8" wrapping="false">
+  <grid type="rectangular" width="10" height="10" neighbors="4" wrapping="false">
     <gridrow>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
