@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<simulation rules="conway">
+<simulation rules="gameoflife">
   <meta>
     <title>Conway's Game of Life</title>
-    <author>Joe Schmoe</author>
-    <description>Basic Game of Life example on a 20x10 grid</description>
+    <author>Franklin Wei</author>
+    <description>Really simple Game of Life on a 4x4 grid</description>
   </meta>
-  <grid type="rectangular" width="4" height="4">
-    <gridrow><gridcell>D</gridcell><gridcell>A</gridcell><gridcell>A</gridcell><gridcell>D</gridcell></gridrow>
-    <gridrow><gridcell>A</gridcell><gridcell>A</gridcell><gridcell>D</gridcell><gridcell>D</gridcell></gridrow>
-    <gridrow><gridcell>A</gridcell><gridcell>D</gridcell><gridcell>D</gridcell><gridcell>A</gridcell></gridrow>
-    <gridrow><gridcell>A</gridcell><gridcell>A</gridcell><gridcell>D</gridcell><gridcell>D</gridcell></gridrow>
+  <grid type="rectangular" width="4" height="4" neighbors="8" wrapping="false">
+    <gridrow><gridcell>DEAD</gridcell><gridcell>ALIVE</gridcell><gridcell>ALIVE</gridcell><gridcell>DEAD</gridcell></gridrow>
+    <gridrow><gridcell>ALIVE</gridcell><gridcell>ALIVE</gridcell><gridcell>DEAD</gridcell><gridcell>DEAD</gridcell></gridrow>
+    <gridrow><gridcell>ALIVE</gridcell><gridcell>DEAD</gridcell><gridcell>DEAD</gridcell><gridcell>ALIVE</gridcell></gridrow>
+    <gridrow><gridcell>ALIVE</gridcell><gridcell>ALIVE</gridcell><gridcell>DEAD</gridcell><gridcell>DEAD</gridcell></gridrow>
   </grid>
   <cellstyle>
     <cellstate type="D"><r>255</r><g>255</g><b>255</b></cellstate>
