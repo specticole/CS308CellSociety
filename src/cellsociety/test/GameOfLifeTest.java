@@ -23,16 +23,20 @@ public class GameOfLifeTest {
   public static void main(String args[]) {
     int w = 20, h = 10;
     RectangularCellGrid grid = new RectangularCellGrid(w, h,
-                                                       false, 8);
+                                                       true, 8);
 
     CellState initialState[][] = new GameOfLifeState[h][w];
     for(int y = 0; y < h; y++) {
       for(int x = 0; x < w; x++) {
-        initialState[y][x] = new GameOfLifeState(Math.random() > .9 ?
-                                                 GameOfLifeState.States.ALIVE :
-                                                 GameOfLifeState.States.DEAD);
+        initialState[y][x] = new GameOfLifeState();
       }
     }
+
+    initialState[0][1] = new GameOfLifeState("ALIVE");
+    initialState[1][2] = new GameOfLifeState("ALIVE");
+    initialState[2][2] = new GameOfLifeState("ALIVE");
+    initialState[2][1] = new GameOfLifeState("ALIVE");
+    initialState[2][0] = new GameOfLifeState("ALIVE");
 
     grid.appendStates(initialState);
 
