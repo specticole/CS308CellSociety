@@ -33,24 +33,24 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.FISH){
       swapLogic(cell, neighbors);
-      updateTurnsSurvived(cell, States.FISH);
+      updateTurnsSurvived(cell);
     }
 
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.SHARK){
       if(!findFish(neighbors)){
         swapLogic(cell, neighbors);
       }
-      updateTurnsSurvived(cell, States.SHARK);
+      updateTurnsSurvived(cell);
     }
 
     breed(cell.getState(Cell.CURRENT_TIME), neighbors);
 
   }
 
-  private void updateTurnsSurvived(Cell cell, WaTorWorldState.States state){
+  private void updateTurnsSurvived(Cell cell){
     WaTorWorldState currentState = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
     int newTurnsSurvived = currentState.getTurnsSurvived() + 1;
-    cell.setState(Cell.CURRENT_TIME, new WaTorWorldState(state, newTurnsSurvived));
+    cell.setState(Cell.CURRENT_TIME, new WaTorWorldState(currentState.getState(), newTurnsSurvived));
 
   }
 
@@ -122,7 +122,7 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   }
 
   /**
-   * This method gets the specific rule set for the game of live variation, in the form of F<int>.../S<int>...
+   * This method gets the specific rule set for the Wa Tor World variation, in the form of F<int>.../S<int>...
    * where F is the number of rounds a fish needs to survive in order to breed
    * where S is the number of rounds a shark needs to survive in order to breed
    * @param params
