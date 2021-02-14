@@ -1,5 +1,7 @@
 package cellsociety;
 
+import java.util.*;
+
 /**
  * Immutable class representing integer coordinates on an arbitrary
  * 2-dimensional "grid". This is generalizable to all 2-dimensional
@@ -11,7 +13,7 @@ package cellsociety;
  * and Hex grids, for example, interpret the same GridCoordinates
  * slightly differently.
  */
-public class GridCoordinates {
+public abstract class GridCoordinates {
   final int x, y;
 
   /**
@@ -42,4 +44,12 @@ public class GridCoordinates {
   public int getY() {
     return y;
   }
+
+  /**
+   * Compute the coordinates of cells immediately adjacent to this
+   * one.
+   *
+   * @return Collection of immediately adjacent coordinates.
+   */
+  public abstract Collection<GridCoordinates> getNeighbors();
 }

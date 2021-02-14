@@ -36,6 +36,8 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
    */
   abstract public List<Cell> getNeighbors(Cell cell);
 
+  abstract public Cell getCell(GridCoordinates coords);
+
   @Override
   public Iterator<Cell> iterator() {
     return myCells.iterator();
