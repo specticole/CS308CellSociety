@@ -1,6 +1,8 @@
 package cellsociety;
 
 import cellsociety.view.CellularAutomatonView;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -38,8 +40,8 @@ public class CellularAutomatonController {
   // uses mkyong.com as reference
   public CellularAutomatonConfiguration loadConfigFile(String configFileName) {
     CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(configFileName);
-
-    return new CellularAutomatonConfiguration(configFileName);
+    myStates = simulationConfig.getInitialStates();
+    return simulationConfig;
   }
 
   public void startSimulation() {
@@ -66,6 +68,11 @@ public class CellularAutomatonController {
     animation.pause();
     currentTime++;
     step(currentTime);
+  }
+
+  public void resetSimulation() {
+    currentTime = 0;
+    // step method will get states at time t = 0
   }
 
   private void step(int time) {
