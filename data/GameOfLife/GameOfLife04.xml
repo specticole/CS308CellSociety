@@ -5,7 +5,7 @@
     <author>Bill Guo</author>
     <description>Herschel: blooms out of a small shape</description>
   </meta>
-  <grid type="rectangular" width="25" height="24">
+  <grid type="rectangular" width="25" height="24" neighbors="8" wrapping="false">
     <gridrow>
       <gridcell>DEAD</gridcell>
       <gridcell>DEAD</gridcell>

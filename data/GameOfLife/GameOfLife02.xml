@@ -5,7 +5,7 @@
     <author>Bill Guo</author>
     <description>4 blocks on corners, should not move</description>
   </meta>
-  <grid type="rectangular" width="6" height="6">
+  <grid type="rectangular" width="6" height="6" neighbors="8" wrapping="false">
     <gridrow>
       <gridcell>ALIVE</gridcell>
       <gridcell>ALIVE</gridcell>

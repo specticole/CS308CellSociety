@@ -24,6 +24,8 @@ public class CellularAutomatonConfiguration {
   private Map<String, String> simulationMetadata;
   private int gridWidth;
   private int gridHeight;
+  private int gridNeighbors;
+  private boolean gridWrapping;
   private Map<String, Color> cellStyles;
   private Map<String, String> simulationParameters;
   private List<List<String>> initialStates;
@@ -51,6 +53,8 @@ public class CellularAutomatonConfiguration {
     simulationMetadata = docParser.getMetadata();
     gridWidth = docParser.getGridWidth();
     gridHeight = docParser.getGridHeight();
+    gridNeighbors = docParser.getGridNeighbors();
+    gridWrapping = docParser.getGridWrapping();
     cellStyles = docParser.getCellStyles();
     simulationParameters = docParser.getParameters();
     initialStates = docParser.getInitialStates();
@@ -81,7 +85,7 @@ public class CellularAutomatonConfiguration {
   private void makeGrid(String simulationType, String gridType, List<List<String>> initialStates) {
     switch(gridType) {
       case "rectangular":
-        grid = new RectangularCellGrid(gridWidth, gridHeight, false, 8);
+        grid = new RectangularCellGrid(gridWidth, gridHeight, gridWrapping, gridNeighbors);
 
         // populate our new grid
         CellState initialState[][] = new CellState[gridHeight][gridWidth];
