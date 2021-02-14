@@ -84,7 +84,6 @@ public class CellularAutomatonController {
     File file = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     try {
       CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
-      myStates = simulationConfig.getInitialStates();
       initializeForConfig(simulationConfig);
       return simulationConfig;
     } catch (NullPointerException n) {
