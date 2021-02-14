@@ -78,7 +78,9 @@ public abstract class Dense2DCellGrid extends CellGrid {
 
     @Override
     public Cell next() {
-      return grid[index / grid[0].length][index % grid[0].length];
+      Cell c = grid[index / grid[0].length][index % grid[0].length];
+      this.remove();
+      return c;
     }
   }
 
