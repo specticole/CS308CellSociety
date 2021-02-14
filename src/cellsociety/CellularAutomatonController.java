@@ -85,6 +85,7 @@ public class CellularAutomatonController {
     try {
       CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
       myStates = simulationConfig.getInitialStates();
+      initializeForConfig(simulationConfig);
       return simulationConfig;
     } catch (NullPointerException n) {
       return null;

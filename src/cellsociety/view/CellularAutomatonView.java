@@ -51,6 +51,7 @@ public class CellularAutomatonView {
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
+    mainGrid.getChildren().clear();
     grid = new RectangularGridStyle(mainGrid);
     cellStyles = config.getCellStyles();
     grid.createGrid(config.getGridHeight(),config.getGridWidth());
