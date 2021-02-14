@@ -62,11 +62,11 @@ public class WaTorWorldRule extends CellularAutomatonRule {
 
       if(state.getState() == States.FISH){
         if(state.getTurnsSurvived() >= fishRoundsToBreed){
-          spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.FISH));
+          spawn.setState(Cell.CURRENT_TIME, new WaTorWorldState(States.FISH));
         }
       } else if(state.getState() == States.SHARK){
         if(state.getTurnsSurvived() >= sharkRoundsToBreed){
-          spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.SHARK));
+          spawn.setState(Cell.CURRENT_TIME, new WaTorWorldState(States.SHARK));
         }
       }
 
@@ -76,14 +76,13 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   }
 
   private ArrayList<Cell> getUsefulNeighbors(List<Cell> neighbors, WaTorWorldState.States state){
-    ArrayList<Cell> emptyNeighbors = new ArrayList<>();
-    for (int neighborIndex : usedNeighbors) {
-      Cell neighbor = neighbors.get(neighborIndex);
+    ArrayList<Cell> usefulNeighbors = new ArrayList<>();
+    for (Cell neighbor : neighbors) {
       if(neighbor.getState(Cell.CURRENT_TIME).getState() == state){
-        emptyNeighbors.add(neighbor);
+        usefulNeighbors.add(neighbor);
       }
     }
-    return emptyNeighbors;
+    return usefulNeighbors;
   }
 
   private Boolean findFish(List<Cell> neighbors){
@@ -93,8 +92,9 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     if(possibleFood.size() > 0){
       Random rand = new Random();
       Cell food = possibleFood.get(rand.nextInt(possibleFood.size()));
-      food.setState(Cell.NEXT_TIME, new WaTorWorldState(States.EMPTY));
-      food.getState(Cell.NEXT_TIME);
+      food.setState(Cell.CURRENT_TIME, new WaTorWorldState(States.EMPTY));
+      WaTorWorldState state = (WaTorWorldState) food.getState(Cell.CURRENT_TIME);
+      state.died();
       return true;
     }
     return false;
@@ -103,13 +103,9 @@ public class WaTorWorldRule extends CellularAutomatonRule {
 
   private void swapLogic(Cell currentCell, List<Cell> neighbors) {
     ArrayList<Cell> possibleSwaps = new ArrayList<>();
-    for (int neighborIndex : usedNeighbors) {
-      Cell neighbor = neighbors.get(neighborIndex);
+    for (Cell neighbor : neighbors) {
       if(neighbor.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.EMPTY){
-        int currentTime = currentCell.getParentGrid().getCurrentTime();
-        if(neighbor.getStates().getLatestTime() == currentTime){
-          possibleSwaps.add(neighbor);
-        } else if (neighbor.getState(Cell.NEXT_TIME).getState() == WaTorWorldState.States.EMPTY){
+        if (neighbor.getState(Cell.NEXT_TIME).getState() == WaTorWorldState.States.EMPTY){
           possibleSwaps.add(neighbor);
         }
       }
