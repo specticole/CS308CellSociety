@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
  */
 public class CellularAutomatonConfiguration {
 
-  private CellStateRule ruleSet;
+  private CellularAutomatonRule ruleSet;
   private CellGrid grid;
   private Map<String, String> simulationMetadata;
   private int gridWidth;
@@ -40,26 +40,26 @@ public class CellularAutomatonConfiguration {
     String gridType = docParser.getGridType();
     String simulationType = docParser.getSimulationType();
     makeGrid(gridType, initialStates);
-    makeRules(simulationType);
+    makeRules(simulationType, simulationParameters);
   }
 
   private void makeGrid(String gridType, List<List<String>> initialStates) {
 
   }
 
-  private void makeRules(String simulationType) {
+  private void makeRules(String simulationType, Map<String, String> simulationParameters) {
     switch (simulationType) {
       case "gameoflife":
-        ruleSet = new GameOfLifeRule();
+        ruleSet = new GameOfLifeRule(simulationParameters);
         break;
       case "percolation":
-        ruleSet = new PercolationRule();
+        ruleSet = new PercolationRule(simulationParameters);
         break;
     }
   }
 
   // getters
-  public CellStateRule getRuleSet() {
+  public CellularAutomatonRule getRuleSet() {
     return ruleSet;
   }
 

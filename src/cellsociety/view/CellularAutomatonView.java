@@ -93,13 +93,13 @@ public class CellularAutomatonView {
   }
 
   public void stepButtonClick() {
-    controller.step();
+    controller.stepOnce();
     started = true;
     paused = true;
     updateButtonLabels();
   }
 
   public void speedButtonClick() {
-    controller.changeAnimationRate(speedSlider.getValue());
+    controller.changeRateSlider((int) speedSlider.getValue());
   }
 }
