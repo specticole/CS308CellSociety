@@ -38,7 +38,9 @@ public class SegregationRule extends CellularAutomatonRule {
 
     for(Cell cell : cellGrid){
       if(cell.getState(Cell.CURRENT_TIME).getState() == States.OPEN){
-        openCells.add(cell);
+        if(cell.getState(Cell.NEXT_TIME).getState() == States.OPEN) {
+          openCells.add(cell);
+        }
       }
     }
 
