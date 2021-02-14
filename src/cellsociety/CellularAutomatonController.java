@@ -82,6 +82,7 @@ public class CellularAutomatonController {
       CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
       return simulationConfig;
     } catch (NullPointerException n) {
+      n.printStackTrace();
       return null;
     }
   }

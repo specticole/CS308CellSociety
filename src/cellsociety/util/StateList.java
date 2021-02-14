@@ -143,6 +143,7 @@ public class StateList<T> {
    * @param state State to associate with this time.
    */
   public void addState(int time, T state) {
+    //System.out.printf("addState(%d), latest = %d\n", time, getLatestTime());
     assert(time >= 0 && time == getLatestTime() + 1);
 
     timeToState.put(time, state);

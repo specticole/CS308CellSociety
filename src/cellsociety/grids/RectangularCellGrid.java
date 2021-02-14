@@ -36,8 +36,6 @@ public class RectangularCellGrid extends Dense2DCellGrid {
     if(neighborCount == 8)
       offsets = Stream.concat(offsets, Arrays.stream(diagonalOffsets));
 
-    assert(offsets.count() == neighborCount);
-
     // There's no need to filter here -- wrapping and out-of-bounds
     // are handleded in Dense2DCellGrid.
     return offsets
