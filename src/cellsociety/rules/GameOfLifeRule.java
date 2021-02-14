@@ -36,15 +36,20 @@ public class GameOfLifeRule extends CellularAutomatonRule {
       }
     }
 
+    //System.out.printf("Alive count: %d ", aliveNeighbors);
+
     if(cell.getState(0).getState()  == GameOfLifeState.States.ALIVE){
       if(!surviveNums.contains(aliveNeighbors)){
-        cell.setState(0, new GameOfLifeState(GameOfLifeState.States.DEAD));
+        cell.setState(1, new GameOfLifeState(GameOfLifeState.States.DEAD));
+        //System.out.printf("-> die");
       }
     } else {
       if(bornNums.contains(aliveNeighbors)){
-        cell.setState(0, new GameOfLifeState(GameOfLifeState.States.ALIVE));
+        cell.setState(1, new GameOfLifeState(GameOfLifeState.States.ALIVE));
+        //Systemout.printf("-> born");
       }
     }
+    //System.out.println("");
   }
 
   /**
