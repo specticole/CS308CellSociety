@@ -30,7 +30,7 @@ public class StateList<T> {
   /**
    * Default number of states to keep. Can be INFINITE_STATES.
    */
-  public static final int DEFAULT_STATES_TO_KEEP = INFINITE_STATES;
+  public static final int DEFAULT_STATES_TO_KEEP = 10;
 
   private Map<Integer, T> timeToState;
   private int statesToKeep;
