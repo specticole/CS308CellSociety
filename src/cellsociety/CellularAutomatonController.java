@@ -117,4 +117,8 @@ public class CellularAutomatonController {
 
   }
 
+  public void resetSimulation() {
+
+  }
+
 }

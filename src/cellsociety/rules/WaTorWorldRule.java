@@ -29,9 +29,6 @@ public class WaTorWorldRule implements CellStateRule {
     }
   }
 
-  private void
-
-
   private Cell swapLogic(Cell currentCell, List<Cell> neighbors){
     int currentTime = currentCell.getParentGrid().getCurrentTime();
     ArrayList<Cell> possibleSwaps = new ArrayList<>();

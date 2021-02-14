@@ -30,9 +30,11 @@
   </HBox>
 
   <HBox GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER" spacing="8">
-    <Button text="%StartButtonLabel"></Button>
-    <Button text="%StopButtonLabel"></Button>
-    <Button text="%StepButtonLabel"></Button>
+    <Button fx:id="startResetButton" text="%StartButtonLabel"
+      onAction="#startResetButtonClick"></Button>
+    <Button fx:id="pauseResumeButton" text="%ResumeButtonLabel"
+      onAction="#pauseResumeButtonClick"></Button>
+    <Button text="%StepButtonLabel" onAction="#stepButtonClick"></Button>
   </HBox>
 
   <HBox GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="TOP_CENTER">
@@ -40,11 +42,12 @@
   </HBox>
 
   <HBox GridPane.rowIndex="2" GridPane.columnIndex="2" alignment="CENTER">
-    <Slider showTickLabels="true" showTickMarks="true"></Slider>
+    <Slider fx:id="speedSlider" min="1" max="5" value="3" blockIncrement="1" minorTickCount="0"
+      majorTickUnit="1" snapToTicks="true" showTickLabels="true" showTickMarks="true"></Slider>
   </HBox>
 
   <HBox GridPane.rowIndex="2" GridPane.columnIndex="3" alignment="TOP_CENTER">
-    <Button text="%ApplySpeedButtonLabel"></Button>
+    <Button text="%ApplySpeedButtonLabel" onAction="#speedButtonClick" ></Button>
   </HBox>
 
 

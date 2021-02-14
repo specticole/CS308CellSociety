@@ -33,6 +33,7 @@ public class WaTorWorldState extends CellState {
     return null;
   }
 
+
   @Override
   public void setState(String str) {
     state = StateEnum.valueOf(str);
