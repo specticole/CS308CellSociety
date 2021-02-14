@@ -5,7 +5,7 @@
     <author>Bill Guo</author>
     <description>Glider starting in the top left, going to the bottom right</description>
   </meta>
-  <grid type="rectangular" width="9" height="9">
+  <grid type="rectangular" width="9" height="9" neighbors="8" wrapping="false">
     <gridrow>
       <gridcell>DEAD</gridcell>
       <gridcell>ALIVE</gridcell>

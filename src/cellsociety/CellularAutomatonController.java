@@ -65,8 +65,6 @@ public class CellularAutomatonController {
     CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(
         configFileName);
 
-    initializeForConfig(simulationConfig);
-
     return simulationConfig;
   }
 
@@ -82,7 +80,6 @@ public class CellularAutomatonController {
     File file = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     try {
       CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
-      initializeForConfig(simulationConfig);
       return simulationConfig;
     } catch (NullPointerException n) {
       return null;

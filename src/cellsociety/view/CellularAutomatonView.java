@@ -42,8 +42,8 @@ public class CellularAutomatonView {
     bundle = ResourceBundle.getBundle("labels", locale);
 
     controller = new CellularAutomatonController(this);
-    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("ControllerTest"
-        + ".xml");
+    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("GameOfLife/GameOfLife01"
+                                                                               + ".xml");
     updateXML(config);
 
     started = false;
@@ -51,6 +51,8 @@ public class CellularAutomatonView {
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
+    controller.initializeForConfig(config);
+
     mainGrid.getChildren().clear();
     grid = new RectangularGridStyle(mainGrid);
     cellStyles = config.getCellStyles();

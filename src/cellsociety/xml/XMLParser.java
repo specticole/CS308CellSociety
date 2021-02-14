@@ -76,6 +76,14 @@ public class XMLParser {
     return Integer.valueOf(getAttribute("grid", "height"));
   }
 
+  public int getGridNeighbors() {
+    return Integer.valueOf(getAttribute("grid", "neighbors"));
+  }
+
+  public boolean getGridWrapping() {
+    return Boolean.valueOf(getAttribute("grid", "wrapping"));
+  }
+
   public List<List<String>> getInitialStates() {
     List<List<String>> gridInitialStates = new ArrayList<>();
     NodeList gridList = root.getElementsByTagName("gridrow");
