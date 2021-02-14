@@ -3,6 +3,7 @@ package cellsociety.states;
 import static java.lang.System.exit;
 
 import cellsociety.CellState;
+import cellsociety.states.GameOfLifeState.States;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,7 +19,8 @@ public class PercolationState extends CellState {
   private ArrayList<String> availableStates;
 
 
-  public PercolationState(){
+  public PercolationState(States s){
+    super(s);
     state = StateEnum.OPEN;
     availableStates = new ArrayList<>();
     for(StateEnum state : StateEnum.values()){
@@ -43,7 +45,7 @@ public class PercolationState extends CellState {
     return state.toString();
   }
 
-  @Override
+
   public CellState fromString(String str) {
     return null;
   }
@@ -53,7 +55,7 @@ public class PercolationState extends CellState {
    * Sets the current state
    * @param str the String name of the desired state
    */
-  @Override
+
   public void setState(String str) {
     if(availableStates.contains(str)){
       state = StateEnum.valueOf(str);
@@ -62,8 +64,7 @@ public class PercolationState extends CellState {
       exit(0);
     }
   }
-
-  @Override
+  
   public String getStateAsString() {
     return state.toString();
   }
