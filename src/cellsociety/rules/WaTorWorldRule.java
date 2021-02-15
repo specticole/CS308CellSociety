@@ -58,6 +58,11 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     WaTorWorldState state = (WaTorWorldState) cellState;
     ArrayList<Cell> possibleSpawn = new ArrayList<>();
     possibleSpawn = getUsefulNeighbors(neighbors, WaTorWorldState.States.EMPTY);
+    for(Cell cell : possibleSpawn){
+      if(cell.getState(Cell.NEXT_TIME).getState() != States.EMPTY){
+        possibleSpawn.remove(cell);
+      }
+    }
 
     if(possibleSpawn.size() > 0){
       Random rand = new Random();
@@ -65,11 +70,11 @@ public class WaTorWorldRule extends CellularAutomatonRule {
 
       if(state.getState() == States.FISH){
         if(state.getTurnsSurvived() >= fishRoundsToBreed){
-          spawn.setState(Cell.CURRENT_TIME, new WaTorWorldState(States.FISH));
+          spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.FISH));
         }
       } else if(state.getState() == States.SHARK){
         if(state.getTurnsSurvived() >= sharkRoundsToBreed){
-          spawn.setState(Cell.CURRENT_TIME, new WaTorWorldState(States.SHARK));
+          spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.SHARK));
         }
       }
 
@@ -117,8 +122,22 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     }
     if(possibleSwaps.size() > 0){
       Random rand = new Random();
-      currentCell.swapCells(possibleSwaps.get(rand.nextInt(possibleSwaps.size())));
+      Cell swapCell = possibleSwaps.get(rand.nextInt(possibleSwaps.size()));
+      swapCells(currentCell, swapCell);
     }
+  }
+
+  private void swapCells(Cell a, Cell b){
+    WaTorWorldState aAsWaTor = (WaTorWorldState) a.getState(Cell.CURRENT_TIME);
+    WaTorWorldState.States aState = aAsWaTor.getState();
+    int aTurnsSurvived = aAsWaTor.getTurnsSurvived();
+
+    WaTorWorldState bAsWaTor = (WaTorWorldState) b.getState(Cell.CURRENT_TIME);
+    WaTorWorldState.States bState = bAsWaTor.getState();
+    int bTurnsSurvived = bAsWaTor.getTurnsSurvived();
+
+    a.setState(Cell.NEXT_TIME, new WaTorWorldState(bState, bTurnsSurvived));
+    b.setState(Cell.NEXT_TIME, new WaTorWorldState(aState, aTurnsSurvived));
   }
 
   /**
