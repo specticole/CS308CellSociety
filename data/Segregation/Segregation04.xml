@@ -20,44 +20,11 @@
     <gridrow>
       <gridcell>OPEN</gridcell>
       <gridcell>O</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
+      <gridcell>X</gridcell>
       <gridcell>O</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
+      <gridcell>X</gridcell>
       <gridcell>O</gridcell>
-      <gridcell>OPEN</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>OPEN</gridcell>
-      <gridcell>O</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>O</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
+      <gridcell>X</gridcell>
       <gridcell>O</gridcell>
       <gridcell>OPEN</gridcell>
     </gridrow>
@@ -66,7 +33,7 @@
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
+      <gridcell>O</gridcell>
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
@@ -77,7 +44,7 @@
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
+      <gridcell>O</gridcell>
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
@@ -86,14 +53,48 @@
     <gridrow>
       <gridcell>OPEN</gridcell>
       <gridcell>O</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
+      <gridcell>X</gridcell>
       <gridcell>O</gridcell>
-      <gridcell>OPEN</gridcell>
-      <gridcell>OPEN</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>X</gridcell>
       <gridcell>O</gridcell>
       <gridcell>OPEN</gridcell>
     </gridrow>
+    <gridrow>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>OPEN</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>OPEN</gridcell>
+    </gridrow>
+
     <gridrow>
       <gridcell>OPEN</gridcell>
       <gridcell>OPEN</gridcell>
