@@ -46,6 +46,10 @@ public class SegregationRule extends CellularAutomatonRule {
       }
     }
 
+    if(openCells.size() == 0){
+      return;
+    }
+
     Random rand = new Random();
     Cell swapCell = openCells.get(rand.nextInt(openCells.size()));
 
@@ -58,7 +62,10 @@ public class SegregationRule extends CellularAutomatonRule {
   }
 
   private boolean needsToMove(List<Cell> populatedNeighbors, List<Cell> similarNeighbors){
-    return (populatedNeighbors.size()/similarNeighbors.size() >= neighborsNeeded);
+    if(similarNeighbors.size() == 0){
+      return (populatedNeighbors.size() != 0);
+    }
+    return ((double) populatedNeighbors.size()/(double) similarNeighbors.size() >= neighborsNeeded);
   }
 
   private ArrayList<Cell> getUsefulNeighbors(List<Cell> neighbors, SegregationState.States state, boolean different){
@@ -78,7 +85,7 @@ public class SegregationRule extends CellularAutomatonRule {
    * @param params
    */
   public void setGameSpecifics(Map<String, String> params) {
-    String rules = params.get("rules");
+    String rules = params.get("neighborsNeeded");
     neighborsNeeded = Double.valueOf(rules);
   }
 
