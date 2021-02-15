@@ -12,10 +12,10 @@ public class WaTorWorldState extends CellState<WaTorWorldState.States> {
   }
 
   private int turnsSurvived;
+  private boolean moved;
 
 
-
-  public WaTorWorldState(States s, int survived) {
+  public WaTorWorldState(States s, int survived){
     super(s);
     turnsSurvived = survived;
   }
@@ -38,5 +38,7 @@ public class WaTorWorldState extends CellState<WaTorWorldState.States> {
   public int getTurnsSurvived(){
     return turnsSurvived;
   }
+
+  public boolean didMove(){ return moved; }
 
 }
