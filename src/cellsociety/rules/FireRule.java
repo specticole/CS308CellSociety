@@ -14,6 +14,7 @@ public class FireRule extends CellularAutomatonRule {
 
   public FireRule(Map<String, String> params) {
     super(params);
+    setGameSpecifics(params);
   }
 
   @Override
@@ -64,7 +65,7 @@ public class FireRule extends CellularAutomatonRule {
    * @param params
    */
   public void setGameSpecifics(Map<String, String> params) {
-    String rules = params.get("rules");
+    String rules = params.get("probCatch");
     fireChance = Integer.valueOf(rules);
   }
 }

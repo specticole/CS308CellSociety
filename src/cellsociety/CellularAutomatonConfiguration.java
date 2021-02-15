@@ -71,7 +71,7 @@ public class CellularAutomatonConfiguration {
       case "percolation":
         return new PercolationState(contents);
       case "fire":
-        return null;
+        return new FireState(contents);
       case "wator":
         return new WaTorWorldState(contents);
       case "segregation":
@@ -113,12 +113,12 @@ public class CellularAutomatonConfiguration {
         ruleSet = new PercolationRule(simulationParameters);
         break;
       case "fire":
-        break;
+        ruleSet = new FireRule(simulationParameters);
       case "wator":
         ruleSet = new WaTorWorldRule(simulationParameters);
         break;
       case "segregation":
-        break;
+        ruleSet = new SegregationRule(simulationParameters);
       default:
         assert(false);
     }
