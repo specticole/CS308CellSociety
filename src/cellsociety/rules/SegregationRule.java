@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class SegregationRule extends CellularAutomatonRule {
 
-  private double neighborsNeeded;
+  private double neighborsNeeded = 0.2;
 
 
   public SegregationRule(Map<String, String> params) {

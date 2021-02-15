@@ -75,7 +75,7 @@ public class CellularAutomatonConfiguration {
       case "wator":
         return new WaTorWorldState(contents);
       case "segregation":
-        return null;
+        return new SegregationState(contents);
       default:
         assert(false);
         return null;
