@@ -18,6 +18,7 @@ public class SegregationRule extends CellularAutomatonRule {
 
   public SegregationRule(Map<String, String> params) {
     super(params);
+    setGameSpecifics(params);
   }
 
   @Override
@@ -72,13 +73,13 @@ public class SegregationRule extends CellularAutomatonRule {
 
 
   /**
-   * This method gets the specific rule set for the Segregation variation, in the form of T<Double>
-   * where T is the percentage of neighbors which need to be of the same type in order to not move
+   * This method gets the specific rule set for the Segregation variation, in the form of <Double>
+   * where the double is the percentage of neighbors which need to be of the same type in order to not move
    * @param params
    */
   public void setGameSpecifics(Map<String, String> params) {
     String rules = params.get("rules");
-    neighborsNeeded = Double.valueOf(rules.substring(1));
+    neighborsNeeded = Double.valueOf(rules);
   }
 
 

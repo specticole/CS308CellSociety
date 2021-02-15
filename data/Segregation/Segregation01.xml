@@ -112,6 +112,6 @@
     <cellstate type="OPEN"><r>255</r><g>255</g><b>255</b></cellstate>
   </cellstyle>
   <config_parameters>
-    <parameter name="neighborsNeeded" value="1.0"></parameter>
+    <parameter name="rules" value="1.0"></parameter>
   </config_parameters>
 </simulation>
