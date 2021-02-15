@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <simulation rules="gameoflife">
   <meta>
-    <title>Conway's Game of Life</title>
+    <title>Conway's Game of Life 1</title>
     <author>Bill Guo</author>
     <description>Pentadecathlon: 12 cell 15 period oscillator</description>
   </meta>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <simulation rules="gameoflife">
   <meta>
-    <title>Conway's Game of Life</title>
+    <title>Conway's Game of Life 3</title>
     <author>Bill Guo</author>
     <description>Glider starting in the top left, going to the bottom right</description>
   </meta>

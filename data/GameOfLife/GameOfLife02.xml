@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <simulation rules="gameoflife">
   <meta>
-    <title>Conway's Game of Life</title>
+    <title>Conway's Game of Life 2</title>
     <author>Bill Guo</author>
     <description>4 blocks on corners, should not move</description>
   </meta>
