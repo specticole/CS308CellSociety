@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <simulation rules="wator">
   <meta>
-    <title>WaTor 2</title>
+    <title>WaTor 5</title>
     <author>Bill Guo</author>
-    <description>Fast fish spawns</description>
+    <description>normal simulation with lots of starting fish</description>
   </meta>
   <grid type="rectangular" width="9" height="9" neighbors="4" wrapping="false">
     <gridrow>
       <gridcell>FISH</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
     </gridrow>
     <gridrow>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
     </gridrow>
     <gridrow>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
-      <gridcell>EMPTY</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
     </gridrow>
     <gridrow>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>FISH</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
       <gridcell>EMPTY</gridcell>
@@ -113,6 +113,6 @@
     <cellstate type="SHARK"><r>0</r><g>255</g><b>0</b></cellstate>
   </cellstyle>
   <config_parameters>
-    <parameter name="rules" value="F1/S5/X5"></parameter>
+    <parameter name="rules" value="F5/S5/X5"></parameter>
   </config_parameters>
 </simulation>
