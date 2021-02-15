@@ -23,14 +23,38 @@ public class SegregationRule extends CellularAutomatonRule {
 
   @Override
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
-    ArrayList<Cell> populatedNeighbors = getUsefulNeighbors(neighbors, States.OPEN, true);
-    ArrayList<Cell> similarNeighbors = getUsefulNeighbors(populatedNeighbors,
-        (States) cell.getState(Cell.CURRENT_TIME).getState(), false);
+    ArrayList<Cell> populatedNeighbors = getPopulatedNeighbors(neighbors);
+    ArrayList<Cell> similarNeighbors = getSimilarNeighbors(neighbors,
+        (States) cell.getState(Cell.CURRENT_TIME).getState());
 
-    if(needsToMove(populatedNeighbors, similarNeighbors)){
-      move(cell);
+    if (cell.getState(Cell.CURRENT_TIME).getState() != States.OPEN){
+      if(needsToMove(populatedNeighbors, similarNeighbors)){
+        move(cell);
+      }
     }
 
+
+  }
+
+  private ArrayList<Cell> getSimilarNeighbors(List<Cell> neighbors, SegregationState.States state){
+    ArrayList<Cell> similarNeighbors = new ArrayList<>();
+    for(Cell neighbor : neighbors){
+      if(neighbor.getState(Cell.CURRENT_TIME).getState() == state){
+        similarNeighbors.add(neighbor);
+      }
+    }
+    return similarNeighbors;
+  }
+
+
+  private ArrayList<Cell> getPopulatedNeighbors(List<Cell> neighbors){
+    ArrayList<Cell> populatedNeighbors = new ArrayList<>();
+    for(Cell neighbor : neighbors){
+      if(neighbor.getState(Cell.CURRENT_TIME).getState() == States.X || neighbor.getState(Cell.CURRENT_TIME).getState() == States.O){
+        populatedNeighbors.add(neighbor);
+      }
+    }
+    return populatedNeighbors;
   }
 
 
@@ -46,6 +70,8 @@ public class SegregationRule extends CellularAutomatonRule {
       }
     }
 
+    System.out.printf("----%d open cells\n", openCells.size());
+
     if(openCells.size() == 0){
       return;
     }
@@ -53,10 +79,10 @@ public class SegregationRule extends CellularAutomatonRule {
     Random rand = new Random();
     Cell swapCell = openCells.get(rand.nextInt(openCells.size()));
 
-    move(currentCell, swapCell);
+    swap(currentCell, swapCell);
   }
 
-  private void move(Cell a, Cell b){
+  private void swap(Cell a, Cell b){
     b.setState(Cell.NEXT_TIME, new SegregationState(((SegregationState) a.getState(Cell.CURRENT_TIME)).getState()));
     a.setState(Cell.NEXT_TIME, new SegregationState());
   }
@@ -68,15 +94,15 @@ public class SegregationRule extends CellularAutomatonRule {
     return ((double) populatedNeighbors.size()/(double) similarNeighbors.size() >= neighborsNeeded);
   }
 
-  private ArrayList<Cell> getUsefulNeighbors(List<Cell> neighbors, SegregationState.States state, boolean different){
-    ArrayList<Cell> usefulNeighbors = new ArrayList<>();
-    for(Cell neighbor : neighbors){
-      if((neighbor.getState(Cell.CURRENT_TIME).getState() == state) ^ different){
-        usefulNeighbors.add(neighbor);
-      }
-    }
-    return usefulNeighbors;
-  }
+//  private ArrayList<Cell> getUsefulNeighbors(List<Cell> neighbors, SegregationState.States state, boolean different){
+//    ArrayList<Cell> usefulNeighbors = new ArrayList<>();
+//    for(Cell neighbor : neighbors){
+//      if((neighbor.getState(Cell.CURRENT_TIME).getState() == state) ^ different){
+//        usefulNeighbors.add(neighbor);
+//      }
+//    }
+//    return usefulNeighbors;
+//  }
 
 
   /**
