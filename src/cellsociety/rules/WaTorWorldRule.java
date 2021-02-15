@@ -42,13 +42,10 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     }
 
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.SHARK){
-      //WaTorWorldState state = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
-      //System.out.printf("A----%d turns without eating\t", state.getTurnsWithoutEating());
       updateTurnsSurvived(cell);
-      //state = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
-      //System.out.printf("B----%d turns without eating\n", state.getTurnsWithoutEating());
+
       if(findFish(neighbors)) {
-        //System.out.println("found food");
+
         foundFood(cell);
       } else {
         if(!starve(cell)){
@@ -63,6 +60,7 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     breed(cell.getState(Cell.CURRENT_TIME), neighbors);
 
   }
+
 
   private boolean starve(Cell cell){
     WaTorWorldState state = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);

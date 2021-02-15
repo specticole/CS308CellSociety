@@ -114,6 +114,7 @@ public class CellularAutomatonConfiguration {
       case "fire":
         ruleSet = new FireRule(simulationParameters);
         break;
+
       case "wator":
         ruleSet = new WaTorWorldRule(simulationParameters);
         break;
