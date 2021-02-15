@@ -5,6 +5,7 @@ import cellsociety.CellGrid;
 import cellsociety.CellularAutomatonRule;
 import cellsociety.states.SegregationState;
 import cellsociety.states.SegregationState.States;
+import cellsociety.states.WaTorWorldState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,12 @@ public class SegregationRule extends CellularAutomatonRule {
     Random rand = new Random();
     Cell swapCell = openCells.get(rand.nextInt(openCells.size()));
 
-    //currentCell.swapCells(swapCell);
+    move(currentCell, swapCell);
+  }
+
+  private void move(Cell a, Cell b){
+    b.setState(Cell.NEXT_TIME, new SegregationState(((SegregationState) a.getState(Cell.CURRENT_TIME)).getState()));
+    a.setState(Cell.NEXT_TIME, new SegregationState());
   }
 
   private boolean needsToMove(List<Cell> populatedNeighbors, List<Cell> similarNeighbors){
