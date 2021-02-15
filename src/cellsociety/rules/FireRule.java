@@ -14,6 +14,7 @@ public class FireRule extends CellularAutomatonRule {
 
   public FireRule(Map<String, String> params) {
     super(params);
+    setGameSpecifics(params);
   }
 
   @Override
