@@ -42,7 +42,7 @@ public class FireRule extends CellularAutomatonRule {
 
   public boolean didCatchFire(){
     Random rand = new Random();
-    if(rand.nextInt(100) >= fireChance){
+    if(rand.nextInt(100) <= fireChance){
       return true;
     }
     return false;
@@ -65,7 +65,7 @@ public class FireRule extends CellularAutomatonRule {
    * @param params
    */
   public void setGameSpecifics(Map<String, String> params) {
-    String rules = params.get("rules");
+    String rules = params.get("probCatch");
     fireChance = Integer.valueOf(rules);
   }
 }
