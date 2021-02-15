@@ -21,7 +21,9 @@ public class WaTorWorldRule extends CellularAutomatonRule {
 
   //private int[] usedNeighbors = {TOP_NEIGHBOR,LEFT_NEIGHBOR,RIGHT_NEIGHBOR,BOTTOM_NEIGHBOR};
   private int sharkRoundsToBreed;
+  private int sharkRoundsToStarve;
   private int fishRoundsToBreed;
+
 
 
   public WaTorWorldRule(Map<String, String> params) {
@@ -32,25 +34,52 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   @Override
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.FISH){
-      swapLogic(cell, neighbors);
+
       updateTurnsSurvived(cell);
+
+      swapLogic(cell, neighbors);
+
     }
 
     if(cell.getState(Cell.CURRENT_TIME).getState() == WaTorWorldState.States.SHARK){
-      if(!findFish(neighbors)){
-        swapLogic(cell, neighbors);
-      }
+      //WaTorWorldState state = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
+      //System.out.printf("A----%d turns without eating\t", state.getTurnsWithoutEating());
       updateTurnsSurvived(cell);
+      //state = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
+      //System.out.printf("B----%d turns without eating\n", state.getTurnsWithoutEating());
+      if(findFish(neighbors)) {
+        //System.out.println("found food");
+        foundFood(cell);
+      } else {
+        if(!starve(cell)){
+          swapLogic(cell, neighbors);
+        }
+
+
+      }
+
     }
 
     breed(cell.getState(Cell.CURRENT_TIME), neighbors);
 
   }
 
+  private boolean starve(Cell cell){
+    WaTorWorldState state = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
+    //System.out.printf("----%d turns without eating\n", state.getTurnsWithoutEating());
+    if(state.getTurnsWithoutEating() >= sharkRoundsToStarve){
+      cell.setState(Cell.NEXT_TIME, new WaTorWorldState());
+      cell.setState(Cell.CURRENT_TIME, new WaTorWorldState());
+      return true;
+    }
+    return false;
+  }
+
   private void updateTurnsSurvived(Cell cell){
     WaTorWorldState currentState = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
     int newTurnsSurvived = currentState.getTurnsSurvived() + 1;
-    cell.setState(Cell.CURRENT_TIME, new WaTorWorldState(currentState.getState(), newTurnsSurvived));
+    int newTurnsWithoutEating = currentState.getTurnsWithoutEating() + 1;
+    cell.setState(Cell.CURRENT_TIME, new WaTorWorldState(currentState.getState(), newTurnsSurvived, newTurnsWithoutEating));
 
   }
 
@@ -58,18 +87,17 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     WaTorWorldState state = (WaTorWorldState) cellState;
     ArrayList<Cell> possibleSpawn = new ArrayList<>();
     possibleSpawn = getUsefulNeighbors(neighbors, WaTorWorldState.States.EMPTY);
-    for(Cell cell : possibleSpawn){
-      if(cell.getState(Cell.NEXT_TIME).getState() != States.EMPTY){
-        possibleSpawn.remove(cell);
-      }
-    }
-
+    //System.out.printf("A----%d\n", possibleSpawn.size());
+    possibleSpawn.removeIf(cell -> cell.getState(Cell.NEXT_TIME).getState() != States.EMPTY);
+    //System.out.printf("B----%d\n", possibleSpawn.size());
     if(possibleSpawn.size() > 0){
       Random rand = new Random();
       Cell spawn = possibleSpawn.get(rand.nextInt(possibleSpawn.size()));
 
       if(state.getState() == States.FISH){
+        //System.out.printf("A----turns survived = %d\n", state.getTurnsSurvived());
         if(state.getTurnsSurvived() >= fishRoundsToBreed){
+          //System.out.printf("B----MadeFish\n", possibleSpawn.size());
           spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.FISH));
         }
       } else if(state.getState() == States.SHARK){
@@ -96,54 +124,52 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   private Boolean findFish(List<Cell> neighbors){
     ArrayList<Cell> possibleFood = new ArrayList<>();
     possibleFood = getUsefulNeighbors(neighbors, WaTorWorldState.States.FISH);
-    for(Cell food : possibleFood){
-      if(food.getState(Cell.NEXT_TIME).getState() != States.EMPTY){
-        possibleFood.remove(food);
-      }
-    }
+    possibleFood.removeIf(food -> food.getState(Cell.NEXT_TIME).getState() == States.EMPTY);
 
     if(possibleFood.size() > 0){
       Random rand = new Random();
       Cell food = possibleFood.get(rand.nextInt(possibleFood.size()));
-      food.setState(Cell.CURRENT_TIME, new WaTorWorldState(States.EMPTY));
+      food.setState(Cell.NEXT_TIME, new WaTorWorldState(States.EMPTY));
       return true;
     }
     return false;
+  }
+
+  private void foundFood(Cell cell){
+    WaTorWorldState state = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
+    int roundsLasted = state.getTurnsSurvived();
+    cell.setState(Cell.NEXT_TIME, new WaTorWorldState(States.SHARK, roundsLasted));
   }
 
 
   private void swapLogic(Cell currentCell, List<Cell> neighbors) {
     ArrayList<Cell> possibleSwaps = new ArrayList<>();
     possibleSwaps = getUsefulNeighbors(neighbors, WaTorWorldState.States.EMPTY);
-    for (Cell neighbor : possibleSwaps) {
-      if (neighbor.getState(Cell.NEXT_TIME).getState() != WaTorWorldState.States.EMPTY){
-        possibleSwaps.remove(neighbor);
-      }
-    }
+    possibleSwaps
+        .removeIf(neighbor -> neighbor.getState(Cell.NEXT_TIME).getState() != States.EMPTY);
     if(possibleSwaps.size() > 0){
       Random rand = new Random();
       Cell swapCell = possibleSwaps.get(rand.nextInt(possibleSwaps.size()));
-      swapCells(currentCell, swapCell);
+      move(currentCell, swapCell);
     }
   }
 
-  private void swapCells(Cell a, Cell b){
+  private void move(Cell a, Cell b){
     WaTorWorldState aAsWaTor = (WaTorWorldState) a.getState(Cell.CURRENT_TIME);
     WaTorWorldState.States aState = aAsWaTor.getState();
     int aTurnsSurvived = aAsWaTor.getTurnsSurvived();
+    int aTurnsWithoutEating = aAsWaTor.getTurnsWithoutEating();
 
-    WaTorWorldState bAsWaTor = (WaTorWorldState) b.getState(Cell.CURRENT_TIME);
-    WaTorWorldState.States bState = bAsWaTor.getState();
-    int bTurnsSurvived = bAsWaTor.getTurnsSurvived();
+    b.setState(Cell.NEXT_TIME, new WaTorWorldState(aState, aTurnsSurvived, aTurnsWithoutEating));
+    a.setState(Cell.NEXT_TIME, new WaTorWorldState());
 
-    a.setState(Cell.NEXT_TIME, new WaTorWorldState(bState, bTurnsSurvived));
-    b.setState(Cell.NEXT_TIME, new WaTorWorldState(aState, aTurnsSurvived));
   }
 
   /**
-   * This method gets the specific rule set for the Wa Tor World variation, in the form of F<int>.../S<int>...
+   * This method gets the specific rule set for the Wa Tor World variation, in the form of F<int>/S<int>/X<int>
    * where F is the number of rounds a fish needs to survive in order to breed
    * where S is the number of rounds a shark needs to survive in order to breed
+   * where X is the number of round a shark will die after if it doesnt eat
    * @param params
    */
   public void setGameSpecifics(Map<String, String> params) {
@@ -151,5 +177,6 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     String[] rulesSplit = rules.split("/");
     fishRoundsToBreed = Integer.valueOf(rulesSplit[0].substring(1));
     sharkRoundsToBreed = Integer.valueOf(rulesSplit[1].substring(1));
+    sharkRoundsToStarve = Integer.valueOf(rulesSplit[2].substring(1));
   }
 }

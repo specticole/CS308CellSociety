@@ -47,7 +47,7 @@ public class SegregationRule extends CellularAutomatonRule {
     Random rand = new Random();
     Cell swapCell = openCells.get(rand.nextInt(openCells.size()));
 
-    currentCell.swapCells(swapCell);
+    //currentCell.swapCells(swapCell);
   }
 
   private boolean needsToMove(List<Cell> populatedNeighbors, List<Cell> similarNeighbors){
