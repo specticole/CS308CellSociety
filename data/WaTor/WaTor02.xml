@@ -113,6 +113,6 @@
     <cellstate type="SHARK"><r>0</r><g>255</g><b>0</b></cellstate>
   </cellstyle>
   <config_parameters>
-    <parameter name="rules" value="F1/S5/X5"></parameter>
+    <parameter name="rules" value="F1/S5/X10"></parameter>
   </config_parameters>
 </simulation>
