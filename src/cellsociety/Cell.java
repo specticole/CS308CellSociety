@@ -18,7 +18,10 @@ import cellsociety.util.*;
  * @author Cole Spector
  */
 public class Cell {
-
+  /**
+   * Constants representing offsets (deltas) from the current
+   * time. Used to simplify state retrieval.
+   */
   public final static int CURRENT_TIME = 0;
   public final static int NEXT_TIME = 1;
 
