@@ -27,7 +27,7 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   @Override
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
 
-    boolean moved = false;
+    boolean moved = false, died = false;
 
     switch((States)cell.getState(Cell.CURRENT_TIME).getState()) {
       case FISH:
@@ -38,7 +38,8 @@ public class WaTorWorldRule extends CellularAutomatonRule {
         if(eatFish(neighbors)){
           foundFood(cell);
         } else {
-          if(!starve(cell))
+          died = starve(cell);
+          if(!died)
             moved = tryMoving(cell, neighbors);
         }
         break;
@@ -52,20 +53,23 @@ public class WaTorWorldRule extends CellularAutomatonRule {
     if(!moved)
     {
       System.out.println("no move");
-      updateTurnsSurvived(cell);
+      if(!died)
+        updateTurnsSurvived(cell);
     } else {
       System.out.println("moved");
 
     }
 
-    breed(cell.getState(Cell.CURRENT_TIME), neighbors);
+    if(!died)
+      breed(cell.getState(Cell.CURRENT_TIME), neighbors);
   }
 
 
   private boolean starve(Cell cell){
     WaTorWorldState state = (WaTorWorldState) cell.getState(Cell.CURRENT_TIME);
-    //System.out.printf("----%d turns without eating\n", state.getTurnsWithoutEating());
+    System.out.printf("----%d turns without eating\n", state.getTurnsWithoutEating());
     if(state.getTurnsWithoutEating() >= sharkRoundsToStarve){
+      System.out.println("starving");
       cell.setState(Cell.NEXT_TIME, new WaTorWorldState(States.EMPTY));
       return true;
     }
