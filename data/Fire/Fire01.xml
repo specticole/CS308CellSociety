@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simulation rules="fire">
+  <meta>
+    <title>Fire Test 1</title>
+    <author>Patrick Liu</author>
+    <description>9x9 grid with one burning tree in the center, probCatch = 0.2</description>
+  </meta>
+  <grid type="rectangular" width="9" height="9" neighbors="8" wrapping="false">
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+  </grid>
+  <cellstyle>
+    <cellstate type="TREE"><r>0</r><g>255</g><b>0</b></cellstate>
+    <cellstate type="EMPTY"><r>255</r><g>255</g><b>0</b></cellstate>
+    <cellstate type="BURNING"><r>165</r><g>42</g><b>42</b></cellstate>
+  </cellstyle>
+  <config_parameters>
+    <parameter name="probCatch" value="20"></parameter>
+  </config_parameters>
+</simulation>
