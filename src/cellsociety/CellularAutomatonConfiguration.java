@@ -64,7 +64,6 @@ public class CellularAutomatonConfiguration {
   }
 
   private CellState makeState(String simulationType, String contents) {
-    // TODO: refactor
     switch(simulationType) {
       case "gameoflife":
         return new GameOfLifeState(contents);
@@ -114,11 +113,14 @@ public class CellularAutomatonConfiguration {
         break;
       case "fire":
         ruleSet = new FireRule(simulationParameters);
+        break;
+
       case "wator":
         ruleSet = new WaTorWorldRule(simulationParameters);
         break;
       case "segregation":
         ruleSet = new SegregationRule(simulationParameters);
+        break;
       default:
         assert(false);
     }

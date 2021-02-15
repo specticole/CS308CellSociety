@@ -42,7 +42,7 @@ public class FireRule extends CellularAutomatonRule {
 
   public boolean didCatchFire(){
     Random rand = new Random();
-    if(rand.nextInt(100) >= fireChance){
+    if(rand.nextInt(100) <= fireChance){
       return true;
     }
     return false;

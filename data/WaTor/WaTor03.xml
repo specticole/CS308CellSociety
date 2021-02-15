@@ -3,7 +3,7 @@
   <meta>
     <title>WaTor 3</title>
     <author>Bill Guo</author>
-    <description>1D grid with a dying shark</description>
+    <description>1D grid with a shark</description>
   </meta>
   <grid type="rectangular" width="9" height="1" neighbors="4" wrapping="false">
     <gridrow>
@@ -25,6 +25,6 @@
     <cellstate type="SHARK"><r>0</r><g>255</g><b>0</b></cellstate>
   </cellstyle>
   <config_parameters>
-    <parameter name="rules" value="F5/S1/X1"></parameter>
+    <parameter name="rules" value="F1/S1/X5"></parameter>
   </config_parameters>
 </simulation>
