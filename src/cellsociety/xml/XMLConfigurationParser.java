@@ -77,9 +77,7 @@ public class XMLConfigurationParser extends XMLGenericParser {
           break; // randomly pick state based on total locations to occupy, with or without desired distribution
       }
     }
-    else {
-      return getSpecifiedInitialStates();
-    }
+    return getSpecifiedInitialStates();
   }
 
   private List<List<String>> getSpecifiedInitialStates() {
