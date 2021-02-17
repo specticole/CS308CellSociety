@@ -30,16 +30,6 @@ public class CellularAutomatonConfiguration {
   private List<List<String>> initialStates;
 
   /**
-   * Stores relevant information given filename in data folder - for testing
-   *
-   * @param configFileName - String filename for XML configuration file
-   */
-  public CellularAutomatonConfiguration(String configFileName) {
-    XMLParser docParser = new XMLParser(configFileName);
-    parseXMLFile(docParser);
-  }
-
-  /**
    * Stores relevant information given any XML file
    * @param configFile - XML configuration file
    */

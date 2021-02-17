@@ -29,7 +29,6 @@ public class CellularAutomatonController {
   private CellularAutomaton myModel;
 
   public CellularAutomatonController() {
-    //currentTime = 0;
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
@@ -52,20 +51,6 @@ public class CellularAutomatonController {
    */
   public void initializeForConfig(CellularAutomatonConfiguration config) {
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
-  }
-
-  /**
-   * Takes in a filename and returns an object that stores all relevant information for the
-   * simulation in convenient data structures
-   *
-   * @param configFileName - the name of the configuration file
-   * @return - object that stores data relevant to the Model and the View
-   */
-  public CellularAutomatonConfiguration loadConfigFile(String configFileName) {
-    CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(
-        configFileName);
-
-    return simulationConfig;
   }
 
   /**
