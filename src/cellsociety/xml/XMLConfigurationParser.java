@@ -74,19 +74,20 @@ public class XMLConfigurationParser extends XMLGenericParser {
   public List<List<String>> getInitialStates() {
     Element gridElement = (Element) root.getElementsByTagName("grid").item(0);
     if (gridElement.hasAttribute("distribution")) {
+      System.out.println(gridElement.getAttribute("distribution"));
       switch (gridElement.getAttribute("distribution").toLowerCase()) {
         case "specified":
-          return getSpecifiedInitialStates();
+          return makeSpecifiedInitialStates();
         case "randomspecified":
           break; // todo: randomly pick state at specified locations, with or without desired distribution
         case "randomtotal":
-          break; // todo: randomly pick state based on total locations to occupy, with or without desired distribution
+          return makeRandomTotalInitialStates(); // todo: randomly pick state based on total locations to occupy, with or without desired distribution
       }
     }
-    return getSpecifiedInitialStates();
+    return makeSpecifiedInitialStates();
   }
 
-  private List<List<String>> getSpecifiedInitialStates() {
+  private List<List<String>> makeSpecifiedInitialStates() {
     List<List<String>> gridInitialStates = new ArrayList<>();
     NodeList gridList = root.getElementsByTagName("gridrow");
     for (int row = 0; row < gridList.getLength(); row++) {
@@ -95,6 +96,21 @@ public class XMLConfigurationParser extends XMLGenericParser {
       ArrayList<String> rowInitialStates = new ArrayList<>();
       for (int col = 0; col < rowList.getLength(); col++) {
         rowInitialStates.add(rowList.item(col).getTextContent());
+      }
+      gridInitialStates.add(rowInitialStates);
+    }
+    return gridInitialStates;
+  }
+
+  private List<List<String>> makeRandomTotalInitialStates() {
+    List<List<String>> gridInitialStates = new ArrayList<>();
+    Object[] possibleCellStates = getCellStates();
+    int numStates = possibleCellStates.length;
+    // even distribution
+    for (int row = 0; row < getGridHeight(); row++) {
+      ArrayList<String> rowInitialStates = new ArrayList<>();
+      for (int col = 0; col < getGridWidth(); col++) {
+        rowInitialStates.add(possibleCellStates[(int) (Math.random()*numStates)].toString());
       }
       gridInitialStates.add(rowInitialStates);
     }
@@ -163,8 +179,8 @@ public class XMLConfigurationParser extends XMLGenericParser {
     return parameterMap;
   }
 
-  private Set<String> getCellStates() {
-    return getCellStyles().keySet();
+  private Object[] getCellStates() {
+    return getCellStyles().keySet().toArray();
   }
 
 }
