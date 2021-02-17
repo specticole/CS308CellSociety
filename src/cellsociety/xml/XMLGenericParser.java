@@ -17,6 +17,8 @@ public class XMLGenericParser {
   // keep only one documentBuilder because it is expensive to make and can reset it before parsing
   protected final DocumentBuilder DOCUMENT_BUILDER;
   protected Element root;
+  protected Document xmlDocument;
+  protected File configFile;
 
   /**
    * Create parser for any XML file input
@@ -25,6 +27,7 @@ public class XMLGenericParser {
    * @throws XMLException
    */
   public XMLGenericParser(File file) throws XMLException {
+    configFile = file;
     DOCUMENT_BUILDER = getDocumentBuilder();
     root = getRootElement(file);
   }
@@ -32,7 +35,7 @@ public class XMLGenericParser {
   protected Element getRootElement(File xmlFile) throws XMLException {
     try {
       DOCUMENT_BUILDER.reset();
-      Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
+      xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
       return xmlDocument.getDocumentElement();
     } catch (SAXException | IOException e) {
       throw new XMLException(e);

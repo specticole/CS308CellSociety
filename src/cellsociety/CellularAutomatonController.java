@@ -2,6 +2,8 @@ package cellsociety;
 
 import cellsociety.grids.Dense2DCellGrid;
 import cellsociety.view.CellularAutomatonView;
+import cellsociety.xml.XMLConfigurationParser;
+import cellsociety.xml.XMLGenericParser;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * This class initializes a CellularAutomatonConfiguration object that stores all relevant
@@ -34,6 +38,7 @@ public class CellularAutomatonController {
   private CellularAutomaton myModel;
   private File currentConfigFile;
   private Path storeConfigFilePath;
+  private List<List<String>> currentStates;
 
   public CellularAutomatonController() {
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
@@ -72,6 +77,7 @@ public class CellularAutomatonController {
     currentConfigFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     try {
       CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(currentConfigFile);
+      currentStates = simulationConfig.getInitialStates();
       return simulationConfig;
     } catch (NullPointerException n) {
       n.printStackTrace();
@@ -90,11 +96,6 @@ public class CellularAutomatonController {
    * Pauses the simulation by pausing the Timeline object
    */
   public void pauseSimulation() {
-    try {
-      storeConfigFile();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
     animation.pause();
   }
 
@@ -126,28 +127,38 @@ public class CellularAutomatonController {
 
   // may be implemented in Complete
   public void resetSimulation() {
-
+    // todo: storeConfigFile should have a corresponding button in the view
+    try {
+      storeConfigFile();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   private void step() {
     myModel.step();
 
     CellState currentState[][] = ((Dense2DCellGrid) myModel.getGrid()).extractStates(0);
-    List<List<String>> updatedStateStrings = new ArrayList<>();
     for (int row = 0; row < currentState.length; row++) {
-      ArrayList<String> rowUpdatedStates = new ArrayList<>();
       for (int col = 0; col < currentState[0].length; col++) {
-        rowUpdatedStates.add(currentState[row][col].toString());
+        currentStates.get(row).set(col, currentState[row][col].toString());
       }
-      updatedStateStrings.add(rowUpdatedStates);
     }
-    myView.updateView(updatedStateStrings);
+    myView.updateView(currentStates);
   }
 
   public void storeConfigFile() throws IOException {
+    // todo: get target directory from view
     String storeConfigFileName = currentConfigFile.getName().replaceAll(".xml","").concat("copy.xml");
     storeConfigFilePath = Paths.get(currentConfigFile.getParentFile().getParent() + "/Storage/" + storeConfigFileName);
-    Files.copy(currentConfigFile.toPath(), storeConfigFilePath, StandardCopyOption.REPLACE_EXISTING);
+    Path storedConfigFilePath = Files.copy(currentConfigFile.toPath(), storeConfigFilePath, StandardCopyOption.REPLACE_EXISTING);
+    File storedConfigFile = storedConfigFilePath.toFile();
+    updateStoredConfigFile(storedConfigFile);
+  }
+
+  public void updateStoredConfigFile(File storedConfigFile) {
+    XMLConfigurationParser updateParser = new XMLConfigurationParser(storedConfigFile);
+    updateParser.updateStoredConfigFile(currentStates);
   }
 
 }

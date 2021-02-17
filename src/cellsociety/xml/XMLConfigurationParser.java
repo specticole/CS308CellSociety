@@ -7,6 +7,12 @@ import java.util.Set;
 import javafx.scene.paint.Color;
 import java.util.HashMap;
 import java.util.Map;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -72,9 +78,9 @@ public class XMLConfigurationParser extends XMLGenericParser {
         case "specified":
           return getSpecifiedInitialStates();
         case "randomspecified":
-          break; // randomly pick state at specified locations, with or without desired distribution
+          break; // todo: randomly pick state at specified locations, with or without desired distribution
         case "randomtotal":
-          break; // randomly pick state based on total locations to occupy, with or without desired distribution
+          break; // todo: randomly pick state based on total locations to occupy, with or without desired distribution
       }
     }
     return getSpecifiedInitialStates();
@@ -93,6 +99,38 @@ public class XMLConfigurationParser extends XMLGenericParser {
       gridInitialStates.add(rowInitialStates);
     }
     return gridInitialStates;
+  }
+
+  /**
+   * Edits the existing configuration file given a 2D ArrayList of updated states
+   * @param currentStates - 2D ArrayList of updated states
+   */
+  public void updateStoredConfigFile(List<List<String>> currentStates) {
+    // todo: clean up this method
+    System.out.println("updating...");
+    NodeList gridList = root.getElementsByTagName("gridrow");
+    for (int row = 0; row < gridList.getLength(); row++) {
+      Element rowElement = (Element) gridList.item(row);
+      NodeList rowList = rowElement.getElementsByTagName("gridcell");
+      for (int col = 0; col < rowList.getLength(); col++) {
+        System.out.println("Changing state to " + currentStates.get(row).get(col));
+        rowList.item(col).setTextContent(currentStates.get(row).get(col));
+      }
+    }
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    Transformer transformer = null;
+    try {
+      transformer = transformerFactory.newTransformer();
+    } catch (TransformerConfigurationException e) {
+      e.printStackTrace();
+    }
+    DOMSource source = new DOMSource(xmlDocument);
+    StreamResult result = new StreamResult(configFile);
+    try {
+      transformer.transform(source, result);
+    } catch (TransformerException e) {
+      e.printStackTrace();
+    }
   }
 
   public Map<String, Color> getCellStyles() {
