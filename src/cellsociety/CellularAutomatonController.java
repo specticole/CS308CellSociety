@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
@@ -31,6 +33,7 @@ public class CellularAutomatonController {
   private CellularAutomatonView myView;
   private CellularAutomaton myModel;
   private File currentConfigFile;
+  private Path storeConfigFilePath;
 
   public CellularAutomatonController() {
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
@@ -87,6 +90,11 @@ public class CellularAutomatonController {
    * Pauses the simulation by pausing the Timeline object
    */
   public void pauseSimulation() {
+    try {
+      storeConfigFile();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     animation.pause();
   }
 
@@ -137,8 +145,9 @@ public class CellularAutomatonController {
   }
 
   public void storeConfigFile() throws IOException {
-    Path storePath = Files.createDirectory(currentConfigFile.toPath());
-    Files.copy(currentConfigFile.toPath(), storePath);
+    String storeConfigFileName = currentConfigFile.getName().replaceAll(".xml","").concat("copy.xml");
+    storeConfigFilePath = Paths.get(currentConfigFile.getParentFile().getParent() + "/Storage/" + storeConfigFileName);
+    Files.copy(currentConfigFile.toPath(), storeConfigFilePath, StandardCopyOption.REPLACE_EXISTING);
   }
 
 }
