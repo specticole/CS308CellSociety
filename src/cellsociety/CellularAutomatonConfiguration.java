@@ -1,6 +1,6 @@
 package cellsociety;
 
-import cellsociety.xml.XMLParser;
+import cellsociety.xml.XMLConfigurationParser;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +34,11 @@ public class CellularAutomatonConfiguration {
    * @param configFile - XML configuration file
    */
   public CellularAutomatonConfiguration(File configFile) {
-    XMLParser docParser = new XMLParser(configFile);
+    XMLConfigurationParser docParser = new XMLConfigurationParser(configFile);
     parseXMLFile(docParser);
   }
 
-  private void parseXMLFile(XMLParser docParser) {
+  private void parseXMLFile(XMLConfigurationParser docParser) {
     simulationMetadata = docParser.getMetadata();
     gridWidth = docParser.getGridWidth();
     gridHeight = docParser.getGridHeight();

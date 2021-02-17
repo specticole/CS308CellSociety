@@ -18,14 +18,15 @@ import org.w3c.dom.NodeList;
  * @author Robert C. Duvall
  * @author Patrick Liu
  */
-public class XMLParser extends XMLGenericParser {
+public class XMLConfigurationParser extends XMLGenericParser {
+  public static final String[] META_FIELDS = {"title", "author", "description"};
 
   /**
    * Create parser for any XML file input
    * @param file - XML configuration file
    * @throws XMLException
    */
-  public XMLParser (File file) throws XMLException {
+  public XMLConfigurationParser(File file) throws XMLException {
     super(file);
   }
 
