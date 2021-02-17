@@ -11,18 +11,20 @@ import org.w3c.dom.NodeList;
 
 
 /**
- * This class handles parsing XML files and returning appropriately-formatted
- * Objects for given input tags. Heavily based on code from class.
+ * This class handles parsing XML files and returning appropriately-formatted Objects for given
+ * input tags. Heavily based on code from class.
  *
  * @author Rhondu Smithwick
  * @author Robert C. Duvall
  * @author Patrick Liu
  */
 public class XMLConfigurationParser extends XMLGenericParser {
+
   public static final String[] META_FIELDS = {"title", "author", "description"};
 
   /**
    * Create parser for any XML file input
+   *
    * @param file - XML configuration file
    * @throws XMLException
    */
@@ -30,7 +32,7 @@ public class XMLConfigurationParser extends XMLGenericParser {
     super(file);
   }
 
-  public Map<String, String> getMetadata () {
+  public Map<String, String> getMetadata() {
     Map<String, String> simulationMetadata = new HashMap<>();
     for (String field : META_FIELDS) {
       simulationMetadata.put(field, getTextValue(root, field));
@@ -84,9 +86,11 @@ public class XMLConfigurationParser extends XMLGenericParser {
     for (int state = 0; state < styleList.getLength(); state++) {
       Element stateElement = (Element) styleList.item(state);
       String cellType = stateElement.getAttribute("type");
-      cellStyleMap.put(cellType, new Color(Integer.valueOf(stateElement.getElementsByTagName("r").item(0).getTextContent()) / 255.0,
+      cellStyleMap.put(cellType, new Color(
+          Integer.valueOf(stateElement.getElementsByTagName("r").item(0).getTextContent()) / 255.0,
           Integer.valueOf(stateElement.getElementsByTagName("g").item(0).getTextContent()) / 255.0,
-          Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent()) / 255.0, 1.0));
+          Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent()) / 255.0,
+          1.0));
     }
     return cellStyleMap;
   }
@@ -98,7 +102,8 @@ public class XMLConfigurationParser extends XMLGenericParser {
       NodeList parameterList = configElement.getElementsByTagName("parameter");
       for (int count = 0; count < parameterList.getLength(); count++) {
         Element parameterElement = (Element) parameterList.item(count);
-        parameterMap.put(parameterElement.getAttribute("name"), parameterElement.getAttribute("value"));
+        parameterMap
+            .put(parameterElement.getAttribute("name"), parameterElement.getAttribute("value"));
       }
     }
     return parameterMap;
