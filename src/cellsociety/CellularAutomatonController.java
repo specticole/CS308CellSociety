@@ -3,6 +3,9 @@ package cellsociety;
 import cellsociety.grids.Dense2DCellGrid;
 import cellsociety.view.CellularAutomatonView;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
@@ -27,6 +30,7 @@ public class CellularAutomatonController {
   private KeyFrame frame;
   private CellularAutomatonView myView;
   private CellularAutomaton myModel;
+  private File currentConfigFile;
 
   public CellularAutomatonController() {
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
@@ -62,9 +66,9 @@ public class CellularAutomatonController {
   public CellularAutomatonConfiguration loadConfigFile(GridPane masterLayout) {
     FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
-    File file = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
+    currentConfigFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     try {
-      CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
+      CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(currentConfigFile);
       return simulationConfig;
     } catch (NullPointerException n) {
       n.printStackTrace();
@@ -130,6 +134,11 @@ public class CellularAutomatonController {
       updatedStateStrings.add(rowUpdatedStates);
     }
     myView.updateView(updatedStateStrings);
+  }
+
+  public void storeConfigFile() throws IOException {
+    Path storePath = Files.createDirectory(currentConfigFile.toPath());
+    Files.copy(currentConfigFile.toPath(), storePath);
   }
 
 }
