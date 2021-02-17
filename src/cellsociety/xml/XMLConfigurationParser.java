@@ -3,6 +3,7 @@ package cellsociety.xml;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javafx.scene.paint.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +66,23 @@ public class XMLConfigurationParser extends XMLGenericParser {
   }
 
   public List<List<String>> getInitialStates() {
+    Element gridElement = (Element) root.getElementsByTagName("grid").item(0);
+    if (gridElement.hasAttribute("distribution")) {
+      switch (gridElement.getAttribute("distribution").toLowerCase()) {
+        case "specified":
+          return getSpecifiedInitialStates();
+        case "randomspecified":
+          break; // randomly pick state at specified locations, with or without desired distribution
+        case "randomtotal":
+          break; // randomly pick state based on total locations to occupy, with or without desired distribution
+      }
+    }
+    else {
+      return getSpecifiedInitialStates();
+    }
+  }
+
+  private List<List<String>> getSpecifiedInitialStates() {
     List<List<String>> gridInitialStates = new ArrayList<>();
     NodeList gridList = root.getElementsByTagName("gridrow");
     for (int row = 0; row < gridList.getLength(); row++) {
@@ -107,6 +125,10 @@ public class XMLConfigurationParser extends XMLGenericParser {
       }
     }
     return parameterMap;
+  }
+
+  private Set<String> getCellStates() {
+    return getCellStyles().keySet();
   }
 
 }
