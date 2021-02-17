@@ -1,7 +1,6 @@
 package cellsociety.rules;
 
 import cellsociety.Cell;
-import cellsociety.CellState;
 import cellsociety.states.GameOfLifeState;
 import cellsociety.CellularAutomatonRule;
 
@@ -19,7 +18,7 @@ public class GameOfLifeRule extends CellularAutomatonRule {
   public GameOfLifeRule(Map<String, String> params) {
     super(params);
 
-    getGameSpecifics();
+    setGameSpecifics(params);
   }
 
   /**
@@ -32,21 +31,21 @@ public class GameOfLifeRule extends CellularAutomatonRule {
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
     int aliveNeighbors = 0;
     for(Cell neighbor : neighbors){
-      if(neighbor.getState(cell.CURRENT_TIME).getState() == GameOfLifeState.States.ALIVE){
+      if(neighbor.getState(Cell.CURRENT_TIME).getState() == GameOfLifeState.States.ALIVE){
         aliveNeighbors++;
       }
     }
 
     //System.out.printf("Alive count: %d ", aliveNeighbors);
 
-    if(cell.getState(cell.CURRENT_TIME).getState()  == GameOfLifeState.States.ALIVE){
+    if(cell.getState(Cell.CURRENT_TIME).getState()  == GameOfLifeState.States.ALIVE){
       if(!surviveNums.contains(aliveNeighbors)){
-        cell.setState(cell.NEXT_TIME, new GameOfLifeState(GameOfLifeState.States.DEAD));
+        cell.setState(Cell.NEXT_TIME, new GameOfLifeState(GameOfLifeState.States.DEAD));
         //System.out.printf("-> die");
       }
     } else {
       if(bornNums.contains(aliveNeighbors)){
-        cell.setState(cell.NEXT_TIME, new GameOfLifeState(GameOfLifeState.States.ALIVE));
+        cell.setState(Cell.NEXT_TIME, new GameOfLifeState(GameOfLifeState.States.ALIVE));
         //Systemout.printf("-> born");
       }
     }
@@ -55,11 +54,19 @@ public class GameOfLifeRule extends CellularAutomatonRule {
 
   /**
    * This method gets the specific rule set for the game of live variation, in the form of B<int><int>.../S<int><int>...
+   * @param params
    */
-  public void getGameSpecifics() {
-    //this will change to read in from the xml
-    Integer[] born = {3};
-    Integer[] survive = {2, 3};
+  public void setGameSpecifics(Map<String, String> params) {
+    List<Integer> born = new ArrayList<>();
+    List<Integer> survive = new ArrayList<>();
+    String rules = params.get("rules");
+    String[] rulesSplit = rules.split("/");
+    for (int i = 1; i < rulesSplit[0].length(); i++) {
+      born.add(Integer.valueOf(rulesSplit[0].substring(i, i + 1)));
+    }
+    for (int i = 1; i < rulesSplit[1].length(); i++) {
+      survive.add(Integer.valueOf(rulesSplit[1].substring(i, i + 1)));
+    }
 
     bornNums = new HashSet<>();
     surviveNums = new HashSet<>();

@@ -3,6 +3,9 @@ package cellsociety;
 import cellsociety.grids.Dense2DCellGrid;
 import cellsociety.view.CellularAutomatonView;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
@@ -27,11 +30,9 @@ public class CellularAutomatonController {
   private KeyFrame frame;
   private CellularAutomatonView myView;
   private CellularAutomaton myModel;
-
-  private List<List<String>> myStates;
+  private File currentConfigFile;
 
   public CellularAutomatonController() {
-    //currentTime = 0;
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
     animation = new Timeline();
     animation.setCycleCount(Timeline.INDEFINITE);
@@ -57,22 +58,6 @@ public class CellularAutomatonController {
   }
 
   /**
-   * Takes in a filename and returns an object that stores all relevant information for the
-   * simulation in convenient data structures
-   *
-   * @param configFileName - the name of the configuration file
-   * @return - object that stores data relevant to the Model and the View
-   */
-  public CellularAutomatonConfiguration loadConfigFile(String configFileName) {
-    CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(
-        configFileName);
-
-    initializeForConfig(simulationConfig);
-
-    return simulationConfig;
-  }
-
-  /**
    * Loads a file based on user selection in a visual file chooser
    *
    * @param masterLayout - the GridPane that the View holds
@@ -81,12 +66,12 @@ public class CellularAutomatonController {
   public CellularAutomatonConfiguration loadConfigFile(GridPane masterLayout) {
     FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
-    File file = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
+    currentConfigFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     try {
-      CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(file);
-      myStates = simulationConfig.getInitialStates();
+      CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(currentConfigFile);
       return simulationConfig;
     } catch (NullPointerException n) {
+      n.printStackTrace();
       return null;
     }
   }
@@ -149,6 +134,11 @@ public class CellularAutomatonController {
       updatedStateStrings.add(rowUpdatedStates);
     }
     myView.updateView(updatedStateStrings);
+  }
+
+  public void storeConfigFile() throws IOException {
+    Path storePath = Files.createDirectory(currentConfigFile.toPath());
+    Files.copy(currentConfigFile.toPath(), storePath);
   }
 
 }

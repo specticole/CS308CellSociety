@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 
 public class CellularAutomatonView {
@@ -22,6 +23,8 @@ public class CellularAutomatonView {
   private GridPane masterLayout;
   @FXML
   private GridPane mainGrid;
+  @FXML
+  private Text title;
   @FXML
   private Button startResetButton;
   @FXML
@@ -42,8 +45,8 @@ public class CellularAutomatonView {
     bundle = ResourceBundle.getBundle("labels", locale);
 
     controller = new CellularAutomatonController(this);
-    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("ControllerTest"
-        + ".xml");
+    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("GameOfLife/GameOfLife01"
+                                                                               + ".xml");
     updateXML(config);
 
     started = false;
@@ -51,6 +54,10 @@ public class CellularAutomatonView {
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
+    System.out.printf("Update XML\n");
+    controller.initializeForConfig(config);
+    title.setText(config.getSimulationMetadata().get("title"));
+    mainGrid.getChildren().clear();
     grid = new RectangularGridStyle(mainGrid);
     cellStyles = config.getCellStyles();
     grid.createGrid(config.getGridHeight(),config.getGridWidth());
@@ -108,12 +115,19 @@ public class CellularAutomatonView {
 
   public void speedButtonClick() {
     controller.changeRateSlider((int) speedSlider.getValue());
+    started = true;
+    paused = false;
+    updateButtonLabels();
   }
 
   public void loadFileClick() {
     CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
     if(config != null){
       updateXML(config);
+      controller.pauseSimulation();
+      started = false;
+      paused = true;
+      updateButtonLabels();
     }
   }
 

@@ -16,7 +16,7 @@
   <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
 
   <HBox GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="4"  alignment="CENTER">
-    <Text text="%Title">
+    <Text fx:id="title">
       <font><Font name="Arial Black" size="36.0" /></font>
     </Text>
   </HBox>

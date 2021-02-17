@@ -52,9 +52,9 @@ public class RectangularGridStyle extends GridStyle{
 
   @Override
   public void updateGrid(List<List<String>> listOfStates, Map<String, Color> stateToColor) {
+    System.out.printf("Update grid %dx%d\n", listOfStates.get(0).size(), listOfStates.size());
     for (int i = 0; i < listOfStates.size(); i++) {
       for (int j = 0; j < listOfStates.get(0).size(); j++) {
-        System.out.println(stateToColor.get(listOfStates.get(i).get(j)));
         grid[i][j].setFill(stateToColor.get(listOfStates.get(i).get(j)));
       }
     }

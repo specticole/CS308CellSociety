@@ -18,7 +18,10 @@ import cellsociety.util.*;
  * @author Cole Spector
  */
 public class Cell {
-
+  /**
+   * Constants representing offsets (deltas) from the current
+   * time. Used to simplify state retrieval.
+   */
   public final static int CURRENT_TIME = 0;
   public final static int NEXT_TIME = 1;
 
@@ -75,9 +78,16 @@ public class Cell {
     return states;
   }
 
-  public void swapCells(Cell otherCell){
-    //TODO: have this cell swap all info but prior states with otherCell
-  }
+
+//  /**
+//   * This method swaps the current state of two Cells
+//   * @param otherCell the other Cell to be swapped with
+//   */
+//  public void swapCells(Cell otherCell){
+//    CellState tempState = this.getState(CURRENT_TIME);
+//    setState(NEXT_TIME, otherCell.getState(CURRENT_TIME));
+//    otherCell.setState(NEXT_TIME, tempState);
+//  }
 
   /**
    * Duplicate the latest state in our state list.

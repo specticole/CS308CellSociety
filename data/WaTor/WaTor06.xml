@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simulation rules="wator">
+  <meta>
+    <title>WaTor 6</title>
+    <author>Bill Guo</author>
+    <description>normal simulation with lots of starting sharks</description>
+  </meta>
+  <grid type="rectangular" width="9" height="9" neighbors="4" wrapping="false">
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>EMPTY</gridcell>
+    </gridrow>
+  </grid>
+
+  <cellstyle>
+    <cellstate type="EMPTY"><r>0</r><g>0</g><b>255</b></cellstate>
+    <cellstate type="FISH"><r>255</r><g>0</g><b>0</b></cellstate>
+    <cellstate type="SHARK"><r>0</r><g>255</g><b>0</b></cellstate>
+  </cellstyle>
+  <config_parameters>
+    <parameter name="rules" value="F5/S5/X5"></parameter>
+  </config_parameters>
+</simulation>

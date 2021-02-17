@@ -1,8 +1,6 @@
 package cellsociety;
 
-import cellsociety.rules.GameOfLifeRule;
-import cellsociety.rules.PercolationRule;
-import cellsociety.xml.XMLParser;
+import cellsociety.xml.XMLConfigurationParser;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +8,7 @@ import javafx.scene.paint.Color;
 
 import cellsociety.states.*;
 import cellsociety.grids.*;
+import cellsociety.rules.*;
 
 /**
  * This class stores all the information read in from the configuration file, to be passed to the
@@ -24,33 +23,27 @@ public class CellularAutomatonConfiguration {
   private Map<String, String> simulationMetadata;
   private int gridWidth;
   private int gridHeight;
+  private int gridNeighbors;
+  private boolean gridWrapping;
   private Map<String, Color> cellStyles;
   private Map<String, String> simulationParameters;
   private List<List<String>> initialStates;
-
-  /**
-   * Stores relevant information given filename in data folder - for testing
-   *
-   * @param configFileName - String filename for XML configuration file
-   */
-  public CellularAutomatonConfiguration(String configFileName) {
-    XMLParser docParser = new XMLParser(configFileName);
-    parseXMLFile(docParser);
-  }
 
   /**
    * Stores relevant information given any XML file
    * @param configFile - XML configuration file
    */
   public CellularAutomatonConfiguration(File configFile) {
-    XMLParser docParser = new XMLParser(configFile);
+    XMLConfigurationParser docParser = new XMLConfigurationParser(configFile);
     parseXMLFile(docParser);
   }
 
-  private void parseXMLFile(XMLParser docParser) {
+  private void parseXMLFile(XMLConfigurationParser docParser) {
     simulationMetadata = docParser.getMetadata();
     gridWidth = docParser.getGridWidth();
     gridHeight = docParser.getGridHeight();
+    gridNeighbors = docParser.getGridNeighbors();
+    gridWrapping = docParser.getGridWrapping();
     cellStyles = docParser.getCellStyles();
     simulationParameters = docParser.getParameters();
     initialStates = docParser.getInitialStates();
@@ -61,19 +54,19 @@ public class CellularAutomatonConfiguration {
   }
 
   private CellState makeState(String simulationType, String contents) {
-    // TODO: refactor
     switch(simulationType) {
       case "gameoflife":
         return new GameOfLifeState(contents);
       case "percolation":
         return new PercolationState(contents);
       case "fire":
-        return null;
+        return new FireState(contents);
       case "wator":
-        return null;
+        return new WaTorWorldState(contents);
       case "segregation":
-        return null;
+        return new SegregationState(contents);
       default:
+        assert(false);
         return null;
     }
   }
@@ -81,13 +74,16 @@ public class CellularAutomatonConfiguration {
   private void makeGrid(String simulationType, String gridType, List<List<String>> initialStates) {
     switch(gridType) {
       case "rectangular":
-        grid = new RectangularCellGrid(gridWidth, gridHeight, false, 8);
+        grid = new RectangularCellGrid(gridWidth, gridHeight, gridWrapping, gridNeighbors);
 
         // populate our new grid
         CellState initialState[][] = new CellState[gridHeight][gridWidth];
         for(int y = 0; y < gridHeight; y++) {
           for(int x = 0; x < gridWidth; x++ ) {
-            initialState[y][x] = makeState(simulationType, initialStates.get(y).get(x));
+            CellState state = makeState(simulationType, initialStates.get(y).get(x));
+            initialState[y][x] = state;
+            //System.out.printf("%s\n", state.toString());
+            assert(state != null);
           }
         }
 
@@ -106,11 +102,17 @@ public class CellularAutomatonConfiguration {
         ruleSet = new PercolationRule(simulationParameters);
         break;
       case "fire":
+        ruleSet = new FireRule(simulationParameters);
         break;
+
       case "wator":
+        ruleSet = new WaTorWorldRule(simulationParameters);
         break;
       case "segregation":
+        ruleSet = new SegregationRule(simulationParameters);
         break;
+      default:
+        assert(false);
     }
   }
 

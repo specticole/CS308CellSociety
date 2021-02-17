@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simulation rules="segregation">
+  <meta>
+    <title>Segregation 6</title>
+    <author>Bill Guo</author>
+    <description>5x5, random, need 0.3</description>
+  </meta>
+  <grid type="rectangular" width="5" height="5" neighbors="8" wrapping="false">
+    <gridrow>
+      <gridcell>X</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>O</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>OPEN</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>O</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>X</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>OPEN</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>X</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>X</gridcell>
+      <gridcell>X</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>X</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>O</gridcell>
+      <gridcell>OPEN</gridcell>
+      <gridcell>O</gridcell>
+    </gridrow>
+  </grid>
+  <cellstyle>
+    <cellstate type="X"><r>255</r><g>0</g><b>0</b></cellstate>
+    <cellstate type="O"><r>0</r><g>0</g><b>255</b></cellstate>
+    <cellstate type="OPEN"><r>255</r><g>255</g><b>255</b></cellstate>
+  </cellstyle>
+  <config_parameters>
+    <parameter name="neighborsNeeded" value="0.3"></parameter>
+  </config_parameters>
+</simulation>

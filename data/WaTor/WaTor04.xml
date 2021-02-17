@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simulation rules="wator">
+  <meta>
+    <title>WaTor 4</title>
+    <author>Bill Guo</author>
+    <description>fish and shark mayhem</description>
+  </meta>
+  <grid type="rectangular" width="9" height="9" neighbors="4" wrapping="false">
+    <gridrow>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>EMPTY</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+      <gridcell>SHARK</gridcell>
+      <gridcell>FISH</gridcell>
+    </gridrow>
+  </grid>
+
+  <cellstyle>
+    <cellstate type="EMPTY"><r>0</r><g>0</g><b>255</b></cellstate>
+    <cellstate type="FISH"><r>255</r><g>0</g><b>0</b></cellstate>
+    <cellstate type="SHARK"><r>0</r><g>255</g><b>0</b></cellstate>
+  </cellstyle>
+  <config_parameters>
+    <parameter name="rules" value="F1/S1/X5"></parameter>
+  </config_parameters>
+</simulation>
