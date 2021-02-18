@@ -50,7 +50,6 @@ public class CellularAutomatonView {
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
-    System.out.printf("Update XML\n");
     controller.initializeForConfig(config);
     title.setText(config.getSimulationMetadata().get("title"));
     mainGrid.getChildren().clear();
