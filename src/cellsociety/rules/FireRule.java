@@ -29,13 +29,10 @@ public class FireRule extends CellularAutomatonRule {
 
   public void neighborsOnFire(Cell cell, List<Cell> neighbors){
     for(Cell neighbor : neighbors){
-      if (neighbor.getState(Cell.CURRENT_TIME).getState() == States.BURNING){
-        if(didCatchFire()){
-          burn(cell);
-          break;
-        } else {
-          continue;
-        }
+      if (neighbor.getState(Cell.CURRENT_TIME).getState() == States.BURNING &&
+          didCatchFire()) {
+        burn(cell);
+        break;
       }
     }
   }
