@@ -5,7 +5,6 @@ import cellsociety.CellGrid;
 import cellsociety.CellularAutomatonRule;
 import cellsociety.states.SegregationState;
 import cellsociety.states.SegregationState.States;
-import cellsociety.states.WaTorWorldState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +26,9 @@ public class SegregationRule extends CellularAutomatonRule {
     ArrayList<Cell> similarNeighbors = getSimilarNeighbors(neighbors,
         (States) cell.getState(Cell.CURRENT_TIME).getState());
 
-    if (cell.getState(Cell.CURRENT_TIME).getState() != States.OPEN){
-      if(needsToMove(populatedNeighbors, similarNeighbors)){
-        move(cell);
-      }
-    }
-
-
+    if (cell.getState(Cell.CURRENT_TIME).getState() != States.OPEN &&
+        needsToMove(populatedNeighbors, similarNeighbors))
+      move(cell);
   }
 
   private ArrayList<Cell> getSimilarNeighbors(List<Cell> neighbors, SegregationState.States state){
@@ -62,12 +57,10 @@ public class SegregationRule extends CellularAutomatonRule {
     CellGrid cellGrid = currentCell.getParentGrid();
     ArrayList<Cell> openCells = new ArrayList<>();
 
-    for(Cell cell : cellGrid){
-      if(cell.getState(Cell.CURRENT_TIME).getState() == States.OPEN){
-        if(cell.getState(Cell.NEXT_TIME).getState() == States.OPEN) {
+    for(Cell cell : cellGrid) {
+      if(cell.getState(Cell.CURRENT_TIME).getState() == States.OPEN &&
+         cell.getState(Cell.NEXT_TIME).getState() == States.OPEN)
           openCells.add(cell);
-        }
-      }
     }
 
     System.out.printf("----%d open cells\n", openCells.size());

@@ -29,23 +29,17 @@ public class FireRule extends CellularAutomatonRule {
 
   public void neighborsOnFire(Cell cell, List<Cell> neighbors){
     for(Cell neighbor : neighbors){
-      if (neighbor.getState(Cell.CURRENT_TIME).getState() == States.BURNING){
-        if(didCatchFire()){
-          burn(cell);
-          break;
-        } else {
-          continue;
-        }
+      if (neighbor.getState(Cell.CURRENT_TIME).getState() == States.BURNING &&
+          didCatchFire()) {
+        burn(cell);
+        break;
       }
     }
   }
 
   public boolean didCatchFire(){
     Random rand = new Random();
-    if(rand.nextInt(100) <= fireChance){
-      return true;
-    }
-    return false;
+    return (rand.nextInt(100) <= fireChance);
   }
 
   public void dieOut(Cell cell){

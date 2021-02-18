@@ -5,14 +5,11 @@ import cellsociety.CellState;
 import cellsociety.CellularAutomatonRule;
 import cellsociety.states.WaTorWorldState;
 import cellsociety.states.WaTorWorldState.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.concurrent.ThreadLocalRandom;
-
 
 public class WaTorWorldRule extends CellularAutomatonRule {
   private int sharkRoundsToBreed;
@@ -97,14 +94,12 @@ public class WaTorWorldRule extends CellularAutomatonRule {
         if(state.getTurnsSurvived() == fishRoundsToBreed){
           spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.FISH));
         }
-      } else if(state.getState() == States.SHARK){
-        if(state.getTurnsSurvived() == sharkRoundsToBreed){
-          spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.SHARK));
-        }
+      } else if(state.getState() == States.SHARK &&
+                state.getTurnsSurvived() == sharkRoundsToBreed) {
+        spawn.setState(Cell.NEXT_TIME, new WaTorWorldState(States.SHARK));
       }
     }
   }
-
   /**
    * Filter a list of Cells for those matching `state' at both the
    * current and next time steps.

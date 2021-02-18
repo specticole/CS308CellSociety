@@ -2,13 +2,10 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
-import cellsociety.xml.XMLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -53,7 +50,6 @@ public class CellularAutomatonView {
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
-    System.out.printf("Update XML\n");
     controller.initializeForConfig(config);
     title.setText(config.getSimulationMetadata().get("title"));
     mainGrid.getChildren().clear();

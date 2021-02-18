@@ -1,9 +1,7 @@
 package cellsociety.view;
 
-import cellsociety.CellGrid;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 

@@ -30,7 +30,7 @@ import org.w3c.dom.NodeList;
  */
 public class CellularAutomatonController {
 
-  public static final double[] STEP_SIZES = {1.0, 1.0 / 5, 1.0 / 10, 1.0 / 20, 1.0 / 60};
+  protected static final double[] STEP_SIZES = {1.0, 1.0 / 5, 1.0 / 10, 1.0 / 20, 1.0 / 60};
 
   private Timeline animation;
   private KeyFrame frame;
