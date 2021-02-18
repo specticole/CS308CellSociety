@@ -1,7 +1,5 @@
 package cellsociety.model;
 
-import cellsociety.*;
-
 /**
  * Top-level class of the cellular automaton model. A
  * CellularAutomaton consists of a CellGrid on which the simulation

@@ -1,10 +1,10 @@
-package cellsociety.rules;
+package cellsociety.model.rules;
 
-import cellsociety.Cell;
-import cellsociety.CellGrid;
-import cellsociety.CellularAutomatonRule;
-import cellsociety.states.SegregationState;
-import cellsociety.states.SegregationState.States;
+import cellsociety.model.Cell;
+import cellsociety.model.CellGrid;
+import cellsociety.model.CellularAutomatonRule;
+import cellsociety.model.states.SegregationState;
+import cellsociety.model.states.SegregationState.States;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

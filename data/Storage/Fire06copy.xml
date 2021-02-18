@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><simulation rules="fire">
+  <meta>
+    <title>Fire Test 6</title>
+    <author>Patrick Liu</author>
+    <description>9x9 grid with burning trees in the four corners, probCatch = 0.2</description>
+  </meta>
+  <grid height="9" neighbors="4" type="rectangular" width="9" wrapping="false">
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+  </grid>
+  <cellstyle>
+    <cellstate type="TREE"><r>0</r><g>255</g><b>0</b></cellstate>
+    <cellstate type="EMPTY"><r>255</r><g>255</g><b>0</b></cellstate>
+    <cellstate type="BURNING"><r>165</r><g>42</g><b>42</b></cellstate>
+  </cellstyle>
+  <config_parameters>
+    <parameter name="probCatch" value="20"/>
+  </config_parameters>
+</simulation>

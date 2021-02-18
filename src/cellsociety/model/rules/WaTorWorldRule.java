@@ -1,11 +1,10 @@
-package cellsociety.rules;
+package cellsociety.model.rules;
 
-import cellsociety.Cell;
-import cellsociety.CellState;
-import cellsociety.CellularAutomatonRule;
-import cellsociety.states.WaTorWorldState;
-import cellsociety.states.WaTorWorldState.*;
-import java.util.HashSet;
+import cellsociety.model.Cell;
+import cellsociety.model.CellState;
+import cellsociety.model.CellularAutomatonRule;
+import cellsociety.model.states.WaTorWorldState;
+import cellsociety.model.states.WaTorWorldState.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;

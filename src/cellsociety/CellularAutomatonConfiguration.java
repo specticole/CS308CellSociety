@@ -1,14 +1,17 @@
 package cellsociety;
 
+import cellsociety.model.CellGrid;
+import cellsociety.model.CellState;
+import cellsociety.model.CellularAutomatonRule;
 import cellsociety.xml.XMLConfigurationParser;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.paint.Color;
 
-import cellsociety.states.*;
-import cellsociety.grids.*;
-import cellsociety.rules.*;
+import cellsociety.model.states.*;
+import cellsociety.model.grids.*;
+import cellsociety.model.rules.*;
 
 /**
  * This class stores all the information read in from the configuration file, to be passed to the

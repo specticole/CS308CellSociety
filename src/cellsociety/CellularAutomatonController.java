@@ -1,16 +1,16 @@
 package cellsociety;
 
-import cellsociety.grids.Dense2DCellGrid;
+import cellsociety.model.CellState;
+import cellsociety.model.CellularAutomaton;
+import cellsociety.model.grids.Dense2DCellGrid;
 import cellsociety.view.CellularAutomatonView;
 import cellsociety.xml.XMLConfigurationParser;
-import cellsociety.xml.XMLGenericParser;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,8 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * This class initializes a CellularAutomatonConfiguration object that stores all relevant

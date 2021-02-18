@@ -1,7 +1,7 @@
-package cellsociety.states;
+package cellsociety.model.states;
 
 
-import cellsociety.CellState;
+import cellsociety.model.CellState;
 
 public class SegregationState extends CellState<SegregationState.States> {
 

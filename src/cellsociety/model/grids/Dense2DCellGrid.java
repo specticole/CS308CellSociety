@@ -1,8 +1,10 @@
-package cellsociety.grids;
+package cellsociety.model.grids;
 
-import cellsociety.*;
+import cellsociety.model.Cell;
+import cellsociety.model.CellGrid;
+import cellsociety.model.CellState;
+import cellsociety.model.GridCoordinates;
 import java.util.*;
-import java.lang.reflect.Constructor;
 import java.util.stream.Collectors;
 
 /**

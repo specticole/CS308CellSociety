@@ -1,9 +1,11 @@
 package cellsociety.test;
 
-import cellsociety.*;
-import cellsociety.grids.*;
-import cellsociety.rules.*;
-import cellsociety.states.*;
+import cellsociety.model.CellState;
+import cellsociety.model.CellularAutomaton;
+import cellsociety.model.CellularAutomatonRule;
+import cellsociety.model.grids.*;
+import cellsociety.model.rules.*;
+import cellsociety.model.states.*;
 
 import java.util.concurrent.*;
 

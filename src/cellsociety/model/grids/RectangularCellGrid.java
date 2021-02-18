@@ -1,6 +1,6 @@
-package cellsociety.grids;
+package cellsociety.model.grids;
 
-import cellsociety.*;
+import cellsociety.model.GridCoordinates;
 import java.util.*;
 import java.util.stream.*;
 

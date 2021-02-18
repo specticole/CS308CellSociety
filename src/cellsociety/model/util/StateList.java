@@ -1,4 +1,4 @@
-package cellsociety.util;
+package cellsociety.model.util;
 
 import java.util.Collections;
 import java.util.TreeMap;

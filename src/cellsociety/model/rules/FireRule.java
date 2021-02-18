@@ -1,9 +1,9 @@
-package cellsociety.rules;
+package cellsociety.model.rules;
 
-import cellsociety.Cell;
-import cellsociety.CellularAutomatonRule;
-import cellsociety.states.FireState;
-import cellsociety.states.FireState.States;
+import cellsociety.model.Cell;
+import cellsociety.model.CellularAutomatonRule;
+import cellsociety.model.states.FireState;
+import cellsociety.model.states.FireState.States;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;

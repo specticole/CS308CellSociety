@@ -1,6 +1,6 @@
-package cellsociety;
+package cellsociety.model;
 
-import cellsociety.util.*;
+import cellsociety.model.util.*;
 
 /**
  * A Cell is the basic unit of a CellGrid in a CellularAutomaton. Each

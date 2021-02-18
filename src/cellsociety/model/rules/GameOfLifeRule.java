@@ -1,8 +1,8 @@
-package cellsociety.rules;
+package cellsociety.model.rules;
 
-import cellsociety.Cell;
-import cellsociety.states.GameOfLifeState;
-import cellsociety.CellularAutomatonRule;
+import cellsociety.model.Cell;
+import cellsociety.model.states.GameOfLifeState;
+import cellsociety.model.CellularAutomatonRule;
 
 import java.util.*;
 

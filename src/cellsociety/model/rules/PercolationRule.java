@@ -1,10 +1,9 @@
-package cellsociety.rules;
+package cellsociety.model.rules;
 
-import cellsociety.Cell;
-import cellsociety.CellState;
-import cellsociety.CellularAutomatonRule;
+import cellsociety.model.Cell;
+import cellsociety.model.CellularAutomatonRule;
 
-import cellsociety.states.PercolationState;
+import cellsociety.model.states.PercolationState;
 import java.util.*;
 
 /**

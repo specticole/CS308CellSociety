@@ -1,6 +1,6 @@
-package cellsociety.states;
+package cellsociety.model.states;
 
-import cellsociety.CellState;
+import cellsociety.model.CellState;
 
 
 public class WaTorWorldState extends CellState<WaTorWorldState.States> {

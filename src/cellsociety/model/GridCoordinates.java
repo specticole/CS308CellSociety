@@ -1,6 +1,4 @@
-package cellsociety;
-
-import java.util.*;
+package cellsociety.model;
 
 /**
  * Immutable class representing integer coordinates on an arbitrary
