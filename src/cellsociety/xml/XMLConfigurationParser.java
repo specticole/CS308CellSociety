@@ -198,7 +198,7 @@ public class XMLConfigurationParser extends XMLGenericParser {
   }
 
   private List<String> getCellStates() {
-    return new ArrayList<String>(getCellStyles().keySet());
+    return new ArrayList<>(getCellStyles().keySet());
   }
 
 }
