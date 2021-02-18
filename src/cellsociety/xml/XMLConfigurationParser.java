@@ -2,6 +2,7 @@ package cellsociety.xml;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.scene.paint.Color;
 import java.util.HashMap;
@@ -70,6 +71,10 @@ public class XMLConfigurationParser extends XMLGenericParser {
     return Boolean.valueOf(getAttribute("grid", "wrapping"));
   }
 
+  /**
+   * Generates initial configuration of states depending on format specified in configuration file
+   * @return - 2D List of cell states represented as Strings
+   */
   public List<List<String>> getInitialStates() {
     Element gridElement = (Element) root.getElementsByTagName("grid").item(0);
     if (gridElement.hasAttribute("distribution")) {
@@ -103,13 +108,14 @@ public class XMLConfigurationParser extends XMLGenericParser {
 
   private List<List<String>> makeRandomTotalInitialStates() {
     List<List<String>> gridInitialStates = new ArrayList<>();
-    Object[] possibleCellStates = getCellStates();
-    int numStates = possibleCellStates.length;
-    // even distribution
+    List<String> possibleCellStates = getCellStates();
+    if (root.getElementsByTagName("distribution").getLength() > 0) {
+      possibleCellStates = getCellStateDistribution();
+    }
     for (int row = 0; row < getGridHeight(); row++) {
       ArrayList<String> rowInitialStates = new ArrayList<>();
       for (int col = 0; col < getGridWidth(); col++) {
-        rowInitialStates.add(possibleCellStates[(int) (Math.random()*numStates)].toString());
+        rowInitialStates.add(possibleCellStates.get((int) (Math.random() * possibleCellStates.size())));
       }
       gridInitialStates.add(rowInitialStates);
     }
@@ -164,6 +170,19 @@ public class XMLConfigurationParser extends XMLGenericParser {
     return cellStyleMap;
   }
 
+  private List<String> getCellStateDistribution() {
+    Element distributionElement = (Element) root.getElementsByTagName("distribution").item(0);
+    NodeList nodeList = distributionElement.getElementsByTagName("cellstate");
+    List<String> distributionList = new ArrayList<>();
+    for (int state = 0; state < nodeList.getLength(); state++) {
+      Element stateElement = (Element) nodeList.item(state);
+      for (int i = 0; i < Integer.valueOf(stateElement.getTextContent()); i++) {
+        distributionList.add(stateElement.getAttribute("type"));
+      }
+    }
+    return distributionList;
+  }
+
   public Map<String, String> getParameters() {
     Element configElement = (Element) root.getElementsByTagName("config_parameters").item(0);
     Map<String, String> parameterMap = new HashMap<>();
@@ -178,8 +197,8 @@ public class XMLConfigurationParser extends XMLGenericParser {
     return parameterMap;
   }
 
-  private Object[] getCellStates() {
-    return getCellStyles().keySet().toArray();
+  private List<String> getCellStates() {
+    return new ArrayList<String>(getCellStyles().keySet());
   }
 
 }
