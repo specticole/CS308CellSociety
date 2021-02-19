@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.scene.paint.Color;
 import java.util.HashMap;
 import java.util.Map;
+import static java.util.Map.entry;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -27,52 +28,148 @@ import org.w3c.dom.NodeList;
  */
 public class XMLConfigurationParser extends XMLGenericParser {
 
-  public static final String[] META_FIELDS = {"title", "author", "description"};
+  private static final List<String> META_FIELDS = new ArrayList<>(Arrays.asList("title", "author", "description"));
+  private static final List<String> SUPPORTED_SIMULATIONS = new ArrayList<>(Arrays.asList("fire", "gameoflife", "percolation",
+      "segregation",
+      "wator"));
+  private static final List<String> SUPPORTED_GRID_TYPES = new ArrayList<>(Arrays.asList("rectangular"));
+  private static final Map<String, ArrayList<Integer>> SUPPORTED_GRIDS = Map.ofEntries(
+      entry("rectangular", new ArrayList<>(Arrays.asList(4, 8)))
+  );
 
   /**
    * Create parser for any XML file input
    *
    * @param file - XML configuration file
-   * @throws XMLException
+   * @throws XMLException - if parser is unable to be created
    */
   public XMLConfigurationParser(File file) throws XMLException {
     super(file);
   }
 
+  /**
+   * Returns map containing metadata: title, author, and description of simulation
+   * @return - map of metadata, with keys of "title," "author," and "description"
+   */
   public Map<String, String> getMetadata() {
     Map<String, String> simulationMetadata = new HashMap<>();
+    Element metaElement = getElement(root, "meta");
     for (String field : META_FIELDS) {
-      simulationMetadata.put(field, getTextValue(root, field));
+      simulationMetadata.put(field, getTextValue(metaElement, field));
     }
     return simulationMetadata;
   }
 
-  public String getSimulationType() {
-    return root.getAttribute("rules");
+  /**
+   * Returns type of simulation in configuration file, if supported
+   * @return - String representing simulation type or error if type is not supported
+   * @throws XMLException - if simulation type is not found in SUPPORTED_SIMULATIONS
+   */
+  public String getSimulationType() throws XMLException {
+    String simulationType = getAttribute(root, "simulation", "rules").toLowerCase();
+    if (SUPPORTED_SIMULATIONS.contains(simulationType)) {
+      return simulationType;
+    }
+    else {
+      throw new XMLException(new IllegalArgumentException(), simulationType + " is not a supported simulation type");
+    }
   }
 
-  public String getGridType() {
-    return getAttribute("grid", "type");
+  /**
+   * Returns type of grid in configuration file, if supported
+   * @return - String representing grid type or error if type is not supported
+   * @throws XMLException - if grid type is not found in SUPPORTED_GRID_TYPES
+   */
+  public String getGridType() throws XMLException {
+    String gridType = getAttribute(root, "grid", "type").toLowerCase();
+    if (SUPPORTED_GRIDS.keySet().contains(gridType)) {
+      return gridType;
+    }
+    else {
+      throw new XMLException(new IllegalArgumentException(), gridType + " is not a supported grid type");
+    }
   }
 
-  public int getGridWidth() {
-    return Integer.valueOf(getAttribute("grid", "width"));
+  /**
+   * Returns width of grid in cells
+   * @return - number of cells in a row of the grid, or an error if the width is invalid
+   * @throws XMLException - if grid width is not an integer or is less than 1
+   */
+  public int getGridWidth() throws XMLException {
+    int gridWidth;
+    try {
+      gridWidth = Integer.valueOf(getAttribute(root, "grid", "width"));
+    }
+    catch (IllegalArgumentException e) {
+      throw new XMLException(e, "Grid width must be an integer");
+    }
+    if (gridWidth > 0) {
+      return gridWidth;
+    }
+    else {
+      throw new XMLException(new IllegalArgumentException(), "Grid width must be greater than 0");
+    }
   }
 
+  /**
+   * Returns height of grid in cells
+   * @return - number of cells in a column of the grid, or an error if the height is invalid
+   * @throws XMLException - if grid height is not an integer or is less than 1
+   */
   public int getGridHeight() {
-    return Integer.valueOf(getAttribute("grid", "height"));
+    int gridHeight;
+    try {
+      gridHeight = Integer.valueOf(getAttribute(root, "grid", "height"));
+    }
+    catch (IllegalArgumentException e) {
+      throw new XMLException(e, "Grid height must be an integer");
+    }
+    if (gridHeight > 0) {
+      return gridHeight;
+    }
+    else {
+      throw new XMLException(new IllegalArgumentException(), "Grid height must be greater than 0");
+    }
   }
 
-  public int getGridNeighbors() {
-    return Integer.valueOf(getAttribute("grid", "neighbors"));
+  /**
+   * Returns number of neighbors each cell has
+   * @return - number of neighbors that should be counted for each cell, or an error
+   * @throws XMLException - if number is not an integer or is not supported for the grid type
+   */
+  public int getGridNeighbors() throws XMLException {
+    int gridNeighbors;
+    try {
+      gridNeighbors = Integer.valueOf(getAttribute(root, "grid", "neighbors"));
+    }
+    catch (IllegalArgumentException e) {
+      throw new XMLException(e, "Neighbors must be an integer");
+    }
+    if (SUPPORTED_GRIDS.get(getGridType()).contains(gridNeighbors)) {
+      return gridNeighbors;
+    }
+    else {
+      throw new XMLException(new IllegalArgumentException(), "Number of neighbors not supported");
+    }
   }
 
-  public boolean getGridWrapping() {
-    return Boolean.valueOf(getAttribute("grid", "wrapping"));
+  /**
+   * Returns whether the grid should wrap around in a toroidal fashion
+   * @return - boolean indicating whether the grid should wrap, or an error
+   * @throws XMLException - if attribute value is not "true" or "false"
+   */
+  public boolean getGridWrapping() throws XMLException {
+    try {
+      return Boolean.valueOf(getAttribute("grid", "wrapping"));
+    }
+    catch (IllegalArgumentException e) {
+      throw new XMLException(e, "Wrapping attribute must be true or false");
+    }
   }
 
   /**
    * Generates initial configuration of states depending on format specified in configuration file
+   *
    * @return - 2D List of cell states represented as Strings
    */
   public List<List<String>> getInitialStates() {
@@ -115,7 +212,8 @@ public class XMLConfigurationParser extends XMLGenericParser {
     for (int row = 0; row < getGridHeight(); row++) {
       ArrayList<String> rowInitialStates = new ArrayList<>();
       for (int col = 0; col < getGridWidth(); col++) {
-        rowInitialStates.add(possibleCellStates.get((int) (Math.random() * possibleCellStates.size())));
+        rowInitialStates
+            .add(possibleCellStates.get((int) (Math.random() * possibleCellStates.size())));
       }
       gridInitialStates.add(rowInitialStates);
     }
@@ -124,6 +222,7 @@ public class XMLConfigurationParser extends XMLGenericParser {
 
   /**
    * Edits the existing configuration file given a 2D ArrayList of updated states
+   *
    * @param currentStates - 2D ArrayList of updated states
    */
   public void updateStoredConfigFile(List<List<String>> currentStates) {
