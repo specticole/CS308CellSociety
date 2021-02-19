@@ -4,6 +4,7 @@ import cellsociety.model.CellGrid;
 import cellsociety.model.CellState;
 import cellsociety.model.CellularAutomatonRule;
 import cellsociety.xml.XMLConfigurationParser;
+import cellsociety.xml.XMLException;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -83,9 +84,14 @@ public class CellularAutomatonConfiguration {
         CellState initialState[][] = new CellState[gridHeight][gridWidth];
         for(int y = 0; y < gridHeight; y++) {
           for(int x = 0; x < gridWidth; x++ ) {
-            CellState state = makeState(simulationType, initialStates.get(y).get(x));
+            CellState state;
+            try {
+              state = makeState(simulationType, initialStates.get(y).get(x));
+            }
+            catch (IllegalArgumentException e) {
+              throw new XMLException(e, "Invalid cell state specified");
+            }
             initialState[y][x] = state;
-            //System.out.printf("%s\n", state.toString());
             assert(state != null);
           }
         }
@@ -107,7 +113,6 @@ public class CellularAutomatonConfiguration {
       case "fire":
         ruleSet = new FireRule(simulationParameters);
         break;
-
       case "wator":
         ruleSet = new WaTorWorldRule(simulationParameters);
         break;
@@ -156,10 +161,6 @@ public class CellularAutomatonConfiguration {
    */
   public List<List<String>> getInitialStates() {
     return initialStates;
-  }
-
-  public Map<String, String> getSimulationParameters() {
-    return simulationParameters;
   }
 
 }

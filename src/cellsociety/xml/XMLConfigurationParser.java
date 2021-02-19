@@ -257,18 +257,31 @@ public class XMLConfigurationParser extends XMLGenericParser {
     }
   }
 
-  public Map<String, Color> getCellStyles() {
-    Element styleElement = (Element) root.getElementsByTagName("cellstyle").item(0);
-    NodeList styleList = styleElement.getElementsByTagName("cellstate");
+  /**
+   * Returns map of cell state names to JavaFX colors that can be interpreted by the View
+   * @return - map with cell state names as keys
+   * @throws XMLException - if RGB outside 0-255 range is given
+   */
+  public Map<String, Color> getCellStyles() throws XMLException {
+    Element styleElement = getElement(root, "cellstyle");
+    NodeList styleList = getNodes(styleElement, "cellstate");
     Map<String, Color> cellStyleMap = new HashMap<>();
     for (int state = 0; state < styleList.getLength(); state++) {
       Element stateElement = (Element) styleList.item(state);
-      String cellType = getCurrentAttribute(stateElement, "type");
-      cellStyleMap.put(cellType, new Color(
-          Integer.valueOf(stateElement.getElementsByTagName("r").item(0).getTextContent()) / 255.0,
-          Integer.valueOf(stateElement.getElementsByTagName("g").item(0).getTextContent()) / 255.0,
-          Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent()) / 255.0,
-          1.0));
+      String cellType = getCurrentAttribute(stateElement,"type");
+      try {
+        cellStyleMap.put(cellType, new Color(
+            Integer.valueOf(stateElement.getElementsByTagName("r").item(0).getTextContent())
+                / 255.0,
+            Integer.valueOf(stateElement.getElementsByTagName("g").item(0).getTextContent())
+                / 255.0,
+            Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent())
+                / 255.0,
+            1.0));
+      }
+      catch (IllegalArgumentException e) {
+        throw new XMLException(e, "Invalid RGB value given");
+      }
     }
     return cellStyleMap;
   }
