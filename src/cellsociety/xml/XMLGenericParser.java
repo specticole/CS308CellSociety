@@ -52,6 +52,16 @@ public class XMLGenericParser {
     }
   }
 
+  protected NodeList getNodes(Element parent, String tagName) throws XMLException {
+    NodeList nodes = parent.getElementsByTagName(tagName);
+    if (nodes != null && nodes.getLength() > 0) {
+      return nodes;
+    }
+    else {
+      throw new XMLException(new IllegalArgumentException());
+    }
+  }
+
   // get value of Element's attribute
   protected String getAttribute(String tagName, String attributeName) {
     NodeList nodeList = root.getElementsByTagName(tagName);
@@ -66,6 +76,15 @@ public class XMLGenericParser {
   protected String getAttribute(Element parent, String tagName, String attributeName) throws XMLException {
     try {
       return getElement(parent, tagName).getAttribute(attributeName);
+    }
+    catch (IllegalArgumentException e) {
+      throw new XMLException(e, "Missing " + attributeName + " attribute");
+    }
+  }
+
+  protected String getCurrentAttribute(Element element, String attributeName) throws XMLException {
+    try {
+      return element.getAttribute(attributeName);
     }
     catch (IllegalArgumentException e) {
       throw new XMLException(e, "Missing " + attributeName + " attribute");
