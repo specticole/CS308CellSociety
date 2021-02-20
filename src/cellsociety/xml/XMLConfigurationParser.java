@@ -73,7 +73,10 @@ public class XMLConfigurationParser extends XMLGenericParser {
    * @throws XMLException - if simulation type is not found in SUPPORTED_SIMULATIONS
    */
   public String getSimulationType() throws XMLException {
-    String simulationType = getAttribute(root, "simulation", "rules").toLowerCase();
+    if (! root.getNodeName().equals("simulation")) {
+      throw new XMLException(new IllegalArgumentException(), "Root node must be named 'simulation'");
+    }
+    String simulationType = getCurrentAttribute(root, "rules").toLowerCase();
     if (SUPPORTED_SIMULATIONS.contains(simulationType)) {
       return simulationType;
     } else {
@@ -194,14 +197,15 @@ public class XMLConfigurationParser extends XMLGenericParser {
 
   private List<List<String>> makeSpecifiedInitialStates() {
     List<List<String>> gridInitialStates = new ArrayList<>();
-    NodeList gridList = getNodes(root, "grid");
+    Element gridElement = getElement(root, "grid");
+    NodeList gridList = getNodes(gridElement, "gridrow");
     for (int row = 0; row < gridList.getLength(); row++) {
       Element rowElement = (Element) gridList.item(row);
-      NodeList rowList = getNodes(rowElement, "gridrow");
+      NodeList rowList = getNodes(rowElement, "gridcell");
       ArrayList<String> rowInitialStates = new ArrayList<>();
       for (int col = 0; col < rowList.getLength(); col++) {
         Element cellElement = (Element) rowList.item(col);
-        rowInitialStates.add(getTextValue(cellElement, "gridcell"));
+        rowInitialStates.add(cellElement.getTextContent());
       }
       gridInitialStates.add(rowInitialStates);
     }
