@@ -35,7 +35,8 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
   abstract public List<Cell> getNeighbors(Cell cell);
 
   /**
-   *
+   * Return the coordinates of cells neighboring the cell with
+   * coordinates `coords'.
    */
   abstract protected Collection<GridCoordinates> getNeighborCoordinates(GridCoordinates coords);
 
