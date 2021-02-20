@@ -63,6 +63,13 @@ public class CellularAutomatonController {
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
   }
 
+  public CellularAutomatonConfiguration loadConfigFile() {
+    currentConfigFile = new File("data/Default.xml");
+    CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(currentConfigFile);
+    currentStates = simulationConfig.getInitialStates();
+    return simulationConfig;
+  }
+
   /**
    * Loads a file based on user selection in a visual file chooser
    *

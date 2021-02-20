@@ -25,6 +25,7 @@ public class CellularAutomatonConfiguration {
   private CellularAutomatonRule ruleSet;
   private CellGrid grid;
   private Map<String, String> simulationMetadata;
+  private String gridType;
   private int gridWidth;
   private int gridHeight;
   private int gridNeighbors;
@@ -51,7 +52,7 @@ public class CellularAutomatonConfiguration {
     cellStyles = docParser.getCellStyles();
     simulationParameters = docParser.getParameters();
     initialStates = docParser.getInitialStates();
-    String gridType = docParser.getGridType();
+    gridType = docParser.getGridType();
     String simulationType = docParser.getSimulationType();
     makeGrid(simulationType, gridType, initialStates);
     makeRules(simulationType, simulationParameters);
@@ -137,6 +138,10 @@ public class CellularAutomatonConfiguration {
     return simulationMetadata;
   }
 
+  public String getGridType(){
+    return gridType;
+  }
+
   public int getGridWidth() {
     return gridWidth;
   }
@@ -162,5 +167,7 @@ public class CellularAutomatonConfiguration {
   public List<List<String>> getInitialStates() {
     return initialStates;
   }
+
+
 
 }
