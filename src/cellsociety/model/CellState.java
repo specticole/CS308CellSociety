@@ -18,7 +18,7 @@ public abstract class CellState<E extends Enum<E>> {
     this.state = s;
   }
 
-  protected CellState(Class<E> cl, String str) {
+  protected CellState(Class<E> cl, String str) throws IllegalArgumentException {
     this(Enum.valueOf(cl, str));
   }
 
