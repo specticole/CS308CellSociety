@@ -18,7 +18,7 @@ public class RectangularGridStyle extends GridStyle{
     pane = new GridPane();
   }
 
-  public Rectangle createRectangleCell(double width, double height, Color color){
+  private Rectangle createRectangleCell(double width, double height, Color color){
     Rectangle cell = new Rectangle(width, height);
     cell.setFill(color);
     return cell;
