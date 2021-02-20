@@ -5,6 +5,7 @@ import cellsociety.model.CellGrid;
 import cellsociety.model.CellState;
 import cellsociety.model.GridCoordinates;
 import java.util.*;
+import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
 /**
@@ -82,6 +83,26 @@ public abstract class Dense2DCellGrid extends CellGrid {
     }
 
     return cells[y][x];
+  }
+
+  /**
+   * Retrieve a Stream containing the neighbor offsets from a given
+   * center. No handling of edge cases (i.e. wrapping, bounds
+   * checking) needs to be done by implementing classes -- this is all
+   * handled by Dense2DCellGrid.
+   *
+   * Not all grid types care about the location when computing
+   * neighbor offsets -- for example, Rectangular grids can ignore
+   * them, since the set of neighbor offsets is the same for all grid
+   * locations. However, hexagonal grids do care about this.
+   */
+  abstract public Stream<GridCoordinates> getNeighborOffsets(GridCoordinates center);
+
+  @Override
+  public Collection<GridCoordinates> getNeighborCoordinates(GridCoordinates center) {
+    return getNeighborOffsets(center)
+        .map(offs -> offs.add(center))
+        .collect(Collectors.toList());
   }
 
   /**
