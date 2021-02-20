@@ -11,11 +11,11 @@ public class RectangularGridStyle extends GridStyle{
 
   public static final double SPACING = 1;
 
-  GridPane pane;
-  Rectangle[][] grid;
+  private GridPane pane;
+  private Rectangle[][] grid;
 
-  public RectangularGridStyle(){
-    pane = new GridPane();
+  public RectangularGridStyle(GridPane gridPane){
+    pane = gridPane;
   }
 
   private Rectangle createRectangleCell(double width, double height, Color color){

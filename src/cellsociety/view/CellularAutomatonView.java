@@ -3,14 +3,12 @@ package cellsociety.view;
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -18,18 +16,16 @@ import javafx.scene.text.Text;
 public class CellularAutomatonView {
 
   private GridPane masterLayout;
-  private Pane mainGrid;
-  @FXML
-  private Text title;
-  @FXML
   private Button startResetButton;
-  @FXML
   private Button pauseResumeButton;
-  @FXML
+  private Button stepButton;
   private Slider speedSlider;
+  private Button applySpeedButton;
+  private Button newSimulationButton;
 
   private boolean started;
   private boolean paused;
+  private int newRowIndex;
 
   ResourceBundle bundle;
   CellularAutomatonController controller;
@@ -41,42 +37,81 @@ public class CellularAutomatonView {
     masterLayout.getStyleClass().add("master-gridpane");
   }
 
-  public GridPane initialize(ResourceBundle bundle){
-
+  public GridPane initialize(ResourceBundle resourceBundle){
     controller = new CellularAutomatonController(this);
-    CellularAutomatonConfiguration config = controller.loadConfigFile();
-    controller.initializeForConfig(config);
-
-    createGrid(config);
-
+    bundle = resourceBundle;
     started = false;
     paused = true;
+    newRowIndex = 2;
+
+    createTitle();
+    createSimulationControlButtons();
+    createNewSimulationButton(newRowIndex);
+    newRowIndex++;
 
     return masterLayout;
   }
 
+  private void createTitle() {
+    HBox titleBox = new HBox();
+    titleBox.getStyleClass().add("title-box");
+    Text titleText = new Text();
+    titleText.setText(bundle.getString("Title"));
+    titleText.getStyleClass().add("text-style");
 
-  private void createGrid(CellularAutomatonConfiguration config){
-    switch (config.getGridType()) {
-      case "rectangular":
-        grid = new RectangularGridStyle();
-        mainGrid = grid.createGrid(config.getGridWidth(), config.getGridHeight());
-    }
-    masterLayout.add(mainGrid, 0, 0,4,1);
+    titleBox.getChildren().add(titleText);
+    masterLayout.add(titleBox,0,0, 3,1);
   }
 
-  public void createButtons(){
+  private void createSimulationControlButtons() {
+    HBox controlsBox = new HBox();
+    controlsBox.getStyleClass().add("controls-box");
+
+    startResetButton = new Button(bundle.getString("StartButtonLabel"));
+    startResetButton.setOnAction(e -> startResetButtonClick());
+    pauseResumeButton = new Button(bundle.getString("ResumeButtonLabel"));
+    pauseResumeButton.setOnAction(e -> pauseResumeButtonClick());
+    stepButton = new Button(bundle.getString("StepButtonLabel"));
+    stepButton.setOnAction(e -> stepButtonClick());
+
+    Text speedText = new Text();
+    speedText.setText(bundle.getString("SpeedLabel"));
+    createSpeedSlider();
+    applySpeedButton = new Button(bundle.getString("ApplySpeedButtonLabel"));
+    applySpeedButton.setOnAction(e -> speedButtonClick());
+
+
+    controlsBox.getChildren().addAll(startResetButton, pauseResumeButton, stepButton, speedText,
+        speedSlider, applySpeedButton);
+    masterLayout.add(controlsBox,0,1, 3,1);
+  }
+
+  private void createSpeedSlider(){
+    speedSlider = new Slider();
+    speedSlider.adjustValue(3);
+    speedSlider.setMin(1);
+    speedSlider.setMax(5);
+    speedSlider.getStyleClass().add("speed-slider");
+  }
+
+  private void createNewSimulationButton(int rowIndex){
+    HBox newSimulationButtonBox = new HBox();
+    newSimulationButtonBox.getStyleClass().add("button-box");
+    newSimulationButton = new Button(bundle.getString("NewSimulationButtonLabel"));
+    newSimulationButton.setOnAction(e -> loadFileClick());
+    newSimulationButtonBox.getChildren().add(newSimulationButton);
+    masterLayout.add(newSimulationButtonBox, 0,rowIndex);
 
   }
 
-  public void updateXML(CellularAutomatonConfiguration config){
-    controller.initializeForConfig(config);
-    title.setText(config.getSimulationMetadata().get("title"));
-    mainGrid.getChildren().clear();
-    //grid = new RectangularGridStyle(mainGrid);
-    cellStyles = config.getCellStyles();
-    //grid.createGrid(config.getGridHeight(),config.getGridWidth());
-    grid.updateGrid(config.getInitialStates(), cellStyles);
+  public void loadFileClick() {
+    CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
+    SimulationView simulationView = new SimulationView(config);
+    masterLayout.add(simulationView.initialize();) simulationView.initialize();
+    controller.pauseSimulation();
+    started = false;
+    paused = true;
+    updateButtonLabels();
   }
 
   private void updateButtonLabels(){
@@ -133,17 +168,6 @@ public class CellularAutomatonView {
     started = true;
     paused = false;
     updateButtonLabels();
-  }
-
-  public void loadFileClick() {
-    CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
-    if(config != null){
-      updateXML(config);
-      controller.pauseSimulation();
-      started = false;
-      paused = true;
-      updateButtonLabels();
-    }
   }
 
   public void updateView(List<List<String>> myStates){
