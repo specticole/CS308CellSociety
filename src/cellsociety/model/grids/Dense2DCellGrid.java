@@ -84,12 +84,15 @@ public abstract class Dense2DCellGrid extends CellGrid {
     return cells[y][x];
   }
 
+  /**
+   *
+   */
   @Override
   public List<Cell> getNeighbors(Cell c) {
     return getNeighborCoordinates(c.getCoordinates())
         .stream()
-        .map(coords -> this.getCell(coords))
-        .filter(cell -> cell != null)
+        .map(coords -> this.getCell(coords)) // handles wrapping and bounds check
+        .filter(cell -> cell != null)        // filter out-of-bounds
         .collect(Collectors.toList());
   }
 
