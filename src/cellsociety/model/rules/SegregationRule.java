@@ -10,11 +10,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Implementation of Segregation's time evolution rule.
+ *
+ * @author Cole Spector
+ */
 public class SegregationRule extends CellularAutomatonRule {
 
   private double neighborsNeeded = 0.2;
 
 
+  /**
+   * Construct a SegregationRule with the given parameter map.
+   *
+   * @param params Parameter map.
+   */
   public SegregationRule(Map<String, String> params) {
     super(params);
     setGameSpecifics(params);
@@ -87,21 +97,13 @@ public class SegregationRule extends CellularAutomatonRule {
     return ((double) populatedNeighbors.size()/(double) similarNeighbors.size() >= neighborsNeeded);
   }
 
-//  private ArrayList<Cell> getUsefulNeighbors(List<Cell> neighbors, SegregationState.States state, boolean different){
-//    ArrayList<Cell> usefulNeighbors = new ArrayList<>();
-//    for(Cell neighbor : neighbors){
-//      if((neighbor.getState(Cell.CURRENT_TIME).getState() == state) ^ different){
-//        usefulNeighbors.add(neighbor);
-//      }
-//    }
-//    return usefulNeighbors;
-//  }
-
-
   /**
-   * This method gets the specific rule set for the Segregation variation, in the form of <Double>
-   * where the double is the percentage of neighbors which need to be of the same type in order to not move
-   * @param params
+   * This method gets the specific rule set for the Segregation
+   * variation, in the form of (Double) where the double is the
+   * percentage of neighbors which need to be of the same type in
+   * order to not move
+   *
+   * @param params Parameter map.
    */
   public void setGameSpecifics(Map<String, String> params) {
     String rules = params.get("neighborsNeeded");

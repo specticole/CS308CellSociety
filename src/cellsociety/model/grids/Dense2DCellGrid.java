@@ -95,6 +95,9 @@ public abstract class Dense2DCellGrid extends CellGrid {
    * neighbor offsets -- for example, Rectangular grids can ignore
    * them, since the set of neighbor offsets is the same for all grid
    * locations. However, hexagonal grids do care about this.
+   *
+   * @param center Central cell's GridCoordinates.
+   * @return Stream of neighbor GridCoordinates.
    */
   abstract public Stream<GridCoordinates> getNeighborOffsets(GridCoordinates center);
 
@@ -102,18 +105,6 @@ public abstract class Dense2DCellGrid extends CellGrid {
   public Collection<GridCoordinates> getNeighborCoordinates(GridCoordinates center) {
     return getNeighborOffsets(center)
         .map(offs -> offs.add(center))
-        .collect(Collectors.toList());
-  }
-
-  /**
-   *
-   */
-  @Override
-  public List<Cell> getNeighbors(Cell c) {
-    return getNeighborCoordinates(c.getCoordinates())
-        .stream()
-        .map(coords -> this.getCell(coords)) // handles wrapping and bounds check
-        .filter(cell -> cell != null)        // filter out-of-bounds
         .collect(Collectors.toList());
   }
 
@@ -157,6 +148,9 @@ public abstract class Dense2DCellGrid extends CellGrid {
    *
    * `states' must be a rectangular array of the same size as `cells'
    * (i.e. width*height).
+   *
+   * @param states 2D array in row-major order representing the states
+   * of each Cell to append.
    */
   public void appendStates(CellState states[][]) {
     assert(states.length == height);
@@ -171,7 +165,11 @@ public abstract class Dense2DCellGrid extends CellGrid {
   }
 
   /**
-   * Extract all CellStates at time `delta + currentTime'.
+   * Extract a snapshot all CellStates at time `delta + currentTime'.
+   *
+   * @param delta Time delta at which to retrieve a snapshot.
+   * @return 2D array in row-major order containing all CellStates
+   * at the given time delta.
    */
   public CellState[][] extractStates(int delta) {
     System.out.printf("Extract at delta=%d -> %dx%d\n", delta, width, height);

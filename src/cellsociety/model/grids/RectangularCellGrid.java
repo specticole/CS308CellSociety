@@ -22,6 +22,9 @@ public class RectangularCellGrid extends Dense2DCellGrid {
     new GridCoordinates(0, -1),
   };
 
+  /**
+   * Offsets of diagonal neighbors.
+   */
   protected static final GridCoordinates diagonalOffsets[] = {
     new GridCoordinates(1,  1),
     new GridCoordinates(1, -1),
