@@ -18,12 +18,12 @@ public abstract class GridStyle {
     simulationView = currentSimulationView;
   }
 
-  public abstract Pane createGrid(int width, int height);
+  public abstract Pane createGrid(int numCols, int numRows);
 
   public abstract void updateGrid(List<List<String>> listOfCells, Map<String, Color> stateToColor);
 
-  public void handleClick(int columnNumber, int rowNumber){
-    simulationView.changeCell(columnNumber, rowNumber);
+  public void handleClick(int colNumber, int rowNumber){
+    simulationView.changeCell(colNumber, rowNumber);
   }
 
 }

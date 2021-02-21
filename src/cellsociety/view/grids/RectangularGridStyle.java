@@ -25,26 +25,25 @@ public class RectangularGridStyle extends GridStyle {
     pane.getStyleClass().add("rectangular-gridpane");
   }
 
-  private Rectangle createRectangleCell(int rowNumber, int columnNumber, double width,
+  private Rectangle createRectangleCell(int rowNumber, int colNumber, double width,
       double height, Color color){
     Rectangle cell = new Rectangle(width, height);
     cell.setFill(color);
-    cell.setOnMouseClicked(e -> handleClick(columnNumber, rowNumber));
+    cell.setOnMouseClicked(e -> handleClick(colNumber, rowNumber));
     return cell;
   }
 
   @Override
-  public GridPane createGrid(int numRows, int numCols) {
-    pane.getStyleClass().add("my-grid-pane");
-    grid = new Rectangle[numRows][numCols];
+  public GridPane createGrid(int numCols, int numRows) {
+    grid = new Rectangle[numCols][numRows];
     double rectangleWidth = calculateRectangleWidth(numCols);
     double rectangleHeight = calculateRectangleHeight(numRows);
     for (int rowNumber = 0; rowNumber < numRows; rowNumber++) {
       for (int colNumber = 0; colNumber < numCols; colNumber++) {
-        grid[rowNumber][colNumber] = createRectangleCell(rowNumber, colNumber, rectangleWidth,
+        grid[colNumber][rowNumber] = createRectangleCell(rowNumber, colNumber, rectangleWidth,
             rectangleHeight,
             Color.WHITE);
-        pane.add(grid[rowNumber][colNumber], colNumber, rowNumber);
+        pane.add(grid[colNumber][rowNumber], colNumber, rowNumber);
       }
     }
     return pane;
@@ -64,9 +63,9 @@ public class RectangularGridStyle extends GridStyle {
 
   @Override
   public void updateGrid(List<List<String>> listOfStates, Map<String, Color> stateToColor) {
-    for (int i = 0; i < listOfStates.size(); i++) {
-      for (int j = 0; j < listOfStates.get(0).size(); j++) {
-        grid[i][j].setFill(stateToColor.get(listOfStates.get(i).get(j)));
+    for (int rowNumber = 0; rowNumber < listOfStates.size(); rowNumber++) {
+      for (int columnNumber = 0; columnNumber < listOfStates.get(0).size(); columnNumber++) {
+        grid[columnNumber][rowNumber].setFill(stateToColor.get(listOfStates.get(rowNumber).get(columnNumber)));
       }
     }
   }

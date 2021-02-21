@@ -94,7 +94,7 @@ public class SimulationView {
         mainGrid = new HexagonalGridStyle(this, new Pane());
         break;
     }
-    gridView = mainGrid.createGrid(config.getGridHeight(), config.getGridWidth());
+    gridView = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight());
     mainGrid.updateGrid(config.getInitialStates(), config.getCellStyles());
   }
 
