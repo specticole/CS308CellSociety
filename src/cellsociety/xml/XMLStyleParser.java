@@ -43,7 +43,7 @@ public class XMLStyleParser extends XMLGenericParser {
         && root.getElementsByTagName("cell").getLength() > 0) {
       Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
       if (cellElement.hasAttribute("width")) {
-        int cellWidth = Integer.valueOf(getAttribute("cell", "width"));
+        int cellWidth = Integer.valueOf(getAttribute(root,"cell", "width"));
         if (cellWidth > 0) {
           return cellWidth;
         }
@@ -62,7 +62,7 @@ public class XMLStyleParser extends XMLGenericParser {
         && root.getElementsByTagName("cell").getLength() > 0) {
       Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
       if (cellElement.hasAttribute("height")) {
-        int cellHeight = Integer.valueOf(getAttribute("cell", "height"));
+        int cellHeight = Integer.valueOf(getAttribute(root,"cell", "height"));
         if (cellHeight > 0) {
           return cellHeight;
         }
@@ -81,7 +81,7 @@ public class XMLStyleParser extends XMLGenericParser {
         && root.getElementsByTagName("cell").getLength() > 0) {
       Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
       if (cellElement.hasAttribute("outline")) {
-        return getAttribute("cell", "outline").toUpperCase().equals("Y");
+        return getAttribute(root,"cell", "outline").toUpperCase().equals("Y");
       }
     }
     return false;
@@ -97,7 +97,7 @@ public class XMLStyleParser extends XMLGenericParser {
         && root.getElementsByTagName("cell").getLength() > 0) {
       Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
       if (cellElement.hasAttribute("shape")) {
-        return getAttribute("cell", "shape");
+        return getAttribute(root,"cell", "shape");
       }
     }
     return "";

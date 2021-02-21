@@ -169,7 +169,7 @@ public class XMLConfigurationParser extends XMLGenericParser {
    */
   public boolean getGridWrapping() throws XMLException {
     try {
-      return Boolean.valueOf(getAttribute("grid", "wrapping"));
+      return Boolean.valueOf(getAttribute(root, "grid", "wrapping"));
     } catch (IllegalArgumentException e) {
       throw new XMLException(e, "Wrapping attribute must be true or false");
     }
