@@ -107,7 +107,12 @@ public class CellularAutomatonView {
   public void loadFileClick() {
     CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
     SimulationView simulationView = new SimulationView(config);
-    masterLayout.add(simulationView.initialize();) simulationView.initialize();
+    newSimulationButton.setVisible(false);
+    newSimulationButton.setDisable(true);
+    masterLayout.add(simulationView.initialize(), 0, newRowIndex - 1, 3,2);
+    createNewSimulationButton(newRowIndex);
+    newRowIndex++;
+
     controller.pauseSimulation();
     started = false;
     paused = true;

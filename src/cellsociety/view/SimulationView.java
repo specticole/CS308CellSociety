@@ -12,6 +12,7 @@ public class SimulationView {
   private GridPane masterLayout;
   private HBox titleBox;
   private GridStyle mainGrid;
+  private Pane pane;
   private Graph graph;
   private VBox editSimulationBox;
 
@@ -19,6 +20,7 @@ public class SimulationView {
 
   public SimulationView(CellularAutomatonConfiguration newConfig){
     masterLayout = new GridPane();
+    masterLayout.getStyleClass().add("simulation-gridpane");
     config = newConfig;
   }
 
@@ -27,7 +29,8 @@ public class SimulationView {
     titleBox.getStyleClass().add("title-box");
     Text titleText = new Text();
     titleText.setText(config.getSimulationMetadata().get("title"));
-    masterLayout.add(titleBox, 0,0);
+    titleBox.getChildren().add(titleText);
+
     switch (config.getGridType()){
       case "rectangular":
         mainGrid = new RectangularGridStyle(new GridPane());
@@ -36,9 +39,12 @@ public class SimulationView {
         mainGrid = new HexagonalGridStyle(new Pane());
         break;
     }
+    pane = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight());
+    mainGrid.updateGrid(config.getInitialStates(), config.getCellStyles());
 
 
-
+    masterLayout.add(titleBox, 0,0);
+    masterLayout.add(pane, 1,0, 1,2);
     return masterLayout;
   }
 

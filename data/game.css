@@ -8,10 +8,17 @@
 
 .master-gridpane {
     -fx-alignment: top-center;
-    -fx-grid-lines-visible: false;
+    -fx-grid-lines-visible: true;
     -fx-vgap: 10;
     -fx-hgap: 10;
     -fx-padding: 20 20 20 20;
+}
+
+.simulation-gridpane {
+    -fx-alignment: top-left;
+    -fx-grid-lines-visible: true;
+    -fx-vgap: 10;
+    -fx-hgap: 10;
 }
 
 .splash-gridpane {
