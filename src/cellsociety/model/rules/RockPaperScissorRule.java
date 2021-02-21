@@ -51,8 +51,8 @@ public class RockPaperScissorRule extends CellularAutomatonRule {
   }
 
   /**
-   * This method gets the specific rule set for the Segregation variation, in the form of <Double>
-   * where the double is the percentage of neighbors which need to be of the same type in order to not move
+   * This method gets the specific rule set for the Segregation variation, in the form of <Int>
+   * where the int is the number of neighbors which need to beat the cell in order for it to swap
    * @param params
    */
   public void setGameSpecifics(Map<String, String> params) {
