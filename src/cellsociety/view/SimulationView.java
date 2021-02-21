@@ -2,6 +2,8 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
+import cellsociety.view.grids.HexagonalGridStyle;
+import cellsociety.view.grids.RectangularGridStyle;
 import cellsociety.view.parameters.FireParameterBox;
 import cellsociety.view.parameters.GameOfLifeParameterBox;
 import cellsociety.view.parameters.PercolationParameterBox;
@@ -86,10 +88,10 @@ public class SimulationView {
   private void createGrid() {
     switch (config.getGridType()){
       case "rectangular":
-        mainGrid = new RectangularGridStyle(new GridPane());
+        mainGrid = new RectangularGridStyle(this, new GridPane());
         break;
       case "hexagonal":
-        mainGrid = new HexagonalGridStyle(new Pane());
+        mainGrid = new HexagonalGridStyle(this, new Pane());
         break;
     }
     gridView = mainGrid.createGrid(config.getGridHeight(), config.getGridWidth());
@@ -142,6 +144,10 @@ public class SimulationView {
       default:
         return null;
     }
+  }
+
+  public void changeCell(int columnNumber, int rowNumber){
+    controller.changeCell(parameterBox.getState(), columnNumber, rowNumber);
   }
 
   public void updateView(List<List<String>> myStates){

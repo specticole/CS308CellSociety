@@ -12,10 +12,18 @@ public abstract class GridStyle {
   public static final int VIEW_WIDTH = 250;
   public static final int VIEW_HEIGHT = 250;
 
+  protected SimulationView simulationView;
+
+  public GridStyle(SimulationView currentSimulationView){
+    simulationView = currentSimulationView;
+  }
+
   public abstract Pane createGrid(int width, int height);
 
   public abstract void updateGrid(List<List<String>> listOfCells, Map<String, Color> stateToColor);
 
-  public abstract Point2D handleClick(Node cell);
+  public void handleClick(int columnNumber, int rowNumber){
+    simulationView.changeCell(columnNumber, rowNumber);
+  }
 
 }

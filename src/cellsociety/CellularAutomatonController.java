@@ -145,4 +145,8 @@ public class CellularAutomatonController {
   public void updateParameters(Map<String, String> parameterList) {
     //TODO: implement parameter changing
   }
+
+  public void changeCell(String state, int xLocation, int yLocation){
+    //TODO: implement cell changing
+  }
 }

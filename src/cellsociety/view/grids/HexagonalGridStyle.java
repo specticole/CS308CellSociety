@@ -1,20 +1,24 @@
-package cellsociety.view;
+package cellsociety.view.grids;
 
+import cellsociety.view.GridStyle;
+import cellsociety.view.SimulationView;
 import java.util.List;
 import java.util.Map;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
-public class HexagonalGridStyle extends GridStyle{
+public class HexagonalGridStyle extends GridStyle {
 
   public static final double HEX_ANGLE = Math.PI / 3;
 
   private Pane pane;
   private Polygon[][] grid;
 
-  public HexagonalGridStyle(Pane pane){
+  public HexagonalGridStyle(SimulationView currentSimulationView, Pane pane){
+    super(currentSimulationView);
     this.pane = pane;
     pane.getStyleClass().add("hexagonal-gridpane");
   }
@@ -35,10 +39,5 @@ public class HexagonalGridStyle extends GridStyle{
   @Override
   public void updateGrid(List<List<String>> listOfCells, Map<String, Color> stateToColor) {
 
-  }
-
-  @Override
-  public Point2D handleClick() {
-    return null;
   }
 }

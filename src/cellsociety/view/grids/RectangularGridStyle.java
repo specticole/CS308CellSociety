@@ -1,5 +1,7 @@
-package cellsociety.view;
+package cellsociety.view.grids;
 
+import cellsociety.view.GridStyle;
+import cellsociety.view.SimulationView;
 import java.awt.Point;
 import java.util.List;
 import java.util.Map;
@@ -10,22 +12,24 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class RectangularGridStyle extends GridStyle{
+public class RectangularGridStyle extends GridStyle {
 
   public static final double SPACING = 1;
 
   private GridPane pane;
   private Rectangle[][] grid;
 
-  public RectangularGridStyle(GridPane gridPane){
+  public RectangularGridStyle(SimulationView currentSimulationView, GridPane gridPane){
+    super(currentSimulationView);
     pane = gridPane;
     pane.getStyleClass().add("rectangular-gridpane");
   }
 
-  private Rectangle createRectangleCell(double width, double height, Color color){
+  private Rectangle createRectangleCell(int rowNumber, int columnNumber, double width,
+      double height, Color color){
     Rectangle cell = new Rectangle(width, height);
     cell.setFill(color);
-    cell.setOnMouseClicked(e -> handleClick(cell));
+    cell.setOnMouseClicked(e -> handleClick(columnNumber, rowNumber));
     return cell;
   }
 
@@ -35,10 +39,12 @@ public class RectangularGridStyle extends GridStyle{
     grid = new Rectangle[numRows][numCols];
     double rectangleWidth = calculateRectangleWidth(numCols);
     double rectangleHeight = calculateRectangleHeight(numRows);
-    for (int i = 0; i < numRows; i++) {
-      for (int j = 0; j < numCols; j++) {
-        grid[i][j] = createRectangleCell(rectangleWidth, rectangleHeight, Color.WHITE);
-        pane.add(grid[i][j], j, i);
+    for (int rowNumber = 0; rowNumber < numRows; rowNumber++) {
+      for (int colNumber = 0; colNumber < numCols; colNumber++) {
+        grid[rowNumber][colNumber] = createRectangleCell(rowNumber, colNumber, rectangleWidth,
+            rectangleHeight,
+            Color.WHITE);
+        pane.add(grid[rowNumber][colNumber], colNumber, rowNumber);
       }
     }
     return pane;
@@ -63,10 +69,5 @@ public class RectangularGridStyle extends GridStyle{
         grid[i][j].setFill(stateToColor.get(listOfStates.get(i).get(j)));
       }
     }
-  }
-
-  @Override
-  public Point2D handleClick(Rectangle cell) {
-    cell.
   }
 }
