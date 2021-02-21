@@ -8,8 +8,15 @@ import java.util.*;
 
 /**
  * Implementation of Percolation's next state logic.
+ *
+ * @author Franklin Wei
  */
 public class PercolationRule extends CellularAutomatonRule {
+  /**
+   * Construct a Percolation rule. `params' is ignored.
+   *
+   * @param params ignored
+   */
   public PercolationRule(Map<String, String> params) {
     super(params);
   }

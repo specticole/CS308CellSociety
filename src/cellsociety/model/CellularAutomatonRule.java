@@ -4,20 +4,34 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Interface that must be implemented
+ * Abstract type representing a rule governing the time evolution of a
+ * CellularAutomaton.
+ *
+ * @author Cole Spector
+ * @author Franklin Wei
  */
 public abstract class CellularAutomatonRule {
+  /**
+   * Map from parameter name to parameter value for rule-specific
+   * parameters.
+   */
   protected Map<String, String> parameters;
 
+  /**
+   * Construct a rule with a given parameter map.
+   *
+   * @param params Parameter map from String to String.
+   */
   public CellularAutomatonRule(Map<String, String> params) {
     this.parameters = params;
   }
 
   /**
-   * This method is called every step, and updates the cell's state under certain conditions
+   * Advance the state of a cell. This is called once per simulation
+   * timestep for every Cell in the CellGrid.
    *
-   * @param cell this is the cell which's state will be updated
-   * @param neighbors this is all 8 neighbors of cell
+   * @param cell Cell to update.
+   * @param neighbors List of neighboring Cells.
    */
   public abstract void advanceCellState(Cell cell, List<Cell> neighbors);
 }
