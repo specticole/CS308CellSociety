@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
+import cellsociety.CellularAutomatonController;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -8,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
 public class SimulationView {
 
@@ -21,6 +23,7 @@ public class SimulationView {
   private Button gridButton;
   private VBox editSimulationBox;
 
+  private CellularAutomatonController controller;
   private CellularAutomatonConfiguration config;
   private ResourceBundle bundle;
 
@@ -30,13 +33,14 @@ public class SimulationView {
   public SimulationView(CellularAutomatonConfiguration newConfig, ResourceBundle currentBundle){
     masterLayout = new GridPane();
     masterLayout.getStyleClass().add("simulation-gridpane");
+    controller = new CellularAutomatonController(this);
     config = newConfig;
     bundle = currentBundle;
     graphShown = false;
     gridShown = true;
   }
 
-  public GridPane initialize(){
+  public Pair<CellularAutomatonController, GridPane> initialize(){
     createTitle();
     createButtons();
     createGrid();
@@ -44,7 +48,7 @@ public class SimulationView {
     masterLayout.add(titleBox, 0,0);
     masterLayout.add(buttonBox, 0,1);
     masterLayout.add(gridView, 1,0, 1,3);
-    return masterLayout;
+    return new Pair<>(controller, masterLayout);
   }
 
   private void createButtons() {
@@ -98,6 +102,8 @@ public class SimulationView {
     }
   }
 
+  private void createParameters() {
 
+  }
 
 }

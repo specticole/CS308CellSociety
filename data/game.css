@@ -55,6 +55,10 @@
     -fx-spacing: 8;
 }
 
+.parameter-box{
+    -fx-spacing: 4;
+}
+
 .new-simulation-button-box{
     -fx-alignment: center;
 }

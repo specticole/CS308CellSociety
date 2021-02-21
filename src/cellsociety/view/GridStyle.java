@@ -10,11 +10,6 @@ public abstract class GridStyle {
   public static final int VIEW_WIDTH = 250;
   public static final int VIEW_HEIGHT = 250;
 
-  public enum Styles{
-    RECTANGULAR,
-    HEXAGONAL
-  }
-
   public abstract Pane createGrid(int width, int height);
 
   public abstract void updateGrid(List<List<String>> listOfCells, Map<String, Color> stateToColor);

@@ -47,7 +47,7 @@
   </HBox>
 
   <HBox GridPane.rowIndex="2" GridPane.columnIndex="3" alignment="TOP_CENTER">
-    <Button text="%ApplySpeedButtonLabel" onAction="#speedButtonClick" ></Button>
+    <Button text="%ApplyButtonLabel" onAction="#speedButtonClick" ></Button>
   </HBox>
 
 

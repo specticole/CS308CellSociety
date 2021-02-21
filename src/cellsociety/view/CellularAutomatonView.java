@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -11,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
 
 public class CellularAutomatonView {
@@ -28,7 +30,8 @@ public class CellularAutomatonView {
   private int newRowIndex;
 
   ResourceBundle bundle;
-  CellularAutomatonController controller;
+  CellularAutomatonController mainController;
+  ArrayList<CellularAutomatonController> simulationControllers;
   Map<String, Color> cellStyles;
   GridStyle grid;
 
@@ -36,7 +39,8 @@ public class CellularAutomatonView {
     masterLayout = gridPane;
     masterLayout.getStyleClass().add("master-gridpane");
     bundle = resourceBundle;
-    controller = new CellularAutomatonController(this);
+    mainController = new CellularAutomatonController(this);
+    simulationControllers = new ArrayList<>();
 
     started = false;
     paused = true;
@@ -81,7 +85,7 @@ public class CellularAutomatonView {
     Text speedText = new Text();
     speedText.setText(bundle.getString("SpeedLabel"));
     createSpeedSlider();
-    applySpeedButton = new Button(bundle.getString("ApplySpeedButtonLabel"));
+    applySpeedButton = new Button(bundle.getString("ApplyButtonLabel"));
     applySpeedButton.setOnAction(e -> speedButtonClick());
 
 
@@ -108,15 +112,19 @@ public class CellularAutomatonView {
 
   }
   public void loadFileClick() {
-    CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
+    CellularAutomatonConfiguration config = mainController.loadConfigFile(masterLayout);
     SimulationView simulationView = new SimulationView(config, bundle);
     newSimulationButton.setVisible(false);
     newSimulationButton.setDisable(true);
-    masterLayout.add(simulationView.initialize(), 0, newRowIndex - 2, 3,2);
+    Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
+    masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
+    simulationControllers.add(simulationPair.getKey());
     createNewSimulationButton(newRowIndex);
     incrementRowIndex();
 
-    controller.pauseSimulation();
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.pauseSimulation();
+    }
     started = false;
     paused = true;
     updateButtonLabels();
@@ -139,12 +147,12 @@ public class CellularAutomatonView {
 
   public void startResetButtonClick() {
     if(started){
-      controller.resetSimulation();
+      mainController.resetSimulation();
       started = false;
       paused = true;
     }
     else{
-      controller.playSimulation();
+      mainController.playSimulation();
       started = true;
       paused = false;
     }
@@ -153,26 +161,33 @@ public class CellularAutomatonView {
 
   public void pauseResumeButtonClick() {
     if(paused){
-      controller.playSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.playSimulation();
+      }
       started = true;
       paused = false;
     }
     else{
-      controller.pauseSimulation();
-      paused = true;
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.pauseSimulation();
+      }
     }
     updateButtonLabels();
   }
 
   public void stepButtonClick() {
-    controller.stepOnce();
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.stepOnce();
+    }
     started = true;
     paused = true;
     updateButtonLabels();
   }
 
   public void speedButtonClick() {
-    controller.changeRateSlider((int) speedSlider.getValue());
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.changeRateSlider((int) speedSlider.getValue());
+    }
     started = true;
     paused = false;
     updateButtonLabels();

@@ -4,6 +4,7 @@ import cellsociety.model.CellState;
 import cellsociety.model.CellularAutomaton;
 import cellsociety.model.grids.Dense2DCellGrid;
 import cellsociety.view.CellularAutomatonView;
+import cellsociety.view.SimulationView;
 import cellsociety.xml.XMLConfigurationParser;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class CellularAutomatonController {
   private KeyFrame frame;
   private CellularAutomatonView myView;
   private CellularAutomaton myModel;
+  private SimulationView mySimulationView;
   private File currentConfigFile;
   private Path storeConfigFilePath;
   private List<List<String>> currentStates;
@@ -54,6 +56,11 @@ public class CellularAutomatonController {
   public CellularAutomatonController(CellularAutomatonView myView) {
     this();
     this.myView = myView;
+  }
+
+  public CellularAutomatonController(SimulationView mySimulationView) {
+    this();
+    this.mySimulationView = mySimulationView;
   }
 
   /**
