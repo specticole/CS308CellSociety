@@ -2,14 +2,8 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
-import cellsociety.model.states.FireState;
-import cellsociety.model.states.GameOfLifeState;
-import cellsociety.model.states.PercolationState;
-import cellsociety.model.states.SegregationState;
-import cellsociety.model.states.WaTorWorldState;
 import cellsociety.view.parameters.FireParameterBox;
 import cellsociety.view.parameters.GameOfLifeParameterBox;
-import cellsociety.view.parameters.ParameterBox;
 import cellsociety.view.parameters.PercolationParameterBox;
 import cellsociety.view.parameters.SegregationParameterBox;
 import cellsociety.view.parameters.WaTorParameterBox;

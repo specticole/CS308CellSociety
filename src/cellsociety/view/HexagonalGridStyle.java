@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import java.util.List;
 import java.util.Map;
+import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -34,5 +35,10 @@ public class HexagonalGridStyle extends GridStyle{
   @Override
   public void updateGrid(List<List<String>> listOfCells, Map<String, Color> stateToColor) {
 
+  }
+
+  @Override
+  public Point2D handleClick() {
+    return null;
   }
 }

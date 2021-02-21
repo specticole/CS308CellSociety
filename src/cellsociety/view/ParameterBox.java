@@ -1,4 +1,4 @@
-package cellsociety.view.parameters;
+package cellsociety.view;
 
 import cellsociety.view.SimulationView;
 import java.util.HashMap;

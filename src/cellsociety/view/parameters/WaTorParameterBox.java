@@ -1,5 +1,6 @@
 package cellsociety.view.parameters;
 
+import cellsociety.view.ParameterBox;
 import cellsociety.view.SimulationView;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
@@ -9,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class WaTorParameterBox extends ParameterBox{
+public class WaTorParameterBox extends ParameterBox {
 
   private TextField fishRoundsToBreedField;
   private TextField sharkRoundsToBreedField;

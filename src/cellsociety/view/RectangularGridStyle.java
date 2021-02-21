@@ -1,7 +1,10 @@
 package cellsociety.view;
 
+import java.awt.Point;
 import java.util.List;
 import java.util.Map;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -22,6 +25,7 @@ public class RectangularGridStyle extends GridStyle{
   private Rectangle createRectangleCell(double width, double height, Color color){
     Rectangle cell = new Rectangle(width, height);
     cell.setFill(color);
+    cell.setOnMouseClicked(e -> handleClick(cell));
     return cell;
   }
 
@@ -59,5 +63,10 @@ public class RectangularGridStyle extends GridStyle{
         grid[i][j].setFill(stateToColor.get(listOfStates.get(i).get(j)));
       }
     }
+  }
+
+  @Override
+  public Point2D handleClick(Rectangle cell) {
+    cell.
   }
 }
