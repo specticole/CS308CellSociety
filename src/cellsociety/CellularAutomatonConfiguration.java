@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.paint.Color;
 
-import cellsociety.model.states.*;
 import cellsociety.model.grids.*;
-import cellsociety.model.rules.*;
 
 /**
  * This class stores all the information read in from the configuration file, to be passed to the
@@ -58,21 +56,24 @@ public class CellularAutomatonConfiguration {
   }
 
   private CellState makeState(String simulationType, String contents) {
-    /* TODO: refactor to use reflection */
-    switch(simulationType) {
-      case "gameoflife":
-        return new GameOfLifeState(contents);
-      case "percolation":
-        return new PercolationState(contents);
-      case "fire":
-        return new FireState(contents);
-      case "wator":
-        return new WaTorWorldState(contents);
-      case "segregation":
-        return new SegregationState(contents);
-      default:
-        assert(false);
-        return null;
+    try {
+      return (CellState)cellsociety.model.states.Index.allStates
+          .get(simulationType)
+          .getConstructor(String.class)
+          .newInstance(contents);
+    } catch(Exception e) {
+      return null;
+    }
+  }
+
+  private void makeRules(String simulationType, Map<String, String> simulationParameters) {
+    try {
+      ruleSet = (CellularAutomatonRule)cellsociety.model.rules.Index.allRules
+          .get(simulationType)
+          .getConstructor(Map.class)
+          .newInstance(simulationParameters);
+    } catch(Exception e) {
+      ruleSet = null;
     }
   }
 
@@ -102,28 +103,6 @@ public class CellularAutomatonConfiguration {
         grid = rectGrid;
 
         break;
-    }
-  }
-
-  private void makeRules(String simulationType, Map<String, String> simulationParameters) {
-    switch (simulationType) {
-      case "gameoflife":
-        ruleSet = new GameOfLifeRule(simulationParameters);
-        break;
-      case "percolation":
-        ruleSet = new PercolationRule(simulationParameters);
-        break;
-      case "fire":
-        ruleSet = new FireRule(simulationParameters);
-        break;
-      case "wator":
-        ruleSet = new WaTorWorldRule(simulationParameters);
-        break;
-      case "segregation":
-        ruleSet = new SegregationRule(simulationParameters);
-        break;
-      default:
-        assert(false);
     }
   }
 
