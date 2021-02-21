@@ -17,6 +17,7 @@ import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.GridPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
@@ -37,7 +38,6 @@ public class CellularAutomatonController {
   private CellularAutomaton myModel;
   private SimulationView mySimulationView;
   private File currentConfigFile;
-  private Path storeConfigFilePath;
   private List<List<String>> currentStates;
 
   public CellularAutomatonController() {
@@ -63,6 +63,21 @@ public class CellularAutomatonController {
     CellularAutomatonConfiguration config = new CellularAutomatonConfiguration(configFile);
     currentStates = config.getInitialStates();
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
+  }
+
+  public void saveConfigFile(GridPane masterLayout) {
+    pauseSimulation();
+    DirectoryChooser directoryChooser = new DirectoryChooser();
+    File saveConfigFileLocation = directoryChooser.showDialog(masterLayout.getScene().getWindow());
+    String saveFileName = currentConfigFile.getName().replaceAll(".xml","").concat("copy.xml"); // todo: allow user to change name
+    try {
+      Path storeConfigFilePath = Paths.get(saveConfigFileLocation.getPath() + "/" + saveFileName);
+      Path storedConfigFilePath = Files.copy(currentConfigFile.toPath(), storeConfigFilePath, StandardCopyOption.REPLACE_EXISTING);
+      File storedConfigFile = storedConfigFilePath.toFile();
+      updateStoredConfigFile(storedConfigFile);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -107,12 +122,7 @@ public class CellularAutomatonController {
 
   // may be implemented in Complete
   public void resetSimulation() {
-    // todo: storeConfigFile should have a corresponding button in the view
-    try {
-      storeConfigFile();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+
   }
 
   private void step() {
@@ -125,15 +135,6 @@ public class CellularAutomatonController {
       }
     }
     mySimulationView.updateView(currentStates);
-  }
-
-  public void storeConfigFile() throws IOException {
-    // todo: get target directory from view
-    String storeConfigFileName = currentConfigFile.getName().replaceAll(".xml","").concat("copy.xml");
-    storeConfigFilePath = Paths.get(currentConfigFile.getParentFile().getParent() + "/Storage/" + storeConfigFileName);
-    Path storedConfigFilePath = Files.copy(currentConfigFile.toPath(), storeConfigFilePath, StandardCopyOption.REPLACE_EXISTING);
-    File storedConfigFile = storedConfigFilePath.toFile();
-    updateStoredConfigFile(storedConfigFile);
   }
 
   public void updateStoredConfigFile(File storedConfigFile) {

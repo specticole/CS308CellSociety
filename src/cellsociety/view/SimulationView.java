@@ -92,7 +92,7 @@ public class SimulationView {
         mainGrid = new HexagonalGridStyle(new Pane());
         break;
     }
-    gridView = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight());
+    gridView = mainGrid.createGrid(config.getGridHeight(), config.getGridWidth());
     mainGrid.updateGrid(config.getInitialStates(), config.getCellStyles());
   }
 
@@ -124,7 +124,7 @@ public class SimulationView {
 
   private void saveXML() throws IOException {
     controller.pauseSimulation();
-    controller.storeConfigFile();
+    controller.saveConfigFile(masterLayout);
   }
 
   private ParameterBox createParameterBox() {

@@ -8,9 +8,9 @@
     <gridrow>
       <gridcell>TREE</gridcell>
       <gridcell>TREE</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
       <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>BURNING</gridcell>
       <gridcell>TREE</gridcell>
       <gridcell>TREE</gridcell>
       <gridcell>TREE</gridcell>
@@ -19,49 +19,27 @@
     <gridrow>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
       <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
       <gridcell>TREE</gridcell>
     </gridrow>
     <gridrow>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>BURNING</gridcell>
+      <gridcell>TREE</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>TREE</gridcell>
       <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
+      <gridcell>TREE</gridcell>
     </gridrow>
     <gridrow>
-      <gridcell>BURNING</gridcell>
+      <gridcell>TREE</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
@@ -73,23 +51,45 @@
     </gridrow>
     <gridrow>
       <gridcell>TREE</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>TREE</gridcell>
+    </gridrow>
+    <gridrow>
       <gridcell>TREE</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+    </gridrow>
+    <gridrow>
       <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
+      <gridcell>BURNING</gridcell>
     </gridrow>
     <gridrow>
       <gridcell>TREE</gridcell>
       <gridcell>TREE</gridcell>
       <gridcell>TREE</gridcell>
-      <gridcell>BURNING</gridcell>
+      <gridcell>TREE</gridcell>
       <gridcell>BURNING</gridcell>
       <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
+      <gridcell>BURNING</gridcell>
       <gridcell>TREE</gridcell>
       <gridcell>TREE</gridcell>
     </gridrow>
