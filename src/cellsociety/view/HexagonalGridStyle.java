@@ -15,6 +15,7 @@ public class HexagonalGridStyle extends GridStyle{
 
   public HexagonalGridStyle(Pane pane){
     this.pane = pane;
+    pane.getStyleClass().add("hexagonal-gridpane");
   }
 
   private void createHexagonalCell (double radius, double xPos, double yPos, Color color){

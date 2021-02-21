@@ -32,18 +32,18 @@ public class CellularAutomatonView {
   Map<String, Color> cellStyles;
   GridStyle grid;
 
-  public CellularAutomatonView(GridPane gridPane){
+  public CellularAutomatonView(GridPane gridPane, ResourceBundle resourceBundle){
     masterLayout = gridPane;
     masterLayout.getStyleClass().add("master-gridpane");
-  }
-
-  public GridPane initialize(ResourceBundle resourceBundle){
-    controller = new CellularAutomatonController(this);
     bundle = resourceBundle;
+    controller = new CellularAutomatonController(this);
+
     started = false;
     paused = true;
     newRowIndex = 2;
+  }
 
+  public GridPane initialize(){
     createTitle();
     createSimulationControlButtons();
     createNewSimulationButton(newRowIndex);
@@ -57,7 +57,7 @@ public class CellularAutomatonView {
     titleBox.getStyleClass().add("title-box");
     Text titleText = new Text();
     titleText.setText(bundle.getString("Title"));
-    titleText.getStyleClass().add("text-style");
+    titleText.getStyleClass().add("title-text");
 
     titleBox.getChildren().add(titleText);
     masterLayout.add(titleBox,0,0, 3,1);
@@ -103,7 +103,6 @@ public class CellularAutomatonView {
     masterLayout.add(newSimulationButtonBox, 0,rowIndex);
 
   }
-
   public void loadFileClick() {
     CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
     SimulationView simulationView = new SimulationView(config);
