@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.GridPane;
@@ -33,7 +34,6 @@ public class CellularAutomatonController {
 
   private Timeline animation;
   private KeyFrame frame;
-  private CellularAutomatonView myView;
   private CellularAutomaton myModel;
   private SimulationView mySimulationView;
   private File currentConfigFile;
@@ -51,12 +51,9 @@ public class CellularAutomatonController {
    * Creates a Controller object that stores a myView object, will pass updated states from the
    * Model to the View
    *
-   * @param myView - the View object for this simulation
+   * @param mySimulationView - the View object for each simulation
+   * @param configFile - the File for each simulation
    */
-  public CellularAutomatonController(CellularAutomatonView myView) {
-    this();
-    this.myView = myView;
-  }
 
   public CellularAutomatonController(SimulationView mySimulationView,
       File configFile) {
@@ -66,40 +63,6 @@ public class CellularAutomatonController {
     CellularAutomatonConfiguration config = new CellularAutomatonConfiguration(configFile);
     currentStates = config.getInitialStates();
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
-  }
-
-  /**
-   * Initialize the CellularAutomaton given a configuration object.
-   */
-  public void initializeForConfig(CellularAutomatonConfiguration config) {
-    myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
-  }
-
-  public CellularAutomatonConfiguration loadConfigFile() {
-    currentConfigFile = new File("data/Default.xml");
-    CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(currentConfigFile);
-    currentStates = simulationConfig.getInitialStates();
-    return simulationConfig;
-  }
-
-  /**
-   * Loads a file based on user selection in a visual file chooser
-   *
-   * @param masterLayout - the GridPane that the View holds
-   * @return - object that stores data relevant to the Model and the View
-   */
-  public CellularAutomatonConfiguration loadConfigFile(GridPane masterLayout) {
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
-    currentConfigFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
-    try {
-      CellularAutomatonConfiguration simulationConfig = new CellularAutomatonConfiguration(currentConfigFile);
-      currentStates = simulationConfig.getInitialStates();
-      return simulationConfig;
-    } catch (NullPointerException n) {
-      n.printStackTrace();
-      return null;
-    }
   }
 
   /**
@@ -178,4 +141,7 @@ public class CellularAutomatonController {
     updateParser.updateStoredConfigFile(currentStates);
   }
 
+  public void updateParameters(Map<String, String> parameterList) {
+    //TODO: implement parameter changing
+  }
 }

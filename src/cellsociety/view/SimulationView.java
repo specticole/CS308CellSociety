@@ -2,8 +2,17 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
+import cellsociety.model.states.FireState;
+import cellsociety.model.states.GameOfLifeState;
+import cellsociety.model.states.PercolationState;
+import cellsociety.model.states.SegregationState;
+import cellsociety.model.states.WaTorWorldState;
+import cellsociety.view.parameters.GameOfLifeParameterBox;
+import cellsociety.view.parameters.ParameterBox;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -23,7 +32,8 @@ public class SimulationView {
   private Graph graph;
   private Button graphButton;
   private Button gridButton;
-  private VBox editSimulationBox;
+  private Button saveButton;
+  private ParameterBox parameterBox;
 
   private CellularAutomatonController controller;
   private CellularAutomatonConfiguration config;
@@ -38,7 +48,6 @@ public class SimulationView {
     config = new CellularAutomatonConfiguration(configFile);
     bundle = currentBundle;
     controller = new CellularAutomatonController(this, configFile);
-    controller.initializeForConfig(config);
     graphShown = false;
     gridShown = true;
   }
@@ -47,9 +56,11 @@ public class SimulationView {
     createTitle();
     createButtons();
     createGrid();
+    parameterBox = createParameterBox();
 
     masterLayout.add(titleBox, 0,0);
     masterLayout.add(buttonBox, 0,1);
+    masterLayout.add(parameterBox.createFields(), 0,2);
     masterLayout.add(gridView, 1,0, 1,3);
     return new Pair<>(controller, masterLayout);
   }
@@ -57,13 +68,21 @@ public class SimulationView {
   private void createButtons() {
     buttonBox = new VBox();
     buttonBox.getStyleClass().add("");
+
     graphButton = new Button(bundle.getString("ShowGraphButtonLabel"));
     graphButton.setOnAction(e -> toggleGraph());
-    buttonBox.getChildren().add(graphButton);
-
     gridButton = new Button(bundle.getString("HideGridButtonLabel"));
     gridButton.setOnAction(e -> toggleGrid());
-    buttonBox.getChildren().add(gridButton);
+    saveButton = new Button(bundle.getString("SaveButtonLabel"));
+    saveButton.setOnAction(e -> {
+      try {
+        saveXML();
+      } catch (IOException ioException) {
+        ioException.printStackTrace();
+      }
+    });
+
+    buttonBox.getChildren().addAll(graphButton, gridButton, saveButton);
   }
 
   private void createGrid() {
@@ -105,11 +124,32 @@ public class SimulationView {
     }
   }
 
-  private void createParameters() {
+  private void saveXML() throws IOException {
+    controller.storeConfigFile();
+  }
 
+  private ParameterBox createParameterBox() {
+    switch (config.getSimulationType()) {
+      case "gameoflife":
+        return new GameOfLifeParameterBox(new VBox(), bundle, this);
+      case "percolation":
+        return null;
+      case "fire":
+        return null;
+      case "wator":
+        return null;
+      case "segregation":
+        return null;
+      default:
+        return null;
+    }
   }
 
   public void updateView(List<List<String>> myStates){
     mainGrid.updateGrid(myStates, config.getCellStyles());
+  }
+
+  public void updateParameters(Map<String, String> parameterList) {
+    controller.updateParameters(parameterList);
   }
 }

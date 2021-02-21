@@ -7,17 +7,17 @@
   <grid height="3" neighbors="8" type="rectangular" width="3" wrapping="false">
     <gridrow>
       <gridcell>DEAD</gridcell>
-      <gridcell>ALIVE</gridcell>
+      <gridcell>DEAD</gridcell>
       <gridcell>DEAD</gridcell>
     </gridrow>
     <gridrow>
-      <gridcell>DEAD</gridcell>
       <gridcell>ALIVE</gridcell>
-      <gridcell>DEAD</gridcell>
+      <gridcell>ALIVE</gridcell>
+      <gridcell>ALIVE</gridcell>
     </gridrow>
     <gridrow>
       <gridcell>DEAD</gridcell>
-      <gridcell>ALIVE</gridcell>
+      <gridcell>DEAD</gridcell>
       <gridcell>DEAD</gridcell>
     </gridrow>
   </grid>

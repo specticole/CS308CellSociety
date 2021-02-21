@@ -33,16 +33,13 @@ public class CellularAutomatonView {
   private int newRowIndex;
 
   ResourceBundle bundle;
-  CellularAutomatonController mainController;
   ArrayList<CellularAutomatonController> simulationControllers;
-  Map<String, Color> cellStyles;
-  GridStyle grid;
+
 
   public CellularAutomatonView(GridPane gridPane, ResourceBundle resourceBundle){
     masterLayout = gridPane;
     masterLayout.getStyleClass().add("master-gridpane");
     bundle = resourceBundle;
-    mainController = new CellularAutomatonController(this);
     simulationControllers = new ArrayList<>();
 
     started = false;

@@ -33,6 +33,7 @@ public class CellularAutomatonConfiguration {
   private Map<String, Color> cellStyles;
   private Map<String, String> simulationParameters;
   private List<List<String>> initialStates;
+  private String simulationType;
 
   /**
    * Stores relevant information given any XML file
@@ -53,7 +54,7 @@ public class CellularAutomatonConfiguration {
     simulationParameters = docParser.getParameters();
     initialStates = docParser.getInitialStates();
     gridType = docParser.getGridType();
-    String simulationType = docParser.getSimulationType();
+    simulationType = docParser.getSimulationType();
     makeGrid(simulationType, gridType, initialStates);
     makeRules(simulationType, simulationParameters);
   }
@@ -166,6 +167,10 @@ public class CellularAutomatonConfiguration {
    */
   public List<List<String>> getInitialStates() {
     return initialStates;
+  }
+
+  public String getSimulationType(){
+    return simulationType;
   }
 
 
