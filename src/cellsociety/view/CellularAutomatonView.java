@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Pair;
 
 
@@ -112,8 +115,8 @@ public class CellularAutomatonView {
 
   }
   public void loadFileClick() {
-    CellularAutomatonConfiguration config = mainController.loadConfigFile(masterLayout);
-    SimulationView simulationView = new SimulationView(config, bundle);
+    File configFile = loadConfigFile();
+    SimulationView simulationView = new SimulationView(configFile, bundle);
     newSimulationButton.setVisible(false);
     newSimulationButton.setDisable(true);
     Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
@@ -145,21 +148,25 @@ public class CellularAutomatonView {
     }
   }
 
-  public void startResetButtonClick() {
+  private void startResetButtonClick() {
     if(started){
-      mainController.resetSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.resetSimulation();
+      }
       started = false;
       paused = true;
     }
     else{
-      mainController.playSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.playSimulation();
+      }
       started = true;
       paused = false;
     }
     updateButtonLabels();
   }
 
-  public void pauseResumeButtonClick() {
+  private void pauseResumeButtonClick() {
     if(paused){
       for (CellularAutomatonController controller: simulationControllers) {
         controller.playSimulation();
@@ -175,7 +182,7 @@ public class CellularAutomatonView {
     updateButtonLabels();
   }
 
-  public void stepButtonClick() {
+  private void stepButtonClick() {
     for (CellularAutomatonController controller: simulationControllers) {
       controller.stepOnce();
     }
@@ -184,7 +191,7 @@ public class CellularAutomatonView {
     updateButtonLabels();
   }
 
-  public void speedButtonClick() {
+  private void speedButtonClick() {
     for (CellularAutomatonController controller: simulationControllers) {
       controller.changeRateSlider((int) speedSlider.getValue());
     }
@@ -193,7 +200,11 @@ public class CellularAutomatonView {
     updateButtonLabels();
   }
 
-  public void updateView(List<List<String>> myStates){
-    grid.updateGrid(myStates, cellStyles);
+  private File loadConfigFile() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
+    File configFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
+    return configFile;
   }
+
 }

@@ -2,6 +2,8 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
+import java.io.File;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -30,12 +32,13 @@ public class SimulationView {
   private boolean graphShown;
   private boolean gridShown;
 
-  public SimulationView(CellularAutomatonConfiguration newConfig, ResourceBundle currentBundle){
+  public SimulationView(File configFile, ResourceBundle currentBundle){
     masterLayout = new GridPane();
     masterLayout.getStyleClass().add("simulation-gridpane");
-    controller = new CellularAutomatonController(this);
-    config = newConfig;
+    config = new CellularAutomatonConfiguration(configFile);
     bundle = currentBundle;
+    controller = new CellularAutomatonController(this, configFile);
+    controller.initializeForConfig(config);
     graphShown = false;
     gridShown = true;
   }
@@ -106,4 +109,7 @@ public class SimulationView {
 
   }
 
+  public void updateView(List<List<String>> myStates){
+    mainGrid.updateGrid(myStates, config.getCellStyles());
+  }
 }

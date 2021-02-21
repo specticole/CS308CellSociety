@@ -58,9 +58,14 @@ public class CellularAutomatonController {
     this.myView = myView;
   }
 
-  public CellularAutomatonController(SimulationView mySimulationView) {
+  public CellularAutomatonController(SimulationView mySimulationView,
+      File configFile) {
     this();
     this.mySimulationView = mySimulationView;
+    currentConfigFile = configFile;
+    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration(configFile);
+    currentStates = config.getInitialStates();
+    myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
   }
 
   /**
@@ -156,7 +161,7 @@ public class CellularAutomatonController {
         currentStates.get(row).set(col, currentState[row][col].toString());
       }
     }
-    myView.updateView(currentStates);
+    mySimulationView.updateView(currentStates);
   }
 
   public void storeConfigFile() throws IOException {

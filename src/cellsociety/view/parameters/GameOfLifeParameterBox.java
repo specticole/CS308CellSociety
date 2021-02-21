@@ -20,16 +20,16 @@ public class GameOfLifeParameterBox  extends ParameterBox{
     Text bornNums = new Text();
     bornNums.setText(bundle.getString("TODO"));
     TextField bornNumsField = new TextField();
-    Button bornNumsButton = new Button(bundle.getString("ApplyButtonLabel"));
-    bornNumsBox.getChildren().addAll(bornNums, bornNumsField, bornNumsButton);
+    bornNumsBox.getChildren().addAll(bornNums, bornNumsField);
 
     HBox surviveNumsBox = new HBox();
     surviveNumsBox.getStyleClass().add("parameter-box");
-    Text bornNums = new Text();
+    Text surviveNums = new Text();
     bornNums.setText(bundle.getString("TODO"));
-    TextField bornNumsField = new TextField();
-    bornNumsBox.getChildren().addAll(bornNums, bornNumsField);
+    TextField surviveNumsField = new TextField();
+    bornNumsBox.getChildren().addAll(surviveNums, surviveNumsField);
 
-    box.getChildren().addAll(bornNumsBox);
+    Button bornNumsButton = new Button(bundle.getString("ApplyButtonLabel"));
+    box.getChildren().addAll(bornNumsBox, surviveNumsBox, bornNumsButton);
   }
 }
