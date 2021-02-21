@@ -161,8 +161,4 @@ public class SimulationView {
     controller.updateParameters(parameterList);
   }
 
-  public void makeAlert(String errorMessage) {
-    Alert alert = new Alert(AlertType.ERROR, errorMessage);
-    alert.showAndWait().filter(response -> response == ButtonType.OK);
-  }
 }

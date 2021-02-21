@@ -59,16 +59,11 @@ public class CellularAutomatonController {
   public CellularAutomatonController(SimulationView mySimulationView,
       File configFile) {
     this();
-    try {
-      this.mySimulationView = mySimulationView;
-      currentConfigFile = configFile;
-      CellularAutomatonConfiguration config = new CellularAutomatonConfiguration(configFile);
-      currentStates = config.getInitialStates();
-      myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
-    }
-    catch (XMLException e) {
-      mySimulationView.makeAlert("Invalid XML file");
-    }
+    this.mySimulationView = mySimulationView;
+    currentConfigFile = configFile;
+    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration(configFile);
+    currentStates = config.getInitialStates();
+    myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
   }
 
   public void saveConfigFile(GridPane masterLayout) {

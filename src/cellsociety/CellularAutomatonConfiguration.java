@@ -3,6 +3,7 @@ package cellsociety;
 import cellsociety.model.CellGrid;
 import cellsociety.model.CellState;
 import cellsociety.model.CellularAutomatonRule;
+import cellsociety.view.SimulationView;
 import cellsociety.xml.XMLConfigurationParser;
 import cellsociety.xml.XMLException;
 import java.io.File;
@@ -37,12 +38,12 @@ public class CellularAutomatonConfiguration {
    * Stores relevant information given any XML file
    * @param configFile - XML configuration file
    */
-  public CellularAutomatonConfiguration(File configFile) {
+  public CellularAutomatonConfiguration(File configFile) throws XMLException {
     XMLConfigurationParser docParser = new XMLConfigurationParser(configFile);
     parseXMLFile(docParser);
   }
 
-  private void parseXMLFile(XMLConfigurationParser docParser) {
+  private void parseXMLFile(XMLConfigurationParser docParser) throws XMLException {
     simulationMetadata = docParser.getMetadata();
     gridWidth = docParser.getGridWidth();
     gridHeight = docParser.getGridHeight();
@@ -68,18 +69,18 @@ public class CellularAutomatonConfiguration {
     }
   }
 
-  private void makeRules(String simulationType, Map<String, String> simulationParameters) {
+  private void makeRules(String simulationType, Map<String, String> simulationParameters) throws XMLException {
     try {
       ruleSet = (CellularAutomatonRule)cellsociety.model.rules.Index.allRules
           .get(simulationType)
           .getConstructor(Map.class)
           .newInstance(simulationParameters);
     } catch(Exception e) {
-      ruleSet = null;
+      throw new XMLException(new IllegalArgumentException());
     }
   }
 
-  private void makeGrid(String simulationType, String gridType, List<List<String>> initialStates) {
+  private void makeGrid(String simulationType, String gridType, List<List<String>> initialStates) throws XMLException {
     switch(gridType) {
       case "rectangular":
         RectangularCellGrid rectGrid = new RectangularCellGrid(gridWidth, gridHeight, gridWrapping, gridNeighbors);
@@ -88,15 +89,13 @@ public class CellularAutomatonConfiguration {
         CellState initialState[][] = new CellState[gridHeight][gridWidth];
         for(int y = 0; y < gridHeight; y++) {
           for(int x = 0; x < gridWidth; x++ ) {
-            CellState state;
-            try {
-              state = makeState(simulationType, initialStates.get(y).get(x));
+            CellState state = makeState(simulationType, initialStates.get(y).get(x));
+            if (state != null) {
+              initialState[y][x] = state;
             }
-            catch (IllegalArgumentException e) {
-              throw new XMLException(e, "Invalid cell state specified");
+            else {
+              throw new XMLException(new IllegalArgumentException());
             }
-            initialState[y][x] = state;
-            assert(state != null);
           }
         }
 

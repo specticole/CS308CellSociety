@@ -2,12 +2,16 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
+import cellsociety.xml.XMLException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -112,22 +116,33 @@ public class CellularAutomatonView {
 
   }
   public void loadFileClick() {
-    File configFile = loadConfigFile();
-    SimulationView simulationView = new SimulationView(configFile, bundle);
-    newSimulationButton.setVisible(false);
-    newSimulationButton.setDisable(true);
-    Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
-    masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
-    simulationControllers.add(simulationPair.getKey());
-    createNewSimulationButton(newRowIndex);
-    incrementRowIndex();
+    try {
+      File configFile = loadConfigFile();
+      SimulationView simulationView = new SimulationView(configFile, bundle);
+      newSimulationButton.setVisible(false);
+      newSimulationButton.setDisable(true);
+      Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
+      masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
+      simulationControllers.add(simulationPair.getKey());
+      createNewSimulationButton(newRowIndex);
+      incrementRowIndex();
 
-    for (CellularAutomatonController controller: simulationControllers) {
-      controller.pauseSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.pauseSimulation();
+      }
+      started = false;
+      paused = true;
+      updateButtonLabels();
     }
-    started = false;
-    paused = true;
-    updateButtonLabels();
+    catch (XMLException e) {
+      if (e.getMessage() != null) {
+        makeAlert(e.getMessage());
+      }
+      else {
+        makeAlert("Invalid XML file");
+      }
+    }
+
   }
 
   private void updateButtonLabels(){
@@ -202,6 +217,11 @@ public class CellularAutomatonView {
     fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
     File configFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
     return configFile;
+  }
+
+  private void makeAlert(String errorMessage) {
+    Alert alert = new Alert(AlertType.ERROR, errorMessage);
+    alert.showAndWait().filter(response -> response == ButtonType.OK);
   }
 
 }
