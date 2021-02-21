@@ -1,6 +1,7 @@
 package cellsociety.model;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A CellGrid is an abstract collection of Cells laid out on a certain
@@ -31,8 +32,8 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
    * @param cell Central cell.
    * @return List of neighbors of `cell'
    */
-  public List<Cell> getNeighbors(Cell cell) {
-    return getNeighborCoordinates(cell.getCoordinates())
+  public List<Cell> getNeighbors(Cell center) {
+    return getNeighborCoordinates(center.getCoordinates())
         .stream()
         .map(coords -> this.getCell(coords)) // handles wrapping and bounds check
         .filter(cell -> cell != null)        // filter out-of-bounds
