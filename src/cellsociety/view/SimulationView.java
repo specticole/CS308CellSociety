@@ -14,39 +14,49 @@ public class SimulationView {
   private GridPane masterLayout;
   private HBox titleBox;
   private GridStyle mainGrid;
-  private Pane pane;
-  private HBox graphBox;
+  private Pane gridView;
+  private VBox buttonBox;
   private Graph graph;
-  private Button showGraphButton;
+  private Button graphButton;
+  private Button gridButton;
   private VBox editSimulationBox;
 
   private CellularAutomatonConfiguration config;
   private ResourceBundle bundle;
+
+  private boolean graphShown;
+  private boolean gridShown;
 
   public SimulationView(CellularAutomatonConfiguration newConfig, ResourceBundle currentBundle){
     masterLayout = new GridPane();
     masterLayout.getStyleClass().add("simulation-gridpane");
     config = newConfig;
     bundle = currentBundle;
+    graphShown = false;
+    gridShown = true;
   }
 
   public GridPane initialize(){
     createTitle();
-    createGraphButton();
+    createButtons();
     createGrid();
 
     masterLayout.add(titleBox, 0,0);
-    masterLayout.add(graphBox, 0,1);
-    masterLayout.add(pane, 1,0, 1,2);
+    masterLayout.add(buttonBox, 0,1);
+    masterLayout.add(gridView, 1,0, 1,3);
     return masterLayout;
   }
 
-  private void createGraphButton() {
-    graphBox = new HBox();
-    graphBox.getStyleClass().add("");
-    showGraphButton = new Button(bundle.getString("ShowGraphButtonLabel"));
-    showGraphButton.setOnAction(e -> showGraph());
-    graphBox.getChildren().add(showGraphButton);
+  private void createButtons() {
+    buttonBox = new VBox();
+    buttonBox.getStyleClass().add("");
+    graphButton = new Button(bundle.getString("ShowGraphButtonLabel"));
+    graphButton.setOnAction(e -> toggleGraph());
+    buttonBox.getChildren().add(graphButton);
+
+    gridButton = new Button(bundle.getString("HideGridButtonLabel"));
+    gridButton.setOnAction(e -> toggleGrid());
+    buttonBox.getChildren().add(gridButton);
   }
 
   private void createGrid() {
@@ -58,7 +68,7 @@ public class SimulationView {
         mainGrid = new HexagonalGridStyle(new Pane());
         break;
     }
-    pane = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight());
+    gridView = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight());
     mainGrid.updateGrid(config.getInitialStates(), config.getCellStyles());
   }
 
@@ -71,8 +81,21 @@ public class SimulationView {
     titleBox.getChildren().add(titleText);
   }
 
-  private void showGraph(){
+  private void toggleGraph(){
 
+  }
+
+  private void toggleGrid() {
+    if(gridShown){
+      masterLayout.getChildren().remove(gridView);
+      gridButton.setText(bundle.getString("ShowGridButtonLabel"));
+      gridShown = false;
+    }
+    else{
+      masterLayout.add(gridView, 1, 0, 1, 3);
+      gridButton.setText(bundle.getString("HideGridButtonLabel"));
+      gridShown = true;
+    }
   }
 
 
