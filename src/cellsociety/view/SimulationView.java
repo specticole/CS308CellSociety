@@ -17,7 +17,7 @@ public class SimulationView {
   private Pane pane;
   private HBox graphBox;
   private Graph graph;
-  private Button addGraphButton;
+  private Button showGraphButton;
   private VBox editSimulationBox;
 
   private CellularAutomatonConfiguration config;
@@ -32,9 +32,11 @@ public class SimulationView {
 
   public GridPane initialize(){
     createTitle();
+    createGraphButton();
     createGrid();
 
     masterLayout.add(titleBox, 0,0);
+    masterLayout.add(graphBox, 0,1);
     masterLayout.add(pane, 1,0, 1,2);
     return masterLayout;
   }
@@ -42,10 +44,9 @@ public class SimulationView {
   private void createGraphButton() {
     graphBox = new HBox();
     graphBox.getStyleClass().add("");
-    addGraphButton = new Button(bundle.getString("NewSimulationButtonLabel"));
-    newSimulationButton.setOnAction(e -> loadFileClick());
-    newSimulationButtonBox.getChildren().add(newSimulationButton);
-    masterLayout.add(newSimulationButtonBox, 0,rowIndex);
+    showGraphButton = new Button(bundle.getString("ShowGraphButtonLabel"));
+    showGraphButton.setOnAction(e -> showGraph());
+    graphBox.getChildren().add(showGraphButton);
   }
 
   private void createGrid() {
@@ -68,6 +69,10 @@ public class SimulationView {
     titleText.setText(config.getSimulationMetadata().get("title"));
     titleText.getStyleClass().add("subtitle-text");
     titleBox.getChildren().add(titleText);
+  }
+
+  private void showGraph(){
+
   }
 
 

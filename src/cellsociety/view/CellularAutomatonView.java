@@ -47,9 +47,13 @@ public class CellularAutomatonView {
     createTitle();
     createSimulationControlButtons();
     createNewSimulationButton(newRowIndex);
-    newRowIndex++;
+    incrementRowIndex();
 
     return masterLayout;
+  }
+
+  private void incrementRowIndex() {
+    newRowIndex += 2;
   }
 
   private void createTitle() {
@@ -105,12 +109,12 @@ public class CellularAutomatonView {
   }
   public void loadFileClick() {
     CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
-    SimulationView simulationView = new SimulationView(config);
+    SimulationView simulationView = new SimulationView(config, bundle);
     newSimulationButton.setVisible(false);
     newSimulationButton.setDisable(true);
-    masterLayout.add(simulationView.initialize(), 0, newRowIndex - 1, 3,2);
+    masterLayout.add(simulationView.initialize(), 0, newRowIndex - 2, 3,2);
     createNewSimulationButton(newRowIndex);
-    newRowIndex++;
+    incrementRowIndex();
 
     controller.pauseSimulation();
     started = false;
