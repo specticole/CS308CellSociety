@@ -55,8 +55,8 @@ public class SimulationView {
   public Pair<CellularAutomatonController, GridPane> initialize(){
     createTitle();
     createButtons();
-    createGrid();
     parameterBox = createParameterBox();
+    createGrid();
 
     masterLayout.add(titleBox, 0,0);
     masterLayout.add(buttonBox, 0,1);
@@ -125,6 +125,7 @@ public class SimulationView {
   }
 
   private void saveXML() throws IOException {
+    controller.pauseSimulation();
     controller.storeConfigFile();
   }
 

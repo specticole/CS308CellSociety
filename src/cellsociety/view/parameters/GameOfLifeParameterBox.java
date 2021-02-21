@@ -3,6 +3,7 @@ package cellsociety.view.parameters;
 import cellsociety.view.SimulationView;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -39,8 +40,16 @@ public class GameOfLifeParameterBox extends ParameterBox{
     Button applyButton = new Button(bundle.getString("ApplyButtonLabel"));
     applyButton.setOnAction(e -> applyParameters());
 
-    box.getChildren().addAll(bornNumsBox, surviveNumsBox, applyButton);
+    createCombobox();
+
+    box.getChildren().addAll(bornNumsBox, surviveNumsBox, applyButton, states);
     return box;
+  }
+
+  private void createCombobox (){
+    states = new ComboBox();
+    states.setPromptText(bundle.getString("StatesPrompt"));
+    states.getItems().addAll("ALIVE", "DEAD");
   }
 
   @Override

@@ -4,6 +4,7 @@ import cellsociety.view.SimulationView;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 
 public abstract class ParameterBox {
@@ -14,6 +15,7 @@ public abstract class ParameterBox {
   protected Map<String, String> parameterList;
   protected ResourceBundle bundle;
   protected SimulationView simulationView;
+  protected ComboBox states;
 
   public ParameterBox(VBox newBox, ResourceBundle currentBundle, SimulationView currentSimulation) {
     box = newBox;
@@ -25,6 +27,10 @@ public abstract class ParameterBox {
   public abstract VBox createFields();
 
   public abstract void applyParameters();
+
+  public String getState(){
+    return (String) states.getValue();
+  }
 
 
 }
