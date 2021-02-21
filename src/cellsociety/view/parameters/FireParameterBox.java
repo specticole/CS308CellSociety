@@ -9,43 +9,43 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class SegregationParameterBox extends ParameterBox{
+public class FireParameterBox extends ParameterBox{
 
-  private TextField neighborsNeededField;
+  private TextField probCatchField;
 
-  public SegregationParameterBox(VBox newBox, ResourceBundle currentBundle,
+  public FireParameterBox(VBox newBox, ResourceBundle currentBundle,
       SimulationView currentSimulation){
     super(newBox, currentBundle, currentSimulation);
   }
 
   @Override
   public VBox createFields() {
-    HBox neighborsNeededBox = new HBox();
-    neighborsNeededBox.getStyleClass().add("parameter-box");
-    Text neighborsNeeded = new Text();
-    neighborsNeeded.setText(bundle.getString("neighborsNeededLabel"));
-    neighborsNeededField = new TextField();
-    neighborsNeededField.setMaxWidth(TEXT_FIELD_MAX_WIDTH);
-    neighborsNeededBox.getChildren().addAll(neighborsNeeded, neighborsNeededField);
+    HBox probCatchBox = new HBox();
+    probCatchBox.getStyleClass().add("parameter-box");
+    Text probCatch = new Text();
+    probCatch.setText(bundle.getString("probCatchLabel"));
+    probCatchField = new TextField();
+    probCatchField.setMaxWidth(TEXT_FIELD_MAX_WIDTH);
+    probCatchBox.getChildren().addAll(probCatch, probCatchField);
 
     Button applyButton = new Button(bundle.getString("ApplyButtonLabel"));
     applyButton.setOnAction(e -> applyParameters());
 
     createCombobox();
 
-    box.getChildren().addAll(neighborsNeededBox, applyButton, states);
+    box.getChildren().addAll(probCatchBox, applyButton, states);
     return box;
   }
 
   private void createCombobox (){
     states = new ComboBox();
     states.setPromptText(bundle.getString("StatesPrompt"));
-    states.getItems().addAll("X", "O", "OPEN");
+    states.getItems().addAll("BURNING", "TREE", "EMPTY");
   }
 
   @Override
   public void applyParameters(){
-    parameterList.put("neighborsNeeded", neighborsNeededField.getText());
+    parameterList.put("probCatch", probCatchField.getText());
     simulationView.updateParameters(parameterList);
   }
 }

@@ -7,8 +7,12 @@ import cellsociety.model.states.GameOfLifeState;
 import cellsociety.model.states.PercolationState;
 import cellsociety.model.states.SegregationState;
 import cellsociety.model.states.WaTorWorldState;
+import cellsociety.view.parameters.FireParameterBox;
 import cellsociety.view.parameters.GameOfLifeParameterBox;
 import cellsociety.view.parameters.ParameterBox;
+import cellsociety.view.parameters.PercolationParameterBox;
+import cellsociety.view.parameters.SegregationParameterBox;
+import cellsociety.view.parameters.WaTorParameterBox;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -134,13 +138,13 @@ public class SimulationView {
       case "gameoflife":
         return new GameOfLifeParameterBox(new VBox(), bundle, this);
       case "percolation":
-        return null;
+        return new PercolationParameterBox(new VBox(), bundle, this);
       case "fire":
-        return null;
+        return new FireParameterBox(new VBox(), bundle, this);
       case "wator":
-        return null;
+        return new WaTorParameterBox(new VBox(), bundle, this);
       case "segregation":
-        return null;
+        return new SegregationParameterBox(new VBox(), bundle, this);
       default:
         return null;
     }

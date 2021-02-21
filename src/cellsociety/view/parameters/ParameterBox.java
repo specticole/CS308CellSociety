@@ -19,6 +19,7 @@ public abstract class ParameterBox {
 
   public ParameterBox(VBox newBox, ResourceBundle currentBundle, SimulationView currentSimulation) {
     box = newBox;
+    box.getStyleClass().add("parameter-box");
     bundle = currentBundle;
     simulationView = currentSimulation;
     parameterList = new HashMap<>();
