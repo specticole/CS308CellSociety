@@ -4,12 +4,9 @@ import cellsociety.view.GridStyle;
 import cellsociety.view.SimulationView;
 import java.util.List;
 import java.util.Map;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 
 public class HexagonalGridStyle extends GridStyle {
 
