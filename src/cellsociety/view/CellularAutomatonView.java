@@ -10,16 +10,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 
 public class CellularAutomatonView {
 
-  @FXML
   private GridPane masterLayout;
-  @FXML
-  private GridPane mainGrid;
+  private Pane mainGrid;
   @FXML
   private Text title;
   @FXML
@@ -35,27 +34,48 @@ public class CellularAutomatonView {
   ResourceBundle bundle;
   CellularAutomatonController controller;
   Map<String, Color> cellStyles;
-  RectangularGridStyle grid;
+  GridStyle grid;
 
-  public void initialize(){
-    Locale locale = new Locale("en", "US");
-    bundle = ResourceBundle.getBundle("labels", locale);
+  public CellularAutomatonView(GridPane gridPane){
+    masterLayout = gridPane;
+    masterLayout.getStyleClass().add("master-gridpane");
+  }
+
+  public GridPane initialize(ResourceBundle bundle){
 
     controller = new CellularAutomatonController(this);
-    //CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("GameOfLife/GameOfLife01" + ".xml");
-    //updateXML(config);
+    CellularAutomatonConfiguration config = controller.loadConfigFile();
+    controller.initializeForConfig(config);
+
+    createGrid(config);
 
     started = false;
     paused = true;
+
+    return masterLayout;
+  }
+
+
+  private void createGrid(CellularAutomatonConfiguration config){
+    switch (config.getGridType()) {
+      case "rectangular":
+        grid = new RectangularGridStyle();
+        mainGrid = grid.createGrid(config.getGridWidth(), config.getGridHeight());
+    }
+    masterLayout.add(mainGrid, 0, 0,4,1);
+  }
+
+  public void createButtons(){
+
   }
 
   public void updateXML(CellularAutomatonConfiguration config){
     controller.initializeForConfig(config);
     title.setText(config.getSimulationMetadata().get("title"));
     mainGrid.getChildren().clear();
-    grid = new RectangularGridStyle(mainGrid);
+    //grid = new RectangularGridStyle(mainGrid);
     cellStyles = config.getCellStyles();
-    grid.createGrid(config.getGridHeight(),config.getGridWidth());
+    //grid.createGrid(config.getGridHeight(),config.getGridWidth());
     grid.updateGrid(config.getInitialStates(), cellStyles);
   }
 
