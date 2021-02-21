@@ -17,14 +17,46 @@ public class RockPaperScissorRule extends CellularAutomatonRule {
         Map.entry(States.PAPER, Arrays.asList(States.SCISSOR)),
         Map.entry(States.SCISSOR, Arrays.asList(States.ROCK))
   );
+  private int threshold;
 
   public RockPaperScissorRule(Map<String, String> params) {
-
     super(params);
+    setGameSpecifics(params);
   }
 
   @Override
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
+    int maxNeighborLosses = 0;
+    States maxNeighborLossState = States.EMPTY;
+    for(States state : LOSSES_TO.get(cell.getState(Cell.CURRENT_TIME).getState())){
+      int numberOfLosses = getNeighborsOfState(state, neighbors);
+      if( numberOfLosses >= threshold && numberOfLosses > maxNeighborLosses){
+        maxNeighborLosses = numberOfLosses;
+        maxNeighborLossState = state;
+      }
+    }
+    if(maxNeighborLossState != States.EMPTY){
+      cell.setState(Cell.NEXT_TIME, new RockPaperScissorState(maxNeighborLossState));
+    }
+  }
 
+  private int getNeighborsOfState(States state, List<Cell> neighbors){
+    int ret = 0;
+    for (Cell neighbor : neighbors){
+      if (neighbor.getState(Cell.CURRENT_TIME).getState() == state){
+        ret ++;
+      }
+    }
+    return ret;
+  }
+
+  /**
+   * This method gets the specific rule set for the Segregation variation, in the form of <Double>
+   * where the double is the percentage of neighbors which need to be of the same type in order to not move
+   * @param params
+   */
+  public void setGameSpecifics(Map<String, String> params) {
+    String rules = params.get("threshold");
+    threshold = Integer.valueOf(rules);
   }
 }
