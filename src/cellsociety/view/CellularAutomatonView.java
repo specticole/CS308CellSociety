@@ -2,81 +2,132 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Pair;
 
 
 public class CellularAutomatonView {
 
   private GridPane masterLayout;
-  private Pane mainGrid;
-  @FXML
-  private Text title;
-  @FXML
   private Button startResetButton;
-  @FXML
   private Button pauseResumeButton;
-  @FXML
+  private Button stepButton;
   private Slider speedSlider;
+  private Button applySpeedButton;
+  private Button newSimulationButton;
 
   private boolean started;
   private boolean paused;
+  private int newRowIndex;
 
   ResourceBundle bundle;
-  CellularAutomatonController controller;
-  Map<String, Color> cellStyles;
-  GridStyle grid;
+  ArrayList<CellularAutomatonController> simulationControllers;
 
-  public CellularAutomatonView(GridPane gridPane){
+
+  public CellularAutomatonView(GridPane gridPane, ResourceBundle resourceBundle){
     masterLayout = gridPane;
     masterLayout.getStyleClass().add("master-gridpane");
-  }
-
-  public GridPane initialize(ResourceBundle bundle){
-
-    controller = new CellularAutomatonController(this);
-    CellularAutomatonConfiguration config = controller.loadConfigFile();
-    controller.initializeForConfig(config);
-
-    createGrid(config);
+    bundle = resourceBundle;
+    simulationControllers = new ArrayList<>();
 
     started = false;
     paused = true;
+    newRowIndex = 2;
+  }
+
+  public GridPane initialize(){
+    createTitle();
+    createSimulationControlButtons();
+    createNewSimulationButton(newRowIndex);
+    incrementRowIndex();
 
     return masterLayout;
   }
 
+  private void incrementRowIndex() {
+    newRowIndex += 2;
+  }
 
-  private void createGrid(CellularAutomatonConfiguration config){
-    switch (config.getGridType()) {
-      case "rectangular":
-        grid = new RectangularGridStyle();
-        mainGrid = grid.createGrid(config.getGridWidth(), config.getGridHeight());
+  private void createTitle() {
+    HBox titleBox = new HBox();
+    titleBox.getStyleClass().add("title-box");
+    Text titleText = new Text();
+    titleText.setText(bundle.getString("Title"));
+    titleText.getStyleClass().add("title-text");
+
+    titleBox.getChildren().add(titleText);
+    masterLayout.add(titleBox,0,0, 3,1);
+  }
+
+  private void createSimulationControlButtons() {
+    HBox controlsBox = new HBox();
+    controlsBox.getStyleClass().add("controls-box");
+
+    startResetButton = new Button(bundle.getString("StartButtonLabel"));
+    startResetButton.setOnAction(e -> startResetButtonClick());
+    pauseResumeButton = new Button(bundle.getString("ResumeButtonLabel"));
+    pauseResumeButton.setOnAction(e -> pauseResumeButtonClick());
+    stepButton = new Button(bundle.getString("StepButtonLabel"));
+    stepButton.setOnAction(e -> stepButtonClick());
+
+    Text speedText = new Text();
+    speedText.setText(bundle.getString("SpeedLabel"));
+    createSpeedSlider();
+    applySpeedButton = new Button(bundle.getString("ApplyButtonLabel"));
+    applySpeedButton.setOnAction(e -> speedButtonClick());
+
+
+    controlsBox.getChildren().addAll(startResetButton, pauseResumeButton, stepButton, speedText,
+        speedSlider, applySpeedButton);
+    masterLayout.add(controlsBox,0,1, 3,1);
+  }
+
+  private void createSpeedSlider(){
+    speedSlider = new Slider();
+    speedSlider.adjustValue(3);
+    speedSlider.setMin(1);
+    speedSlider.setMax(5);
+    speedSlider.getStyleClass().add("speed-slider");
+  }
+
+  private void createNewSimulationButton(int rowIndex){
+    HBox newSimulationButtonBox = new HBox();
+    newSimulationButtonBox.getStyleClass().add("button-box");
+    newSimulationButton = new Button(bundle.getString("NewSimulationButtonLabel"));
+    newSimulationButton.setOnAction(e -> loadFileClick());
+    newSimulationButtonBox.getChildren().add(newSimulationButton);
+    masterLayout.add(newSimulationButtonBox, 0,rowIndex);
+
+  }
+  public void loadFileClick() {
+    File configFile = loadConfigFile();
+    SimulationView simulationView = new SimulationView(configFile, bundle);
+    newSimulationButton.setVisible(false);
+    newSimulationButton.setDisable(true);
+    Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
+    masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
+    simulationControllers.add(simulationPair.getKey());
+    createNewSimulationButton(newRowIndex);
+    incrementRowIndex();
+
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.pauseSimulation();
     }
-    masterLayout.add(mainGrid, 0, 0,4,1);
-  }
-
-  public void createButtons(){
-
-  }
-
-  public void updateXML(CellularAutomatonConfiguration config){
-    controller.initializeForConfig(config);
-    title.setText(config.getSimulationMetadata().get("title"));
-    mainGrid.getChildren().clear();
-    //grid = new RectangularGridStyle(mainGrid);
-    cellStyles = config.getCellStyles();
-    //grid.createGrid(config.getGridHeight(),config.getGridWidth());
-    grid.updateGrid(config.getInitialStates(), cellStyles);
+    started = false;
+    paused = true;
+    updateButtonLabels();
   }
 
   private void updateButtonLabels(){
@@ -94,59 +145,63 @@ public class CellularAutomatonView {
     }
   }
 
-  public void startResetButtonClick() {
+  private void startResetButtonClick() {
     if(started){
-      controller.resetSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.resetSimulation();
+      }
       started = false;
       paused = true;
     }
     else{
-      controller.playSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.playSimulation();
+      }
       started = true;
       paused = false;
     }
     updateButtonLabels();
   }
 
-  public void pauseResumeButtonClick() {
+  private void pauseResumeButtonClick() {
     if(paused){
-      controller.playSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.playSimulation();
+      }
       started = true;
       paused = false;
     }
     else{
-      controller.pauseSimulation();
-      paused = true;
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.pauseSimulation();
+      }
     }
     updateButtonLabels();
   }
 
-  public void stepButtonClick() {
-    controller.stepOnce();
+  private void stepButtonClick() {
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.stepOnce();
+    }
     started = true;
     paused = true;
     updateButtonLabels();
   }
 
-  public void speedButtonClick() {
-    controller.changeRateSlider((int) speedSlider.getValue());
+  private void speedButtonClick() {
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.changeRateSlider((int) speedSlider.getValue());
+    }
     started = true;
     paused = false;
     updateButtonLabels();
   }
 
-  public void loadFileClick() {
-    CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
-    if(config != null){
-      updateXML(config);
-      controller.pauseSimulation();
-      started = false;
-      paused = true;
-      updateButtonLabels();
-    }
+  private File loadConfigFile() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
+    File configFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
+    return configFile;
   }
 
-  public void updateView(List<List<String>> myStates){
-    grid.updateGrid(myStates, cellStyles);
-  }
 }

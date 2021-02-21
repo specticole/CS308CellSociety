@@ -56,11 +56,12 @@ public class SplashScreen {
     switchToSimulation(bundle);
   }
 
-  private void switchToSimulation(ResourceBundle bundle){
-    Parent root = new CellularAutomatonView(new GridPane()).initialize(bundle);
+  private void switchToSimulation(ResourceBundle newBundle){
+    Parent root = new CellularAutomatonView(new GridPane(), newBundle).initialize();
     Scene scene = new Scene(root, WIDTH, HEIGHT);
     scene.getStylesheets().add("game.css");
     stage.setScene(scene);
+
   }
 
 }

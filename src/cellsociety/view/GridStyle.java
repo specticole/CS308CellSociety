@@ -7,13 +7,8 @@ import javafx.scene.paint.Color;
 
 
 public abstract class GridStyle {
-  public static final int VIEW_WIDTH = 500;
-  public static final int VIEW_HEIGHT = 500;
-
-  public enum Styles{
-    RECTANGULAR,
-    HEXAGONAL
-  }
+  public static final int VIEW_WIDTH = 250;
+  public static final int VIEW_HEIGHT = 250;
 
   public abstract Pane createGrid(int width, int height);
 

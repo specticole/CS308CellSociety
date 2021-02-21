@@ -11,14 +11,15 @@ public class RectangularGridStyle extends GridStyle{
 
   public static final double SPACING = 1;
 
-  GridPane pane;
-  Rectangle[][] grid;
+  private GridPane pane;
+  private Rectangle[][] grid;
 
-  public RectangularGridStyle(){
-    pane = new GridPane();
+  public RectangularGridStyle(GridPane gridPane){
+    pane = gridPane;
+    pane.getStyleClass().add("rectangular-gridpane");
   }
 
-  public Rectangle createRectangleCell(double width, double height, Color color){
+  private Rectangle createRectangleCell(double width, double height, Color color){
     Rectangle cell = new Rectangle(width, height);
     cell.setFill(color);
     return cell;
