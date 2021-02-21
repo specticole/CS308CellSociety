@@ -7,9 +7,7 @@ package cellsociety.model;
  * of the CellGrid through time.
  *
  * A CellularAutomaton can be advanced through time by calling the
- * step() method repeatedly.import cellsociety.model.CellGrid;
- * import cellsociety.model.CellState;
- * import cellsociety.xml.XMLParser;
+ * step() method repeatedly.
  *
  * The state (i.e. grid) of the cellular automaton can be retrieved
  * through getGrid(), which contains the current and past states of
@@ -37,6 +35,8 @@ public class CellularAutomaton {
    * Change the rule used to govern evolution of subsequent
    * generations of this CellularAutomaton. Previous generations are
    * not affected.
+   *
+   * @param rule New rule.
    */
   public void setRule(CellularAutomatonRule rule) {
     this.rule = rule;

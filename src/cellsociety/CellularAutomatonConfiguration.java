@@ -60,6 +60,7 @@ public class CellularAutomatonConfiguration {
   }
 
   private CellState makeState(String simulationType, String contents) {
+    /* TODO: refactor to use reflection */
     switch(simulationType) {
       case "gameoflife":
         return new GameOfLifeState(contents);
@@ -80,7 +81,7 @@ public class CellularAutomatonConfiguration {
   private void makeGrid(String simulationType, String gridType, List<List<String>> initialStates) {
     switch(gridType) {
       case "rectangular":
-        grid = new RectangularCellGrid(gridWidth, gridHeight, gridWrapping, gridNeighbors);
+        RectangularCellGrid rectGrid = new RectangularCellGrid(gridWidth, gridHeight, gridWrapping, gridNeighbors);
 
         // populate our new grid
         CellState initialState[][] = new CellState[gridHeight][gridWidth];
@@ -98,7 +99,9 @@ public class CellularAutomatonConfiguration {
           }
         }
 
-        ((Dense2DCellGrid)grid).appendStates(initialState);
+        rectGrid.appendStates(initialState);
+
+        grid = rectGrid;
 
         break;
     }

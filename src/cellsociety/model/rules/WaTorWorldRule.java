@@ -10,11 +10,22 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of Wa-Tor World's time evolution rule.
+ *
+ * @author Cole Spector
+ * @author Franklin Wei
+ */
 public class WaTorWorldRule extends CellularAutomatonRule {
   private int sharkRoundsToBreed;
   private int sharkRoundsToStarve;
   private int fishRoundsToBreed;
 
+  /**
+   * Construct a rule with given parameters.
+   *
+   * @param params Parameter map.
+   */
   public WaTorWorldRule(Map<String, String> params) {
     super(params);
     setGameSpecifics(params);
@@ -157,11 +168,15 @@ public class WaTorWorldRule extends CellularAutomatonRule {
   }
 
   /**
-   * This method gets the specific rule set for the Wa Tor World variation, in the form of F<int>/S<int>/X<int>
-   * where F is the number of rounds a fish needs to survive in order to breed
-   * where S is the number of rounds a shark needs to survive in order to breed
-   * where X is the number of round a shark will die after if it doesnt eat
-   * @param params
+   * This method gets the specific rule set for the Wa Tor World
+   * variation, in the form of F(int)/S(int)/X(int) where F is the
+   * number of rounds a fish needs to survive in order to breed where
+   * S is the number of rounds a shark needs to survive in order to
+   * breed where X is the number of round a shark will die after if it
+   * doesnt eat
+   *
+   * @param params Parameter map containing a subset of the allowed
+   * key-value pairs.
    */
   public void setGameSpecifics(Map<String, String> params) {
     String rules = params.get("rules");

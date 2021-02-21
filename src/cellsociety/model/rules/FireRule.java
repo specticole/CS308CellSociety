@@ -8,10 +8,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Implementation of Fire's time evolution rule.
+ *
+ * @author Cole Spector
+ */
 public class FireRule extends CellularAutomatonRule {
 
   private int fireChance;
 
+  /**
+   * Construct a FireRule with the given parameter map.
+   *
+   * @param params Parameter map.
+   */
   public FireRule(Map<String, String> params) {
     super(params);
     setGameSpecifics(params);
@@ -27,7 +37,7 @@ public class FireRule extends CellularAutomatonRule {
     }
   }
 
-  public void neighborsOnFire(Cell cell, List<Cell> neighbors){
+  private void neighborsOnFire(Cell cell, List<Cell> neighbors){
     for(Cell neighbor : neighbors){
       if (neighbor.getState(Cell.CURRENT_TIME).getState() == States.BURNING &&
           didCatchFire()) {
@@ -37,26 +47,29 @@ public class FireRule extends CellularAutomatonRule {
     }
   }
 
-  public boolean didCatchFire(){
+  private boolean didCatchFire(){
     Random rand = new Random();
     return (rand.nextInt(100) <= fireChance);
   }
 
-  public void dieOut(Cell cell){
+  private void dieOut(Cell cell){
     cell.setState(Cell.NEXT_TIME, new FireState(States.BURNING));
   }
 
-  public void burn(Cell cell){
+  private void burn(Cell cell){
     cell.setState(Cell.NEXT_TIME, new FireState(States.BURNING));
   }
 
 
 
   /**
-   * This method gets the specific rule set for the Segregation variation, in the form of <Int>
-   * where the double is the chance out of 100 (as a whole number) of a TREE catching fire with
-   * a BURNING neighbor
-   * @param params
+   * This method gets the specific rule set for the Fire variation,
+   * with one parameter:
+   *
+   * "probCatch" -> an integer representing the percent chance of
+   * fire.
+   *
+   * @param params Parameter map.
    */
   public void setGameSpecifics(Map<String, String> params) {
     String rules = params.get("probCatch");
