@@ -18,7 +18,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -156,5 +159,10 @@ public class SimulationView {
 
   public void updateParameters(Map<String, String> parameterList) {
     controller.updateParameters(parameterList);
+  }
+
+  public void makeAlert(String errorMessage) {
+    Alert alert = new Alert(AlertType.ERROR, errorMessage);
+    alert.showAndWait().filter(response -> response == ButtonType.OK);
   }
 }

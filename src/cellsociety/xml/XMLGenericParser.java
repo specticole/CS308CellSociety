@@ -12,8 +12,6 @@ import org.xml.sax.SAXException;
 
 public class XMLGenericParser {
 
-  // Readable error message that can be displayed by the GUI
-  public static final String ERROR_MESSAGE = "XML file does not represent %s";
   // keep only one documentBuilder because it is expensive to make and can reset it before parsing
   protected final DocumentBuilder DOCUMENT_BUILDER;
   protected Element root;
