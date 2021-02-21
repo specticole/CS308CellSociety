@@ -1,12 +1,8 @@
 package cellsociety.xml;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import javafx.scene.paint.Color;
-import java.util.HashMap;
-import java.util.Map;
 
 import static java.util.Map.entry;
 
@@ -32,10 +28,7 @@ public class XMLConfigurationParser extends XMLGenericParser {
 
   private static final List<String> META_FIELDS = new ArrayList<>(
       Arrays.asList("title", "author", "description"));
-  private static final List<String> SUPPORTED_SIMULATIONS = new ArrayList<>(
-      Arrays.asList("fire", "gameoflife", "percolation",
-          "segregation",
-          "wator"));
+  private static final Set<String> SUPPORTED_SIMULATIONS = cellsociety.model.rules.Index.allRules.keySet();
   private static final List<String> SUPPORTED_GRID_TYPES = new ArrayList<>(
       Arrays.asList("rectangular"));
   private static final Map<String, ArrayList<Integer>> SUPPORTED_GRIDS = Map.ofEntries(
