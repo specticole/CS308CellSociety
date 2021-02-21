@@ -5,7 +5,7 @@
     <author>Bill Guo</author>
     <description>Blinker: period 2 oscillator</description>
   </meta>
-  <grid type="hexagonal" width="3" height="3" neighbors="8" wrapping="false">
+  <grid type="hexagonal" width="3" height="3" neighbors="6" wrapping="false">
     <gridrow>
       <gridcell>DEAD</gridcell>
       <gridcell>DEAD</gridcell>

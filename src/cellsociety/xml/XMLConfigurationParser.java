@@ -37,9 +37,10 @@ public class XMLConfigurationParser extends XMLGenericParser {
           "segregation",
           "wator"));
   private static final List<String> SUPPORTED_GRID_TYPES = new ArrayList<>(
-      Arrays.asList("rectangular"));
+      Arrays.asList("rectangular", "hexagonal"));
   private static final Map<String, ArrayList<Integer>> SUPPORTED_GRIDS = Map.ofEntries(
-      entry("rectangular", new ArrayList<>(Arrays.asList(4, 8)))
+      entry("rectangular", new ArrayList<>(Arrays.asList(4, 8))),
+      entry("hexagonal", new ArrayList<>(Arrays.asList(6)))
   );
 
   /**

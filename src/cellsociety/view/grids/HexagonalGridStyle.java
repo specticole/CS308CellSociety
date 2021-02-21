@@ -29,12 +29,11 @@ public class HexagonalGridStyle extends GridStyle {
     Polygon cell = new Polygon();
     cell.getPoints().addAll(
         xPositionInPane, yPositionInPane - radius,
-        xPositionInPane + radius * Math.cos(HEX_ANGLE), yPositionInPane - radius * Math.sin(HEX_ANGLE),
-        xPositionInPane + radius * Math.cos(HEX_ANGLE), yPositionInPane + radius * Math.sin(HEX_ANGLE),
+        xPositionInPane+radius * Math.sin(HEX_ANGLE), yPositionInPane-radius * Math.cos(HEX_ANGLE),
+        xPositionInPane+radius * Math.sin(HEX_ANGLE), yPositionInPane+radius * Math.cos(HEX_ANGLE),
         xPositionInPane, yPositionInPane + radius,
-        xPositionInPane - radius * Math.cos(HEX_ANGLE), yPositionInPane + radius * Math.sin(HEX_ANGLE),
-        xPositionInPane - radius * Math.cos(HEX_ANGLE),
-        yPositionInPane - radius * Math.sin(HEX_ANGLE));
+        xPositionInPane-radius * Math.sin(HEX_ANGLE), yPositionInPane+radius * Math.cos(HEX_ANGLE),
+        xPositionInPane-radius * Math.sin(HEX_ANGLE), yPositionInPane-radius * Math.cos(HEX_ANGLE));
     cell.setFill(color);
     cell.setOnMouseClicked(e -> handleClick(xPositionInGrid, yPositionInGrid));
     return cell;
@@ -44,10 +43,13 @@ public class HexagonalGridStyle extends GridStyle {
   public Pane createGrid(int numCols, int numRows) {
     grid = new Polygon[numCols][numRows];
     double radius = calculateHexagonRadius(numCols, numRows);
+    System.out.println(radius);
     for (int rowNumber = 0; rowNumber < numRows; rowNumber++) {
       for (int colNumber = 0; colNumber < numCols; colNumber++) {
         double xPosition = calculateXPosition(colNumber, rowNumber, radius);
+        System.out.println("x: " + xPosition);
         double yPosition = calculateYPosition(rowNumber, radius);
+        System.out.println("y: " + yPosition);
         grid[colNumber][rowNumber] = createHexagonalCell(radius, rowNumber, colNumber, xPosition,
             yPosition, Color.WHITE);
         pane.getChildren().add(grid[colNumber][rowNumber]);
@@ -66,17 +68,17 @@ public class HexagonalGridStyle extends GridStyle {
 
   }
 
-  private double numberOfRadiusesVertically(int numCols) {
-    if(numCols % 2 == 1){
-      return (((numCols - 1) / 2) * 3) + 2;
+  private double numberOfRadiusesVertically(int numRows) {
+    if(numRows % 2 == 1){
+      return (((numRows - 1) / 2) * 3) + 2;
     }
     else{
-      return (numCols * 1.5) + Math.cos(HEX_ANGLE);
+      return (numRows * 1.5) + Math.cos(HEX_ANGLE);
     }
   }
 
-  private double numberOfRadiusesHorizontally(int numRows){
-    return (numRows * 2) + 1;
+  private double numberOfRadiusesHorizontally(int numCols){
+    return ((numCols * 2) + 1) * Math.sin(HEX_ANGLE);
   }
 
   private double calculateXPosition(int colNumber, int rowNumber, double radius){
