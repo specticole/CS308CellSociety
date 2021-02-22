@@ -212,10 +212,13 @@ public class CellularAutomatonView {
     updateButtonLabels();
   }
 
-  private File loadConfigFile() {
+  private File loadConfigFile() throws XMLException {
     FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
     File configFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
+    if (configFile == null) {
+      throw new XMLException(new IllegalArgumentException(), "No file selected");
+    }
     return configFile;
   }
 

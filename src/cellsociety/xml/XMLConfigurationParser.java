@@ -29,8 +29,6 @@ public class XMLConfigurationParser extends XMLGenericParser {
   private static final List<String> META_FIELDS = new ArrayList<>(
       Arrays.asList("title", "author", "description"));
   private static final Set<String> SUPPORTED_SIMULATIONS = cellsociety.model.rules.Index.allRules.keySet();
-  private static final List<String> SUPPORTED_GRID_TYPES = new ArrayList<>(
-      Arrays.asList("rectangular"));
   private static final Map<String, ArrayList<Integer>> SUPPORTED_GRIDS = Map.ofEntries(
       entry("rectangular", new ArrayList<>(Arrays.asList(4, 8)))
   );
