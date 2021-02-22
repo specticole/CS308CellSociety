@@ -191,13 +191,9 @@ public class CellularAutomatonView {
       started = true;
       paused = false;
     }
-    else{
-      for (CellularAutomatonController controller: simulationControllers) {
-        controller.pauseSimulation();
-      }
-      paused = true;
+    else {
+      pauseAllSims();
     }
-    updateButtonLabels();
   }
 
   private void stepButtonClick() {
