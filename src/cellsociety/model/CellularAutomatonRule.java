@@ -34,4 +34,14 @@ public abstract class CellularAutomatonRule {
    * @param neighbors List of neighboring Cells.
    */
   public abstract void advanceCellState(Cell cell, List<Cell> neighbors);
+
+  /**
+   * Set the simulation parameters. This is called when the simulation is
+   * first set up using values read from the configuration file or default values.
+   * This method is also called when the user inputs new parameters into the GUI.
+   *
+   * @param params - map of parameter names and values
+   */
+  public abstract void setGameSpecifics(Map<String, String> params);
+
 }

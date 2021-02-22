@@ -63,16 +63,41 @@ public class GameOfLifeRule extends CellularAutomatonRule {
    *
    * @param params Parameter map, with key "rules".
    */
+  @Override
   public void setGameSpecifics(Map<String, String> params) {
-    List<Integer> born = new ArrayList<>();
-    List<Integer> survive = new ArrayList<>();
-    String rules = params.get("rules");
-    String[] rulesSplit = rules.split("/");
-    for (int i = 1; i < rulesSplit[0].length(); i++) {
-      born.add(Integer.valueOf(rulesSplit[0].substring(i, i + 1)));
+    List<Integer> born = new ArrayList<>(Arrays.asList(3)); // default value
+    List<Integer> survive = new ArrayList<>(Arrays.asList(2,3)); // default value
+    List<Integer> paramBorn = new ArrayList<>();
+    List<Integer> paramSurvive = new ArrayList<>();
+    boolean correctFormat = true;
+    if (params.containsKey("rules")) {
+      String rules = params.get("rules");
+      String[] rulesSplit = rules.split("/");
+      if (rulesSplit.length == 2 && rulesSplit[0].startsWith("B") && rulesSplit[1].startsWith("S")) {
+        for (int i = 1; i < rulesSplit[0].length(); i++) {
+          try {
+            paramBorn.add(Integer.parseInt(rulesSplit[0].substring(i, i + 1)));
+          }
+          catch (NumberFormatException e) {
+            correctFormat = false;
+          }
+        }
+        for (int i = 1; i < rulesSplit[1].length(); i++) {
+          try {
+            paramSurvive.add(Integer.parseInt(rulesSplit[1].substring(i, i + 1)));
+          }
+          catch (NumberFormatException e) {
+            correctFormat = false;
+          }
+        }
+      }
     }
-    for (int i = 1; i < rulesSplit[1].length(); i++) {
-      survive.add(Integer.valueOf(rulesSplit[1].substring(i, i + 1)));
+
+    if (correctFormat) {
+      born.clear();
+      born.addAll(paramBorn);
+      survive.clear();
+      survive.addAll(paramSurvive);
     }
 
     bornNums = new HashSet<>();
