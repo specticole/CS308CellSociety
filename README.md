@@ -66,7 +66,9 @@ Assumptions or Simplifications:
 For the UI, we decided to keep all the simulations, including the graph views, in one screen as 
 we felt that we could better organize the information pertaining to the simulations without 
 having the user do that for themselves. This saves the user time; all they have to do is click 
-the buttons that are provided. The control buttons at the top of the view 
+the buttons that are provided. The control buttons at the top of the view control all 
+simulations because if multiple simulations are running, it is convenient to be able to pause all 
+of them at the same time in order to compare them.
 
 Interesting data files:
 

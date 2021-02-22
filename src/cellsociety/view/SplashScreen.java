@@ -27,16 +27,16 @@ public class SplashScreen {
 
   public GridPane initialize(){
     Text title = new Text();
-    title.setText(bundle.getString("title"));
+    title.setText(bundle.getString("Title"));
     title.getStyleClass().add("splash-button");
     masterLayout.add(title,0,0);
 
-    Button englishButton = new Button(bundle.getString("englishButtonLabel"));
+    Button englishButton = new Button(bundle.getString("EnglishButtonLabel"));
     englishButton.getStyleClass().add("splash-button");
     englishButton.setOnAction(e -> handleEnglishButton());
     masterLayout.add(englishButton,0,1);
 
-    Button pigLatinButton = new Button(bundle.getString("pigLatinButtonLabel"));
+    Button pigLatinButton = new Button(bundle.getString("PigLatinButtonLabel"));
     pigLatinButton.getStyleClass().add("splash-button");
     pigLatinButton.setOnAction(e -> handlePigLatinButton());
     masterLayout.add(pigLatinButton,0,2);
