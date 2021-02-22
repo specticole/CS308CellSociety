@@ -12,11 +12,12 @@ import java.util.Map;
 public class RockPaperScissorRule extends CellularAutomatonRule {
 
   private static final Map<States, List<States>> LOSSES_TO =
-      Map.ofEntries(
-        Map.entry(States.ROCK, Arrays.asList(States.PAPER)),
-        Map.entry(States.PAPER, Arrays.asList(States.SCISSOR)),
-        Map.entry(States.SCISSOR, Arrays.asList(States.ROCK))
-  );
+      Map.of(
+          States.ROCK, Arrays.asList(States.PAPER),
+          States.PAPER, Arrays.asList(States.SCISSOR),
+          States.SCISSOR, Arrays.asList(States.ROCK),
+          States.EMPTY, Arrays.asList(States.ROCK, States.SCISSOR, States.PAPER)
+      );
   private int threshold;
 
   public RockPaperScissorRule(Map<String, String> params) {
