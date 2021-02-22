@@ -22,7 +22,7 @@ public class SplashScreen {
     this.stage = stage;
     masterLayout = new GridPane();
     masterLayout.getStyleClass().add("splash-gridpane");
-    bundle = ResourceBundle.getBundle("splashLabels");
+    bundle = ResourceBundle.getBundle("cellsociety/resources/splashLabels");
   }
 
   public GridPane initialize(){
@@ -46,20 +46,20 @@ public class SplashScreen {
 
   private void handleEnglishButton(){
     Locale locale = new Locale("en", "US");
-    ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+    ResourceBundle bundle = ResourceBundle.getBundle("cellsociety/resources/labels", locale);
     switchToSimulation(bundle);
   }
 
   private void handlePigLatinButton(){
     Locale locale = new Locale("pl", "US");
-    ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+    ResourceBundle bundle = ResourceBundle.getBundle("cellsociety/resources/labels", locale);
     switchToSimulation(bundle);
   }
 
   private void switchToSimulation(ResourceBundle newBundle){
     Parent root = new CellularAutomatonView(new GridPane(), newBundle).initialize();
     Scene scene = new Scene(root, WIDTH, HEIGHT);
-    scene.getStylesheets().add("game.css");
+    scene.getStylesheets().add("cellsociety/resources/game.css");
     stage.setScene(scene);
 
   }
