@@ -121,7 +121,7 @@ public class CellularAutomatonController {
     step();
   }
 
-  // may be implemented in Complete
+  // TODO: may be implemented in Complete
   public void resetSimulation() {
 
   }
