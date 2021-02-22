@@ -7,7 +7,6 @@ import java.util.Map;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
 
 public class Graph {
 
@@ -18,6 +17,9 @@ public class Graph {
 
   public Graph(CellularAutomatonConfiguration config){
     this.config = config;
+  }
+
+  public LineChart initialize(){
     time = 0;
     NumberAxis xAxis = new NumberAxis();
     NumberAxis yAxis = new NumberAxis();
@@ -31,9 +33,6 @@ public class Graph {
       lineChart.getData().add(tempSeries);
     }
     updateGraph(config.getInitialStates());
-  }
-
-  public LineChart getGraph() {
     return lineChart;
   }
 

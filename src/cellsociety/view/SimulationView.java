@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -21,10 +22,11 @@ public class SimulationView {
 
   private GridPane masterLayout;
   private HBox titleBox;
+  private VBox buttonBox;
   private GridStyle mainGrid;
   private Pane gridView;
-  private VBox buttonBox;
   private Graph graph;
+  private LineChart graphView;
   private Button graphButton;
   private Button gridButton;
   private Button saveButton;
@@ -52,6 +54,7 @@ public class SimulationView {
     createButtons();
     parameterBox = createParameterBox();
     createGrid();
+    createGraph();
 
     masterLayout.add(titleBox, 0,0);
     masterLayout.add(buttonBox, 0,1);
@@ -69,13 +72,7 @@ public class SimulationView {
     gridButton = new Button(bundle.getString("HideGridButtonLabel"));
     gridButton.setOnAction(e -> toggleGrid());
     saveButton = new Button(bundle.getString("SaveButtonLabel"));
-    saveButton.setOnAction(e -> {
-      try {
-        saveXML();
-      } catch (IOException ioException) {
-        ioException.printStackTrace();
-      }
-    });
+    saveButton.setOnAction(e -> saveXML());
 
     buttonBox.getChildren().addAll(graphButton, gridButton, saveButton);
   }
@@ -93,6 +90,11 @@ public class SimulationView {
     mainGrid.updateGrid(config.getInitialStates(), config.getCellStyles());
   }
 
+  private void createGraph(){
+    graph = new Graph(config);
+    graphView = graph.initialize();
+  }
+
   private void createTitle() {
     titleBox = new HBox();
     titleBox.getStyleClass().add("title-box");
@@ -103,7 +105,16 @@ public class SimulationView {
   }
 
   private void toggleGraph(){
-
+    if(graphShown){
+      masterLayout.getChildren().remove(graphView);
+      graphButton.setText(bundle.getString("ShowGraphButtonLabel"));
+      graphShown = false;
+    }
+    else{
+      masterLayout.add(graphView, 2, 0, 1, 3);
+      graphButton.setText(bundle.getString("HideGraphButtonLabel"));
+      graphShown = true;
+    }
   }
 
   private void toggleGrid() {
@@ -119,15 +130,12 @@ public class SimulationView {
     }
   }
 
-  private void saveXML() throws IOException {
+  private void saveXML(){
     controller.pauseSimulation();
     controller.saveConfigFile(masterLayout);
   }
 
   private ParameterBox createParameterBox() {
-    if(config.getSimulationParameters() == null){
-      System.out.println(config.getSimulationParameters());
-    }
     return new ParameterBox(new VBox(), bundle, this,
         config.getSimulationParameters(), config.getCellStyles().keySet());
   }
@@ -138,6 +146,7 @@ public class SimulationView {
 
   public void updateView(List<List<String>> myStates){
     mainGrid.updateGrid(myStates, config.getCellStyles());
+    graph.updateGraph(myStates);
   }
 
   public void updateParameters(Map<String, String> parameterList) {
