@@ -122,7 +122,7 @@ public class CellularAutomatonController {
     step();
   }
 
-  // may be implemented in Complete
+  // TODO: may be implemented in Complete
   public void resetSimulation() {
     pauseSimulation();
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
@@ -147,5 +147,9 @@ public class CellularAutomatonController {
 
   public void updateParameters(Map<String, String> parameterList) {
     //TODO: implement parameter changing
+  }
+
+  public void changeCell(String state, int xLocation, int yLocation){
+    //TODO: implement cell changing
   }
 }

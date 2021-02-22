@@ -30,7 +30,8 @@ public class XMLConfigurationParser extends XMLGenericParser {
       Arrays.asList("title", "author", "description"));
   private static final Set<String> SUPPORTED_SIMULATIONS = cellsociety.model.rules.Index.allRules.keySet();
   private static final Map<String, ArrayList<Integer>> SUPPORTED_GRIDS = Map.ofEntries(
-      entry("rectangular", new ArrayList<>(Arrays.asList(4, 8)))
+      entry("rectangular", new ArrayList<>(Arrays.asList(4, 8))),
+      entry("hexagonal", new ArrayList<>(Arrays.asList(6)))
   );
 
   /**

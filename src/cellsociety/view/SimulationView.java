@@ -2,26 +2,14 @@ package cellsociety.view;
 
 import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
-import cellsociety.model.states.FireState;
-import cellsociety.model.states.GameOfLifeState;
-import cellsociety.model.states.PercolationState;
-import cellsociety.model.states.SegregationState;
-import cellsociety.model.states.WaTorWorldState;
-import cellsociety.view.parameters.FireParameterBox;
-import cellsociety.view.parameters.GameOfLifeParameterBox;
-import cellsociety.view.parameters.ParameterBox;
-import cellsociety.view.parameters.PercolationParameterBox;
-import cellsociety.view.parameters.SegregationParameterBox;
-import cellsociety.view.parameters.WaTorParameterBox;
+import cellsociety.view.grids.HexagonalGridStyle;
+import cellsociety.view.grids.RectangularGridStyle;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -67,7 +55,7 @@ public class SimulationView {
 
     masterLayout.add(titleBox, 0,0);
     masterLayout.add(buttonBox, 0,1);
-    masterLayout.add(parameterBox.createFields(), 0,2);
+    masterLayout.add(parameterBox.initialize(), 0,2);
     masterLayout.add(gridView, 1,0, 1,3);
     return new Pair<>(controller, masterLayout);
   }
@@ -95,13 +83,13 @@ public class SimulationView {
   private void createGrid() {
     switch (config.getGridType()){
       case "rectangular":
-        mainGrid = new RectangularGridStyle(new GridPane());
+        mainGrid = new RectangularGridStyle(this, new GridPane());
         break;
       case "hexagonal":
-        mainGrid = new HexagonalGridStyle(new Pane());
+        mainGrid = new HexagonalGridStyle(this, new Pane());
         break;
     }
-    gridView = mainGrid.createGrid(config.getGridHeight(), config.getGridWidth());
+    gridView = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight());
     mainGrid.updateGrid(config.getInitialStates(), config.getCellStyles());
   }
 
@@ -137,20 +125,15 @@ public class SimulationView {
   }
 
   private ParameterBox createParameterBox() {
-    switch (config.getSimulationType()) {
-      case "gameoflife":
-        return new GameOfLifeParameterBox(new VBox(), bundle, this);
-      case "percolation":
-        return new PercolationParameterBox(new VBox(), bundle, this);
-      case "fire":
-        return new FireParameterBox(new VBox(), bundle, this);
-      case "wator":
-        return new WaTorParameterBox(new VBox(), bundle, this);
-      case "segregation":
-        return new SegregationParameterBox(new VBox(), bundle, this);
-      default:
-        return null;
+    if(config.getSimulationParameters() == null){
+      System.out.println(config.getSimulationParameters());
     }
+    return new ParameterBox(new VBox(), bundle, this,
+        config.getSimulationParameters(), config.getCellStyles().keySet());
+  }
+
+  public void changeCell(int columnNumber, int rowNumber){
+    controller.changeCell(parameterBox.getState(), columnNumber, rowNumber);
   }
 
   public void updateView(List<List<String>> myStates){

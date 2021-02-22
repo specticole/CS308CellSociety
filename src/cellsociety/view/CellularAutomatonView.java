@@ -190,6 +190,7 @@ public class CellularAutomatonView {
       for (CellularAutomatonController controller: simulationControllers) {
         controller.pauseSimulation();
       }
+      paused = true;
     }
     updateButtonLabels();
   }

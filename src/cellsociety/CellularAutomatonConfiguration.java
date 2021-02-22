@@ -154,6 +154,10 @@ public class CellularAutomatonConfiguration {
     return simulationType;
   }
 
+  public Map<String, String> getSimulationParameters(){
+    return simulationParameters;
+  }
+
 
 
 }
