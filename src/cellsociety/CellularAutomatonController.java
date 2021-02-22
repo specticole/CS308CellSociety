@@ -40,6 +40,7 @@ public class CellularAutomatonController {
   private SimulationView mySimulationView;
   private File currentConfigFile;
   private List<List<String>> currentStates;
+  private CellularAutomatonConfiguration config;
 
   public CellularAutomatonController() {
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
@@ -61,7 +62,7 @@ public class CellularAutomatonController {
     this();
     this.mySimulationView = mySimulationView;
     currentConfigFile = configFile;
-    CellularAutomatonConfiguration config = new CellularAutomatonConfiguration(configFile);
+    config = new CellularAutomatonConfiguration(configFile);
     currentStates = config.getInitialStates();
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
   }
@@ -123,7 +124,8 @@ public class CellularAutomatonController {
 
   // may be implemented in Complete
   public void resetSimulation() {
-
+    pauseSimulation();
+    myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
   }
 
   private void step() {
