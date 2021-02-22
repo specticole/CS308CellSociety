@@ -178,11 +178,30 @@ public class WaTorWorldRule extends CellularAutomatonRule {
    * @param params Parameter map containing a subset of the allowed
    * key-value pairs.
    */
+  @Override
   public void setGameSpecifics(Map<String, String> params) {
-    String rules = params.get("rules");
-    String[] rulesSplit = rules.split("/");
-    fishRoundsToBreed = Integer.valueOf(rulesSplit[0].substring(1));
-    sharkRoundsToBreed = Integer.valueOf(rulesSplit[1].substring(1));
-    sharkRoundsToStarve = Integer.valueOf(rulesSplit[2].substring(1));
+    fishRoundsToBreed = 3; // default value
+    sharkRoundsToBreed = 5; // default value
+    sharkRoundsToStarve = 3; // default value
+    if (params.containsKey("rules")) {
+      String rules = params.get("rules");
+      String[] rulesSplit = rules.split("/");
+      if (rulesSplit.length == 3 && rulesSplit[0].startsWith("F") && rulesSplit[1].startsWith("S") && rulesSplit[2].startsWith("X")) {
+        try {
+          if (Integer.parseInt(rulesSplit[0].substring(1)) > 0) {
+            fishRoundsToBreed = Integer.parseInt(rulesSplit[0].substring(1));
+          }
+          if (Integer.parseInt(rulesSplit[1].substring(1)) > 0) {
+            sharkRoundsToBreed = Integer.parseInt(rulesSplit[1].substring(1));
+          }
+          if (Integer.parseInt(rulesSplit[2].substring(1)) > 0) {
+            sharkRoundsToStarve = Integer.parseInt(rulesSplit[2].substring(1));
+          }
+        }
+        catch (Exception ignored) {
+
+        }
+      }
+    }
   }
 }
