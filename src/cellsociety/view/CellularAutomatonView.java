@@ -1,12 +1,9 @@
 package cellsociety.view;
 
-import cellsociety.CellularAutomatonConfiguration;
 import cellsociety.CellularAutomatonController;
 import cellsociety.xml.XMLException;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -15,7 +12,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -30,7 +26,6 @@ public class CellularAutomatonView {
   private Button stepButton;
   private Slider speedSlider;
   private Button applySpeedButton;
-  private Button newSimulationButton;
 
   private boolean started;
   private boolean paused;
@@ -109,18 +104,17 @@ public class CellularAutomatonView {
   private void createNewSimulationButton(int rowIndex){
     HBox newSimulationButtonBox = new HBox();
     newSimulationButtonBox.getStyleClass().add("button-box");
-    newSimulationButton = new Button(bundle.getString("NewSimulationButtonLabel"));
-    newSimulationButton.setOnAction(e -> loadFileClick());
+    Button newSimulationButton = new Button(bundle.getString("NewSimulationButtonLabel"));
+    newSimulationButton.setOnAction(e -> handleLoadNewSimulation(newSimulationButtonBox));
     newSimulationButtonBox.getChildren().add(newSimulationButton);
     masterLayout.add(newSimulationButtonBox, 0,rowIndex);
 
   }
-  public void loadFileClick() {
+  public void handleLoadNewSimulation(HBox newSimulationButtonBox) {
     try {
       File configFile = loadConfigFile();
       SimulationView simulationView = new SimulationView(configFile, bundle);
-      newSimulationButton.setVisible(false);
-      newSimulationButton.setDisable(true);
+      masterLayout.getChildren().remove(newSimulationButtonBox);
       Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
       masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
       simulationControllers.add(simulationPair.getKey());

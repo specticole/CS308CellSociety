@@ -7,9 +7,10 @@ import java.util.Map;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
 
 public class Graph {
+
+  public static final int MAX_HEIGHT = 250;
 
   private LineChart lineChart;
   private CellularAutomatonConfiguration config;
@@ -18,11 +19,15 @@ public class Graph {
 
   public Graph(CellularAutomatonConfiguration config){
     this.config = config;
+  }
+
+  public LineChart initialize(){
     time = 0;
     NumberAxis xAxis = new NumberAxis();
     NumberAxis yAxis = new NumberAxis();
     lineChart = new LineChart<>(xAxis, yAxis);
     lineChart.setTitle(config.getSimulationMetadata().get("title"));
+    lineChart.setMaxHeight(MAX_HEIGHT);
     dataMap = new HashMap<>();
     for (String cellState : config.getCellStyles().keySet()) {
       XYChart.Series tempSeries = new XYChart.Series();
@@ -31,9 +36,6 @@ public class Graph {
       lineChart.getData().add(tempSeries);
     }
     updateGraph(config.getInitialStates());
-  }
-
-  public LineChart getGraph() {
     return lineChart;
   }
 

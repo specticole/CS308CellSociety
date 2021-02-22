@@ -26,7 +26,7 @@
   </HBox>
 
   <HBox GridPane.rowIndex="1" GridPane.columnIndex="1" alignment="CENTER">
-    <Button text="%LoadFileButtonLabel" onAction="#loadFileClick"></Button>
+    <Button text="%LoadFileButtonLabel" onAction="#handleLoadNewSimulation"></Button>
   </HBox>
 
   <HBox GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER" spacing="8">

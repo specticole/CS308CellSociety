@@ -34,7 +34,7 @@ public class GraphTester extends Application {
     File configFile = fileChooser.showOpenDialog(stage.getScene().getWindow());
     CellularAutomatonConfiguration config = new CellularAutomatonConfiguration(configFile);
     myGraph = new Graph(config);
-    Scene scene = new Scene(myGraph.getGraph(), 400, 400);
+    Scene scene = new Scene(myGraph.initialize(), 400, 400);
     stage.setScene(scene);
     stage.show();
 

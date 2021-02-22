@@ -14,7 +14,6 @@
 .master-gridpane {
     -fx-alignment: top-center;
     -fx-grid-lines-visible: true;
-    -fx-vgap: 10;
     -fx-hgap: 10;
     -fx-padding: 20 20 20 20;
 }
