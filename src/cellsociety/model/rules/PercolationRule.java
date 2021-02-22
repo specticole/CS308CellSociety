@@ -32,4 +32,9 @@ public class PercolationRule extends CellularAutomatonRule {
       }
     }
   }
+
+  @Override
+  public void setGameSpecifics(Map<String, String> params) {
+
+  }
 }

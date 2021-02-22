@@ -71,6 +71,7 @@ public class FireRule extends CellularAutomatonRule {
    *
    * @param params Parameter map.
    */
+  @Override
   public void setGameSpecifics(Map<String, String> params) {
     fireChance = 50; // default value
     if (params.containsKey("probCatch")) {

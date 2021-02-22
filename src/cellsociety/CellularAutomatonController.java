@@ -2,6 +2,8 @@ package cellsociety;
 
 import cellsociety.model.CellState;
 import cellsociety.model.CellularAutomaton;
+import cellsociety.model.CellularAutomatonRule;
+import cellsociety.model.GridCoordinates;
 import cellsociety.model.grids.Dense2DCellGrid;
 import cellsociety.view.CellularAutomatonView;
 import cellsociety.view.SimulationView;
@@ -54,7 +56,7 @@ public class CellularAutomatonController {
    * Model to the View
    *
    * @param mySimulationView - the View object for each simulation
-   * @param configFile - the File for each simulation
+   * @param configFile       - the File for each simulation
    */
 
   public CellularAutomatonController(SimulationView mySimulationView,
@@ -71,10 +73,12 @@ public class CellularAutomatonController {
     pauseSimulation();
     DirectoryChooser directoryChooser = new DirectoryChooser();
     File saveConfigFileLocation = directoryChooser.showDialog(masterLayout.getScene().getWindow());
-    String saveFileName = currentConfigFile.getName().replaceAll(".xml","").concat("copy.xml"); // todo: allow user to change name
+    String saveFileName = currentConfigFile.getName().replaceAll(".xml", "")
+        .concat("copy.xml"); // todo: allow user to change name
     try {
       Path storeConfigFilePath = Paths.get(saveConfigFileLocation.getPath() + "/" + saveFileName);
-      Path storedConfigFilePath = Files.copy(currentConfigFile.toPath(), storeConfigFilePath, StandardCopyOption.REPLACE_EXISTING);
+      Path storedConfigFilePath = Files.copy(currentConfigFile.toPath(), storeConfigFilePath,
+          StandardCopyOption.REPLACE_EXISTING);
       File storedConfigFile = storedConfigFilePath.toFile();
       updateStoredConfigFile(storedConfigFile);
     } catch (IOException e) {
@@ -126,19 +130,23 @@ public class CellularAutomatonController {
     pauseSimulation();
     config = new CellularAutomatonConfiguration(currentConfigFile);
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
-    step();
+    mySimulationView.updateView(config.getInitialStates());
   }
 
   private void step() {
     myModel.step();
 
-    CellState currentState[][] = ((Dense2DCellGrid) myModel.getGrid()).extractStates(0);
+    CellState[][] currentState = ((Dense2DCellGrid) myModel.getGrid()).extractStates(0);
+    setCurrentStates(currentState);
+    mySimulationView.updateView(currentStates);
+  }
+
+  private void setCurrentStates(CellState[][] currentState) {
     for (int row = 0; row < currentState.length; row++) {
       for (int col = 0; col < currentState[0].length; col++) {
         currentStates.get(row).set(col, currentState[row][col].toString());
       }
     }
-    mySimulationView.updateView(currentStates);
   }
 
   public void updateStoredConfigFile(File storedConfigFile) {
@@ -147,10 +155,20 @@ public class CellularAutomatonController {
   }
 
   public void updateParameters(Map<String, String> parameterList) {
-    //TODO: implement parameter changing
+    CellularAutomatonRule ruleSet = config.getRuleSet();
+    ruleSet.setGameSpecifics(parameterList);
+    myModel.setRule(ruleSet);
   }
 
-  public void changeCell(String state, int xLocation, int yLocation){
-    //TODO: implement cell changing
+  public void changeCell(String state, int xLocation, int yLocation) {
+    try {
+      myModel.getGrid().getCell(new GridCoordinates(xLocation, yLocation)).setState(0,
+          cellsociety.model.states.Index.allStates.get(config.getSimulationType())
+              .getConstructor(String.class).newInstance(state));
+      setCurrentStates(((Dense2DCellGrid) myModel.getGrid()).extractStates(0));
+      mySimulationView.updateView(currentStates);
+    } catch (Exception ignored) {
+
+    }
   }
 }
