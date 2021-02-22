@@ -1,6 +1,7 @@
 package cellsociety.model;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A CellGrid is an abstract collection of Cells laid out on a certain
@@ -10,8 +11,8 @@ import java.util.*;
  * empty grids of a specified size; the specifics of this are left to
  * deriving classes.
  *
- * Iterating over a CellGrid is possible; doing so will yield a series
- * of Cells.
+ * Iterating over a CellGrid is allowed through the standard Iterator
+ * interface; doing so will yield a series of Cells.
  *
  * @author Franklin Wei
  */
@@ -26,21 +27,42 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
   }
 
   /**
-   * Retrieve a list of the adjacent neighbors of `cell'. Implementing
-   * classes should define the neighbor index layout.
+   * Retrieve a list of the adjacent neighbors of `cell'.
    *
-   * @param cell central cell
-   * @return list of neighbors of `cell'
+   * @param cell Central cell.
+   * @return List of neighbors of `cell'
    */
-  abstract public List<Cell> getNeighbors(Cell cell);
+  public List<Cell> getNeighbors(Cell center) {
+    return getNeighborCoordinates(center.getCoordinates())
+        .stream()
+        .map(coords -> this.getCell(coords)) // handles wrapping and bounds check
+        .filter(cell -> cell != null)        // filter out-of-bounds
+        .collect(Collectors.toList());
+  }
 
   /**
+   * Retrieve the coordinates of cells neighboring the cell with
+   * coordinates `coords'. The topological structure of a grid is
+   * defined by this method.
    *
+   * This method is allowed to return coordinates which are "out of
+   * bounds", but only if the implementing class also handles this by
+   * making getCell() behave appropriately when called with these "out
+   * of bounds" GridCoordinates. See the the getCell() description for
+   * the definition of "appropriate behavior".
+   *
+   * @param coords GridCoordinates of center cell.
+   * @return A Collection of the GridCoordinates of neighboring cells.
    */
   abstract protected Collection<GridCoordinates> getNeighborCoordinates(GridCoordinates coords);
 
   /**
+   * Attempt to retrieve the Cell with GridCoordinates `coords'.
    *
+   * If `coords' is in bounds, then this method must return the Cell with those exact coordinates. However, if `coords' is out of bounds, then the implementing class is free to choose an "appropriate behavior", which can either be: 1) wrapping, or 2) returning null.
+   *
+   * @param coords Requested cell coordinates.
+   * @return Cell with those coordinates, or null.
    */
   abstract public Cell getCell(GridCoordinates coords);
 

@@ -13,7 +13,7 @@ public class XMLStyleParser extends XMLGenericParser {
    * Create parser for any XML file input
    *
    * @param file - XML configuration file
-   * @throws XMLException
+   * @throws XMLException - if something goes wrong trying to set up an XML parser
    */
   public XMLStyleParser(File file) throws XMLException {
     super(file);
@@ -22,64 +22,107 @@ public class XMLStyleParser extends XMLGenericParser {
   /**
    * Returns desired language, if specified
    *
-   * @return
+   * @return - String representation of desired language if specified, or empty string
    */
   public String getLanguage() {
-    return getTextValue(root, "language");
+    if (root.getElementsByTagName("language") != null
+        && root.getElementsByTagName("language").getLength() > 0) {
+      return getTextValue(root, "language");
+    } else {
+      return "";
+    }
   }
 
   /**
    * Returns desired cell width in pixels, if specified
    *
-   * @return
+   * @return - desired cell width in pixels, or 0 if value is not given or invalid
    */
   public int getCellWidth() {
-    return Integer.valueOf(getAttribute("cell", "width"));
+    if (root.getElementsByTagName("cell") != null
+        && root.getElementsByTagName("cell").getLength() > 0) {
+      Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
+      if (cellElement.hasAttribute("width")) {
+        int cellWidth = Integer.valueOf(getAttribute(root,"cell", "width"));
+        if (cellWidth > 0) {
+          return cellWidth;
+        }
+      }
+    }
+    return 0;
   }
 
   /**
    * Returns desired cell height in pixels, if specified
    *
-   * @return
+   * @return - desired cell height in pixels, or 0 if value is not given or invalid
    */
   public int getCellHeight() {
-    return Integer.valueOf(getAttribute("cell", "height"));
+    if (root.getElementsByTagName("cell") != null
+        && root.getElementsByTagName("cell").getLength() > 0) {
+      Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
+      if (cellElement.hasAttribute("height")) {
+        int cellHeight = Integer.valueOf(getAttribute(root,"cell", "height"));
+        if (cellHeight > 0) {
+          return cellHeight;
+        }
+      }
+    }
+    return 0;
   }
 
   /**
    * Returns whether the cells should be outlined, if specified
    *
-   * @return
+   * @return - true if the outline attribute is "y" or "Y," false otherwise
    */
   public boolean getCellOutlines() {
-    return getAttribute("cell", "outline").toUpperCase().equals("Y");
+    if (root.getElementsByTagName("cell") != null
+        && root.getElementsByTagName("cell").getLength() > 0) {
+      Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
+      if (cellElement.hasAttribute("outline")) {
+        return getAttribute(root,"cell", "outline").toUpperCase().equals("Y");
+      }
+    }
+    return false;
   }
 
   /**
    * Returns desired cell shape, either a geometric shape or image, if specified
    *
-   * @return
+   * @return - desired cell shape if specified, empty string otherwise
    */
   public String getCellShape() {
-    return getAttribute("cell", "shape");
+    if (root.getElementsByTagName("cell") != null
+        && root.getElementsByTagName("cell").getLength() > 0) {
+      Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
+      if (cellElement.hasAttribute("shape")) {
+        return getAttribute(root,"cell", "shape");
+      }
+    }
+    return "";
   }
 
   /**
    * Returns map of alternative colors, with all possible state names space-delimited as the keys
    *
-   * @return
+   * @return - map of alternative colors, if specified
    */
-  public Map<String, Color> getAltColors() {
+  public Map<String, Color> getAltColors() throws XMLException {
     Map<String, Color> altColors = new HashMap<>();
     NodeList colorNodes = root.getElementsByTagName("altcolor");
-    if (colorNodes != null) {
+    if (colorNodes != null && colorNodes.getLength() > 0) {
       for (int i = 0; i < colorNodes.getLength(); i++) {
         Element altColor = (Element) colorNodes.item(i);
-        altColors
-            .put(altColor.getTextContent(), new Color(Integer.valueOf(altColor.getAttribute("r")),
-                Integer.valueOf(altColor.getAttribute("g")),
-                Integer.valueOf(altColor.getAttribute("b")),
-                1.0));
+        try {
+          altColors
+              .put(altColor.getTextContent(), new Color(Integer.valueOf(altColor.getAttribute("r")),
+                  Integer.valueOf(altColor.getAttribute("g")),
+                  Integer.valueOf(altColor.getAttribute("b")),
+                  1.0));
+        } catch (IllegalArgumentException e) {
+          throw new XMLException(e, "Alternative color invalid");
+        }
       }
     }
     return altColors;

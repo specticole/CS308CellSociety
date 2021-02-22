@@ -4,14 +4,18 @@ import cellsociety.model.util.*;
 
 /**
  * A Cell is the basic unit of a CellGrid in a CellularAutomaton. Each
- * Cell holds its current and past CellStates in a CellStateList,
- * (which abstracts away the details of how exactly past states are
- * managed for memory purposes). A Cell always exists as a member
- * within exactly one parent CellGrid, which it can access through the
+ * Cell holds its current and past CellStates in a StateList, (which
+ * abstracts away the details of how exactly past states are managed
+ * for memory purposes). A Cell always exists as a member within
+ * exactly one parent CellGrid, which it can access through the
  * `parentGrid' member.
  *
+ * The separation of a cell's location (handled by Cell), and its
+ * states (which are handled by StateList) is crucial for adherence to
+ * the single responsibility principle.
+ *
  * A Cell knows its location within a grid through its
- * CellCoordinates, and it (or another class that has access to it)
+ * GridCoordinates, and it (or another class that has access to it)
  * can query its parent CellGrid for a List of its neighbors.
  *
  * @author Franklin Wei
@@ -21,8 +25,16 @@ public class Cell {
   /**
    * Constants representing offsets (deltas) from the current
    * time. Used to simplify state retrieval.
+   *
+   * CURRENT_TIME refers to the state parentGrid.currentTime + 0.
    */
   public final static int CURRENT_TIME = 0;
+
+  /**
+   * NEXT_TIME refers to the state parentGrid.currentTime + 1, and
+   * should ONLY be used from implementations of
+   * CellularAutomatonRule.
+   */
   public final static int NEXT_TIME = 1;
 
   private StateList<CellState> states;
@@ -33,6 +45,9 @@ public class Cell {
   /**
    * Initialize a Cell with a given parent grid, and an empty
    * StateList.
+   *
+   * @param parentGrid Parent CellGrid.
+   * @param coordinates Location on parent grid.
    */
   public Cell(CellGrid parentGrid, GridCoordinates coordinates){
     this.parentGrid = parentGrid;
@@ -44,7 +59,8 @@ public class Cell {
    * Modify the CellState of this cell associated with a certain time
    * delta (relative to parentGrid.currentTime).
    *
-   * @param state the string name of the state which to set the CellState
+   * @param delta Time offset from parentGrid.currentTime.
+   * @param state The new CellState to assign.
    */
   public void setState(int delta, CellState state) {
     states.setState(parentGrid.getCurrentTime() + delta, state);
@@ -53,8 +69,9 @@ public class Cell {
   /**
    * Retrieve the CellState of this cell at the time T=delta +
    * parentGrid.getCurrentTime(). If this is called from
-   * advanceCellState(), delta=0 denotes the "prior" parent
-   * generation, and delta=+1 denotes the "next" target generation.
+   * advanceCellState(), delta=CURRENT_TIME denotes the "prior" parent
+   * generation, and delta=NEXT_TIME denotes the "next" target
+   * generation.
    *
    * Otherwise, delta=0 retrieves the latest generation's state.
    *
@@ -62,32 +79,26 @@ public class Cell {
    * individual cells to coordinate and avoid multiple cells "moving"
    * into a single cell.
    *
-   * @return the current CellState as a string
+   * IMPORTANT: *ONLY* implementations of CellularAutomatonRule may
+   * call this method with delta=NEXT_TIME. Doing so from any other
+   * code will raise an exception.
+   *
+   * @param delta Time offset from current time.
+   * @return State at given time offset.
    */
   public CellState getState(int delta){
     return states.getState(parentGrid.getCurrentTime() + delta);
   }
 
   /**
-   * This method returns the StateList<Cell> of all current and prior
-   * states for this Cell.
+   * This method returns the state list of this cell, which contains
+   * the current and (some or all) prior states for this Cell.
    *
-   * @return the StateList for this Cell
+   * @return The StateList for this Cell.
    */
   public StateList<CellState> getStates() {
     return states;
   }
-
-
-//  /**
-//   * This method swaps the current state of two Cells
-//   * @param otherCell the other Cell to be swapped with
-//   */
-//  public void swapCells(Cell otherCell){
-//    CellState tempState = this.getState(CURRENT_TIME);
-//    setState(NEXT_TIME, otherCell.getState(CURRENT_TIME));
-//    otherCell.setState(NEXT_TIME, tempState);
-//  }
 
   /**
    * Duplicate the latest state in our state list.
@@ -106,7 +117,7 @@ public class Cell {
    * It is _critically important_ that this is only called once per
    * time step of the parent grid's simulation time.
    *
-   * @param state State to append.
+   * @param state State to append to state list.
    */
   public void appendState(CellState state) {
     states.addState(parentGrid.getCurrentTime() + 1,
@@ -114,13 +125,19 @@ public class Cell {
   }
 
   /**
-   * This method returns the CellGrid the Cell is a part of
-   * @return the CellGrid the Cell is a part of
+   * This method returns the CellGrid of which this cell is a member.
+   *
+   * @return Parent CellGrid.
    */
   public CellGrid getParentGrid(){
     return parentGrid;
   }
 
+  /**
+   * Retrieve the coordinates of this cell.
+   *
+   * @return This cell's coordinates.
+   */
   public GridCoordinates getCoordinates() {
     return coordinates;
   }

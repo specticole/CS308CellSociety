@@ -15,6 +15,11 @@ public class GameOfLifeRule extends CellularAutomatonRule {
   private Set<Integer> bornNums;
   private Set<Integer> surviveNums;
 
+  /**
+   * Construct a rule with the given parameter map.
+   *
+   * @param params Parameter map.
+   */
   public GameOfLifeRule(Map<String, String> params) {
     super(params);
 
@@ -53,8 +58,10 @@ public class GameOfLifeRule extends CellularAutomatonRule {
   }
 
   /**
-   * This method gets the specific rule set for the game of live variation, in the form of B<int><int>.../S<int><int>...
-   * @param params
+   * This method gets the specific rule set for the game of live
+   * variation, in the form of B(int)(int).../S(int)(int)...
+   *
+   * @param params Parameter map, with key "rules".
    */
   public void setGameSpecifics(Map<String, String> params) {
     List<Integer> born = new ArrayList<>();

@@ -35,11 +35,19 @@ public class StateList<T> {
   private Map<Integer, T> timeToState;
   private int statesToKeep;
 
+  /**
+   * Construct an empty StateList.
+   *
+   * @param statesToKeep Number of states to keep, or INFINITE_STATES.
+   */
   public StateList(int statesToKeep) {
     timeToState = new TreeMap<>();
     this.statesToKeep = statesToKeep;
   }
 
+  /**
+   * Construct an empty StateList with DEFAULT_STATES_TO_KEEP.
+   */
   public StateList() {
     this(DEFAULT_STATES_TO_KEEP);
   }
@@ -160,7 +168,7 @@ public class StateList<T> {
    * present in the state list (enforced by assertion).
    *
    * @param time Time to modify.
-   * @param newstate New state at time `time'.
+   * @param newState New state at time `time'.
    */
   public void setState(int time, T newState) {
     assert(timeToState.containsKey(time));
@@ -171,6 +179,7 @@ public class StateList<T> {
   /**
    * Retrieve a state associated with a time.
    *
+   * @param time Query time.
    * @return State associated with time.
    */
   public T getState(int time) {

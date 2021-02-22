@@ -22,6 +22,9 @@ public class RectangularCellGrid extends Dense2DCellGrid {
     new GridCoordinates(0, -1),
   };
 
+  /**
+   * Offsets of diagonal neighbors.
+   */
   protected static final GridCoordinates diagonalOffsets[] = {
     new GridCoordinates(1,  1),
     new GridCoordinates(1, -1),
@@ -30,17 +33,15 @@ public class RectangularCellGrid extends Dense2DCellGrid {
   };
 
   @Override
-  public Collection<GridCoordinates> getNeighborCoordinates(GridCoordinates center) {
+  public Stream<GridCoordinates> getNeighborOffsets(GridCoordinates center) {
     Stream<GridCoordinates> offsets = Arrays.stream(directOffsets);
 
     if(neighborCount == 8)
       offsets = Stream.concat(offsets, Arrays.stream(diagonalOffsets));
 
     // There's no need to filter here -- wrapping and out-of-bounds
-    // are handleded in Dense2DCellGrid.
-    return offsets
-        .map(offs -> offs.add(center))
-        .collect(Collectors.toList());
+    // are handled in Dense2DCellGrid.
+    return offsets;
   }
 
   /**

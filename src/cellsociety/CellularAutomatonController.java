@@ -6,6 +6,7 @@ import cellsociety.model.grids.Dense2DCellGrid;
 import cellsociety.view.CellularAutomatonView;
 import cellsociety.view.SimulationView;
 import cellsociety.xml.XMLConfigurationParser;
+import cellsociety.xml.XMLException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
