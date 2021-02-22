@@ -10,6 +10,8 @@ import javafx.scene.chart.XYChart;
 
 public class Graph {
 
+  public static final int MAX_HEIGHT = 250;
+
   private LineChart lineChart;
   private CellularAutomatonConfiguration config;
   private int time;
@@ -25,6 +27,7 @@ public class Graph {
     NumberAxis yAxis = new NumberAxis();
     lineChart = new LineChart<>(xAxis, yAxis);
     lineChart.setTitle(config.getSimulationMetadata().get("title"));
+    lineChart.setMaxHeight(MAX_HEIGHT);
     dataMap = new HashMap<>();
     for (String cellState : config.getCellStyles().keySet()) {
       XYChart.Series tempSeries = new XYChart.Series();

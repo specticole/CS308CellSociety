@@ -26,7 +26,6 @@ public class CellularAutomatonView {
   private Button stepButton;
   private Slider speedSlider;
   private Button applySpeedButton;
-  private Button newSimulationButton;
 
   private boolean started;
   private boolean paused;
@@ -105,18 +104,17 @@ public class CellularAutomatonView {
   private void createNewSimulationButton(int rowIndex){
     HBox newSimulationButtonBox = new HBox();
     newSimulationButtonBox.getStyleClass().add("button-box");
-    newSimulationButton = new Button(bundle.getString("NewSimulationButtonLabel"));
-    newSimulationButton.setOnAction(e -> loadFileClick());
+    Button newSimulationButton = new Button(bundle.getString("NewSimulationButtonLabel"));
+    newSimulationButton.setOnAction(e -> handleLoadNewSimulation(newSimulationButtonBox));
     newSimulationButtonBox.getChildren().add(newSimulationButton);
     masterLayout.add(newSimulationButtonBox, 0,rowIndex);
 
   }
-  public void loadFileClick() {
+  public void handleLoadNewSimulation(HBox newSimulationButtonBox) {
     try {
       File configFile = loadConfigFile();
       SimulationView simulationView = new SimulationView(configFile, bundle);
-      newSimulationButton.setVisible(false);
-      newSimulationButton.setDisable(true);
+      masterLayout.getChildren().remove(newSimulationButtonBox);
       Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
       masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
       simulationControllers.add(simulationPair.getKey());

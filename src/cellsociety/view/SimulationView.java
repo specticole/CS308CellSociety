@@ -30,6 +30,7 @@ public class SimulationView {
   private Button graphButton;
   private Button gridButton;
   private Button saveButton;
+  private Button deleteSimulationButton;
   private ParameterBox parameterBox;
 
   private CellularAutomatonController controller;
@@ -73,8 +74,14 @@ public class SimulationView {
     gridButton.setOnAction(e -> toggleGrid());
     saveButton = new Button(bundle.getString("SaveButtonLabel"));
     saveButton.setOnAction(e -> saveXML());
+    deleteSimulationButton = new Button(bundle.getString("DeleteSimulationButtonLabel"));
+    deleteSimulationButton.setOnAction(e -> deleteSimulation());
 
-    buttonBox.getChildren().addAll(graphButton, gridButton, saveButton);
+    buttonBox.getChildren().addAll(graphButton, gridButton, saveButton, deleteSimulationButton);
+  }
+
+  private void deleteSimulation() {
+    ((GridPane) masterLayout.getParent()).getChildren().remove(masterLayout);
   }
 
   private void createGrid() {
