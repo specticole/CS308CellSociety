@@ -30,17 +30,20 @@ public class SimulationView {
 
   private CellularAutomatonController controller;
   private CellularAutomatonConfiguration config;
+  private CellularAutomatonView parentView;
   private ResourceBundle bundle;
 
   private boolean graphShown;
   private boolean gridShown;
 
-  public SimulationView(File configFile, ResourceBundle currentBundle){
+  public SimulationView(File configFile, ResourceBundle currentBundle,
+      CellularAutomatonView parent){
     masterLayout = new GridPane();
     masterLayout.getStyleClass().add("simulation-gridpane");
     config = new CellularAutomatonConfiguration(configFile);
     bundle = currentBundle;
     controller = new CellularAutomatonController(this, configFile);
+    parentView = parent;
     graphShown = false;
     gridShown = true;
   }
@@ -134,7 +137,7 @@ public class SimulationView {
   }
 
   private void saveXML(){
-    controller.pauseSimulation();
+    parentView.pauseAllSims();
     controller.saveConfigFile(masterLayout);
   }
 
