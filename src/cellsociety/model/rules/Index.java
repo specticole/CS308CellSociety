@@ -16,6 +16,7 @@ public class Index {
           "wator", WaTorWorldRule.class,
           "fire", FireRule.class,
           "percolation", PercolationRule.class,
-          "rps", RockPaperScissorRule.class
+          "rps", RockPaperScissorRule.class,
+          "elementary", ElementaryRule.class
              );
 }
