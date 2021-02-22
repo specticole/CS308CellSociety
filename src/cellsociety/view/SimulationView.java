@@ -21,16 +21,12 @@ import javafx.util.Pair;
 public class SimulationView {
 
   private GridPane masterLayout;
-  private HBox titleBox;
-  private VBox buttonBox;
   private GridStyle mainGrid;
   private Pane gridView;
   private Graph graph;
   private LineChart graphView;
   private Button graphButton;
   private Button gridButton;
-  private Button saveButton;
-  private Button deleteSimulationButton;
   private ParameterBox parameterBox;
 
   private CellularAutomatonController controller;
@@ -51,8 +47,8 @@ public class SimulationView {
   }
 
   public Pair<CellularAutomatonController, GridPane> initialize(){
-    createTitle();
-    createButtons();
+    HBox titleBox = createTitle();
+    VBox buttonBox = createButtons();
     parameterBox = createParameterBox();
     createGrid();
     createGraph();
@@ -64,20 +60,20 @@ public class SimulationView {
     return new Pair<>(controller, masterLayout);
   }
 
-  private void createButtons() {
-    buttonBox = new VBox();
-    buttonBox.getStyleClass().add("");
+  private VBox createButtons() {
+    VBox buttonBox = new VBox();
 
     graphButton = new Button(bundle.getString("ShowGraphButtonLabel"));
     graphButton.setOnAction(e -> toggleGraph());
     gridButton = new Button(bundle.getString("HideGridButtonLabel"));
     gridButton.setOnAction(e -> toggleGrid());
-    saveButton = new Button(bundle.getString("SaveButtonLabel"));
+    Button saveButton = new Button(bundle.getString("SaveButtonLabel"));
     saveButton.setOnAction(e -> saveXML());
-    deleteSimulationButton = new Button(bundle.getString("DeleteSimulationButtonLabel"));
+    Button deleteSimulationButton = new Button(bundle.getString("DeleteSimulationButtonLabel"));
     deleteSimulationButton.setOnAction(e -> deleteSimulation());
 
     buttonBox.getChildren().addAll(graphButton, gridButton, saveButton, deleteSimulationButton);
+    return buttonBox;
   }
 
   private void deleteSimulation() {
@@ -102,13 +98,14 @@ public class SimulationView {
     graphView = graph.initialize();
   }
 
-  private void createTitle() {
-    titleBox = new HBox();
+  private HBox createTitle() {
+    HBox titleBox = new HBox();
     titleBox.getStyleClass().add("title-box");
     Text titleText = new Text();
     titleText.setText(config.getSimulationMetadata().get("title"));
     titleText.getStyleClass().add("subtitle-text");
     titleBox.getChildren().add(titleText);
+    return titleBox;
   }
 
   private void toggleGraph(){

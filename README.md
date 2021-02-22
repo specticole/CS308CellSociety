@@ -63,6 +63,11 @@ Features implemented:
 
 Assumptions or Simplifications:
 
+For the UI, we decided to keep all the simulations, including the graph views, in one screen as 
+we felt that we could better organize the information pertaining to the simulations without 
+having the user do that for themselves. This saves the user time; all they have to do is click 
+the buttons that are provided. The control buttons at the top of the view 
+
 Interesting data files:
 
 Known Bugs:
