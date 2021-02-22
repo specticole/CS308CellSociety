@@ -20,4 +20,8 @@ public class LangtonRule extends CellularAutomatonRule {
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
 
   }
+
+  @Override
+  public void setGameSpecifics(Map<String, String> params) {
+  }
 }
