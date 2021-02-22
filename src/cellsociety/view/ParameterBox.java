@@ -31,6 +31,10 @@ public class ParameterBox {
     states = listOfStates;
   }
 
+  public String getState(){
+    return (String) stateList.getValue();
+  }
+
   public VBox initialize(){
     createParameterTextFields();
     if(!parameterTextFieldsList.isEmpty()){
@@ -71,9 +75,4 @@ public class ParameterBox {
     }
     simulationView.updateParameters(parameterMap);
   }
-
-  public String getState(){
-    return (String) stateList.getValue();
-  }
-
 }
