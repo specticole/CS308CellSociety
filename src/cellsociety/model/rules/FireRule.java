@@ -72,7 +72,12 @@ public class FireRule extends CellularAutomatonRule {
    * @param params Parameter map.
    */
   public void setGameSpecifics(Map<String, String> params) {
-    String rules = params.get("probCatch");
-    fireChance = Integer.valueOf(rules);
+    fireChance = 50; // default value
+    if (params.containsKey("probCatch")) {
+      int inputChance = Integer.parseInt(params.get("probCatch"));
+      if (inputChance >= 0 && inputChance <= 100) {
+        fireChance = inputChance;
+      }
+    }
   }
 }

@@ -118,14 +118,15 @@ public class CellularAutomatonController {
    * Pauses the simulation and increments the time by one
    */
   public void stepOnce() {
-    animation.pause();
+    pauseSimulation();
     step();
   }
 
-  // TODO: may be implemented in Complete
   public void resetSimulation() {
     pauseSimulation();
+    config = new CellularAutomatonConfiguration(currentConfigFile);
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
+    step();
   }
 
   private void step() {
