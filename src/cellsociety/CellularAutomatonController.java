@@ -44,6 +44,9 @@ public class CellularAutomatonController {
   private List<List<String>> currentStates;
   private CellularAutomatonConfiguration config;
 
+  /**
+   * Initializes JavaFX animation
+   */
   public CellularAutomatonController() {
     frame = new KeyFrame(Duration.seconds(STEP_SIZES[2]), e -> step());
     animation = new Timeline();
@@ -58,7 +61,6 @@ public class CellularAutomatonController {
    * @param mySimulationView - the View object for each simulation
    * @param configFile       - the File for each simulation
    */
-
   public CellularAutomatonController(SimulationView mySimulationView,
       File configFile) {
     this();
@@ -69,6 +71,12 @@ public class CellularAutomatonController {
     myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
   }
 
+  /**
+   * Saves the current state of the grid into a new XML file. The file is saved
+   * into a directory chosen by the user and has the name "[CONFIGNAME]copy.xml"
+   *
+   * @param masterLayout - GridPane where directory chooser should be displayed
+   */
   public void saveConfigFile(GridPane masterLayout) {
     pauseSimulation();
     DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -126,6 +134,10 @@ public class CellularAutomatonController {
     step();
   }
 
+  /**
+   * Resets the simulation by using the original configuration file
+   * to re-initialize the Model
+   */
   public void resetSimulation() {
     pauseSimulation();
     config = new CellularAutomatonConfiguration(currentConfigFile);
@@ -133,14 +145,15 @@ public class CellularAutomatonController {
     mySimulationView.updateView(config.getInitialStates());
   }
 
+  // updates the Model, then uses the updated grid to update the View
   private void step() {
     myModel.step();
-
     CellState[][] currentState = ((Dense2DCellGrid) myModel.getGrid()).extractStates(0);
     setCurrentStates(currentState);
     mySimulationView.updateView(currentStates);
   }
 
+  // helper method to update the ArrayList instance variable given a 2D array
   private void setCurrentStates(CellState[][] currentState) {
     for (int row = 0; row < currentState.length; row++) {
       for (int col = 0; col < currentState[0].length; col++) {
@@ -149,17 +162,29 @@ public class CellularAutomatonController {
     }
   }
 
-  public void updateStoredConfigFile(File storedConfigFile) {
+  // helper method to save new config file by editing a copy of the original
+  private void updateStoredConfigFile(File storedConfigFile) {
     XMLConfigurationParser updateParser = new XMLConfigurationParser(storedConfigFile);
     updateParser.updateStoredConfigFile(currentStates);
   }
 
+  /**
+   * Sets simulation parameters to user-defined values that they enter
+   * in the View
+   * @param parameterList - map of updated parameter names and values
+   */
   public void updateParameters(Map<String, String> parameterList) {
     CellularAutomatonRule ruleSet = config.getRuleSet();
     ruleSet.setGameSpecifics(parameterList);
     myModel.setRule(ruleSet);
   }
 
+  /**
+   * Changes the state of a Cell that has been clicked on in the View
+   * @param state - the state that the Cell should be updated to
+   * @param xLocation - the x coordinate of the Cell
+   * @param yLocation - the y coordinate of the Cell
+   */
   public void changeCell(String state, int xLocation, int yLocation) {
     try {
       myModel.getGrid().getCell(new GridCoordinates(xLocation, yLocation)).setState(0,

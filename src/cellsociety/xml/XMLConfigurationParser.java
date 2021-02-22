@@ -185,15 +185,14 @@ public class XMLConfigurationParser extends XMLGenericParser {
       switch (getAttribute(root, "grid", "distribution").toLowerCase()) {
         case "specified":
           return makeSpecifiedInitialStates();
-        case "randomspecified":
-          break; // todo: randomly pick state at specified locations, with or without desired distribution
         case "randomtotal":
-          return makeRandomTotalInitialStates(); // todo: randomly pick state based on total locations to occupy, with or without desired distribution
+          return makeRandomTotalInitialStates();
       }
     }
     return makeSpecifiedInitialStates();
   }
 
+  // reads states from the XML file and assigns to each grid location
   private List<List<String>> makeSpecifiedInitialStates() {
     List<List<String>> gridInitialStates = new ArrayList<>();
     Element gridElement = getElement(root, "grid");
@@ -211,6 +210,9 @@ public class XMLConfigurationParser extends XMLGenericParser {
     return gridInitialStates;
   }
 
+  // randomly assigns a state to each cell location
+  // uses distribution if specified in the XML file
+  // otherwise splits evenly between the states
   private List<List<String>> makeRandomTotalInitialStates() {
     List<List<String>> gridInitialStates = new ArrayList<>();
     List<String> possibleCellStates = getCellStates();
@@ -289,6 +291,9 @@ public class XMLConfigurationParser extends XMLGenericParser {
     return cellStyleMap;
   }
 
+  // creates list where each state appears a certain number of times
+  // as specified in the configuration file.
+  // this list is used in randomly generating states for the initial grid
   private List<String> getCellStateDistribution() throws XMLException {
     Element gridElement = getElement(root, "grid");
     Element distributionElement = getElement(gridElement, "distribution");
