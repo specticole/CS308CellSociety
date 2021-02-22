@@ -320,18 +320,18 @@ public class XMLConfigurationParser extends XMLGenericParser {
    * invalid parameter values by offering default values.
    * @return - map with parameter names as keys. 
    */
-  public Map<String, String> getParameters() {
+  public Map<String, String> getParameters() throws XMLException {
     Element configElement = getElement(root, "config_parameters");
     Map<String, String> parameterMap = new HashMap<>();
-    if (configElement.hasChildNodes()) {
-      NodeList parameterList = getNodes(configElement, "parameter");
-      for (int count = 0; count < parameterList.getLength(); count++) {
-        Element parameterElement = (Element) parameterList.item(count);
-        parameterMap
-            .put(getCurrentAttribute(parameterElement, "name"),
-                getCurrentAttribute(parameterElement, "value"));
+      NodeList parameterList = configElement.getElementsByTagName("parameter");
+      if (parameterList != null && parameterList.getLength() > 0) {
+        for (int count = 0; count < parameterList.getLength(); count++) {
+          Element parameterElement = (Element) parameterList.item(count);
+          parameterMap
+              .put(getCurrentAttribute(parameterElement, "name"),
+                  getCurrentAttribute(parameterElement, "value"));
+        }
       }
-    }
     return parameterMap;
   }
 
