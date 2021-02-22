@@ -55,8 +55,20 @@ public class RockPaperScissorRule extends CellularAutomatonRule {
    * where the int is the number of neighbors which need to beat the cell in order for it to swap
    * @param params
    */
+  @Override
   public void setGameSpecifics(Map<String, String> params) {
-    String rules = params.get("threshold");
-    threshold = Integer.valueOf(rules);
+    threshold = 3; // default value
+    if (params.containsKey("threshold")) {
+      int paramThreshold = 0;
+      try {
+        paramThreshold = Integer.parseInt(params.get("threshold"));
+      }
+      catch (Exception ignored) {
+
+      }
+      if (paramThreshold > 0) {
+        threshold = paramThreshold;
+      }
+    }
   }
 }

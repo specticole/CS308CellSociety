@@ -17,7 +17,7 @@ import java.util.Random;
  */
 public class SegregationRule extends CellularAutomatonRule {
 
-  private double neighborsNeeded = 0.2;
+  private double neighborsNeeded;
 
 
   /**
@@ -105,9 +105,21 @@ public class SegregationRule extends CellularAutomatonRule {
    *
    * @param params Parameter map.
    */
+  @Override
   public void setGameSpecifics(Map<String, String> params) {
-    String rules = params.get("neighborsNeeded");
-    neighborsNeeded = Double.valueOf(rules);
+    neighborsNeeded = 0.2; // default value
+    if (params.containsKey("neighborsNeeded")) {
+      double paramNeeded = 0.0;
+      try {
+        paramNeeded = Double.parseDouble(params.get("neighborsNeeded"));
+      }
+      catch (Exception ignored) {
+
+      }
+      if (paramNeeded > 0 && paramNeeded < 1) {
+        neighborsNeeded = paramNeeded;
+      }
+    }
   }
 
 
