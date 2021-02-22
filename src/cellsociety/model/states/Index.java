@@ -16,6 +16,7 @@ public class Index {
           "wator", WaTorWorldState.class,
           "fire", FireState.class,
           "percolation", PercolationState.class,
-          "rps", RockPaperScissorState.class
+          "rps", RockPaperScissorState.class,
+          "elementary", ElementaryState.class
              );
 }
