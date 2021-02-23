@@ -95,6 +95,9 @@ Another simplification we made is that when you choose to do a random distributi
 resetting the simulation randomizes the states again instead of returning you to the configuration you started with.
 Hence, the user gets a true "random" experience each time they reset the simulation.
 
+No outlines in the style xml means that the outlines are not drawn i.e. they will be filled with 
+whatever the background color is. Outlines mean that there will be black outlines.
+
 Errors checked: 
 Errors are handled by displaying a message to the user and not loading in the selected configuration file. 
 In most cases, the error message is specific to the error type. 
@@ -111,9 +114,9 @@ Interesting data files:
 
 Known Bugs:
 
-We took some liberties in our interpretation of the Wa-Tor
+ * We took some liberties in our interpretation of the Wa-Tor
 specification, so our implementation shows some interesting behavior.
-Changing the font size or color removes the labels on the speed slider.
+ * Changing the font size or color removes the labels on the speed slider.
 
 Extra credit:
 
