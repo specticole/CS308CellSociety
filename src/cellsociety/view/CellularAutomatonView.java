@@ -42,6 +42,7 @@ public class CellularAutomatonView {
 
   ResourceBundle bundle;
   ArrayList<CellularAutomatonController> simulationControllers;
+  CellularAutomatonStyle styleParameters;
 
 
   public CellularAutomatonView(GridPane gridPane, ResourceBundle resourceBundle){
@@ -134,9 +135,9 @@ public class CellularAutomatonView {
   private void handleLoadNewSimulation(HBox newSimulationButtonBox) {
     try {
       File configFile = loadXMLFile();
-      Alert styleAlert = new Alert(AlertType.CONFIRMATION, "Would you like to load a style file?");
+      Alert styleAlert = new Alert(AlertType.CONFIRMATION, bundle.getString("StyleFilePrompt"));
       styleAlert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> loadStyleFile());
-      SimulationView simulationView = new SimulationView(configFile, bundle, this);
+      SimulationView simulationView = new SimulationView(configFile, bundle, this, styleParameters);
       masterLayout.getChildren().remove(newSimulationButtonBox);
       Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
       masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
@@ -165,12 +166,11 @@ public class CellularAutomatonView {
   private void loadStyleFile() {
     try {
       File styleFile = loadXMLFile();
-      CellularAutomatonStyle styleParameters = new CellularAutomatonStyle(styleFile);
+      styleParameters = new CellularAutomatonStyle(styleFile);
     }
     catch (Exception e) {
       makeAlert("Invalid style file");
     }
-
   }
 
   private void updateButtonLabels(){

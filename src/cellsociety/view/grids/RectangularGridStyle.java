@@ -34,7 +34,7 @@ public class RectangularGridStyle extends GridStyle {
   }
 
   @Override
-  public GridPane createGrid(int numCols, int numRows) {
+  public GridPane createGrid(int numCols, int numRows, boolean outlines) {
     grid = new Rectangle[numCols][numRows];
     double rectangleWidth = calculateRectangleWidth(numCols);
     double rectangleHeight = calculateRectangleHeight(numRows);
@@ -45,6 +45,11 @@ public class RectangularGridStyle extends GridStyle {
             Color.WHITE);
         pane.add(grid[colNumber][rowNumber], colNumber, rowNumber);
       }
+    }
+    System.out.println(outlines);
+    if (!outlines) {
+      pane.getStyleClass().clear();
+      pane.getStyleClass().add("rectangular-gridpane-nospace");
     }
     return pane;
   }

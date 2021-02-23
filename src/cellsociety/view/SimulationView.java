@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import cellsociety.controller.CellularAutomatonConfiguration;
 import cellsociety.controller.CellularAutomatonController;
+import cellsociety.controller.CellularAutomatonStyle;
 import cellsociety.view.grids.HexagonalGridStyle;
 import cellsociety.view.grids.RectangularGridStyle;
 import cellsociety.xml.XMLException;
@@ -31,6 +32,7 @@ public class SimulationView {
 
   private CellularAutomatonController controller;
   private CellularAutomatonConfiguration config;
+  private CellularAutomatonStyle style;
   private CellularAutomatonView parentView;
   private ResourceBundle bundle;
 
@@ -38,13 +40,15 @@ public class SimulationView {
   private boolean gridShown;
 
   public SimulationView(File configFile, ResourceBundle currentBundle,
-      CellularAutomatonView parent){
+      CellularAutomatonView parent, CellularAutomatonStyle styleParameters){
     masterLayout = new GridPane();
     masterLayout.getStyleClass().add("simulation-gridpane");
     config = new CellularAutomatonConfiguration(configFile);
     bundle = currentBundle;
     controller = new CellularAutomatonController(this, configFile);
+    style = styleParameters;
     parentView = parent;
+
     graphShown = false;
     gridShown = true;
   }
@@ -92,7 +96,13 @@ public class SimulationView {
         mainGrid = new HexagonalGridStyle(this, new Pane());
         break;
     }
-    gridView = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight());
+    if(style != null){
+      gridView = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight(),
+          style.getCellOutlines());
+    }
+    else {
+      gridView = mainGrid.createGrid(config.getGridWidth(), config.getGridHeight(), true);
+    }
     mainGrid.updateGrid(config.getInitialStates(), config.getCellStyles());
   }
 
