@@ -59,7 +59,7 @@ public class SplashScreen {
   private void switchToSimulation(ResourceBundle newBundle){
     Parent root = new CellularAutomatonView(new GridPane(), newBundle).initialize();
     Scene scene = new Scene(root, WIDTH, HEIGHT);
-    scene.getStylesheets().add("cellsociety/resources/game.css");
+    scene.getStylesheets().add("cellsociety/resources/normalfont.css");
     stage.setScene(scene);
 
   }

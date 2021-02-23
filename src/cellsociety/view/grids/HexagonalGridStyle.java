@@ -8,6 +8,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
+/**
+ * Creates a hexagonal grid for the View to display.
+ *
+ * Handles the calculation of the size of each hexagon as well as its cell position.
+ * Hexagons are only regular, they cannot be stretched to fit the display.
+ * This means that there will be excess space on one of the axis.
+ * Each cell is stored in a 2D array which represents its position.
+ * The position is needed to update the state of a cell from the model.
+ *
+ * @author Bill Guo
+ */
+
 public class HexagonalGridStyle extends GridStyle {
 
   public static final double HEX_ANGLE = Math.PI / 3;
@@ -15,6 +27,14 @@ public class HexagonalGridStyle extends GridStyle {
   private Pane pane;
   private Polygon[][] grid;
 
+  /**
+   * Initializes a hexagonal GridStyle.
+   * Requires the SimulationView that is making this object, as well as a provided pane.
+   * Parent SimulationView is required to call a function from the parent when a cell is clicked.
+   *
+   * @param currentSimulationView Parent SimulationView
+   * @param pane
+   */
   public HexagonalGridStyle(SimulationView currentSimulationView, Pane pane){
     super(currentSimulationView);
     this.pane = pane;
@@ -35,6 +55,15 @@ public class HexagonalGridStyle extends GridStyle {
     cell.setOnMouseClicked(e -> handleClick(xPositionInGrid, yPositionInGrid));
     return cell;
   }
+
+  /**
+   * Creates the Pane object that is added to the SimulationView.
+   * Used by the SimulationView to show the grid on the UI.
+   *
+   * @param numCols number of columns specified by the config file
+   * @param numRows number of rows specified by the config file
+   * @return Pane object to be added to the SimulationView main GridPane
+   */
 
   @Override
   public Pane createGrid(int numCols, int numRows) {
@@ -91,7 +120,13 @@ public class HexagonalGridStyle extends GridStyle {
     return ((rowNumber * 1.5) + 1) * radius;
   }
 
-
+  /**
+   * Updates the grid to show the next set of states.
+   * Used by SimulationView to send the information from the controller to the grid.
+   *
+   * @param listOfStates 2D list of the new states from the controller
+   * @param stateToColor Map that converts a state to a specific color
+   */
   @Override
   public void updateGrid(List<List<String>> listOfStates, Map<String, Color> stateToColor) {
     for (int rowNumber = 0; rowNumber < listOfStates.size(); rowNumber++) {

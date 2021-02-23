@@ -20,15 +20,23 @@ import javafx.util.Pair;
 
 public class CellularAutomatonView {
 
+  public static final String LARGEFONT_CSS = "cellsociety/resources/largefont.css";
+  public static final String NORMALFONT_CSS = "cellsociety/resources/normalfont.css";
+
   private GridPane masterLayout;
   private Button startResetButton;
   private Button pauseResumeButton;
   private Button stepButton;
   private Slider speedSlider;
   private Button applySpeedButton;
+  private Button fontButton;
+  private Button colorButton;
 
   private boolean started;
   private boolean paused;
+  private boolean largefont;
+  private boolean dark;
+
   private int newRowIndex;
 
   ResourceBundle bundle;
@@ -41,6 +49,8 @@ public class CellularAutomatonView {
     bundle = resourceBundle;
     simulationControllers = new ArrayList<>();
 
+    largefont = false;
+    dark = false;
     started = false;
     paused = true;
     newRowIndex = 2;
@@ -76,20 +86,29 @@ public class CellularAutomatonView {
 
     startResetButton = new Button(bundle.getString("StartButtonLabel"));
     startResetButton.setOnAction(e -> startResetButtonClick());
+    startResetButton.getStyleClass().add("button-text");
     pauseResumeButton = new Button(bundle.getString("ResumeButtonLabel"));
     pauseResumeButton.setOnAction(e -> pauseResumeButtonClick());
+    pauseResumeButton.getStyleClass().add("button-text");
     stepButton = new Button(bundle.getString("StepButtonLabel"));
     stepButton.setOnAction(e -> stepButtonClick());
+    stepButton.getStyleClass().add("button-text");
+    fontButton = new Button(bundle.getString("IncreaseFontButtonLabel"));
+    fontButton.setOnAction(e -> fontButtonClick());
+    fontButton.getStyleClass().add("button-text");
+    colorButton = new Button(bundle.getString("DarkButtonLabel"));
+    colorButton.setOnAction(e -> colorButtonClick());
+    colorButton.getStyleClass().add("button-text");
 
     Text speedText = new Text();
     speedText.setText(bundle.getString("SpeedLabel"));
     createSpeedSlider();
     applySpeedButton = new Button(bundle.getString("ApplyButtonLabel"));
     applySpeedButton.setOnAction(e -> speedButtonClick());
-
+    applySpeedButton.getStyleClass().add("button-text");
 
     controlsBox.getChildren().addAll(startResetButton, pauseResumeButton, stepButton, speedText,
-        speedSlider, applySpeedButton);
+        speedSlider, applySpeedButton, fontButton, colorButton);
     masterLayout.add(controlsBox,0,1, 3,1);
   }
 
@@ -106,6 +125,7 @@ public class CellularAutomatonView {
     newSimulationButtonBox.getStyleClass().add("button-box");
     Button newSimulationButton = new Button(bundle.getString("NewSimulationButtonLabel"));
     newSimulationButton.setOnAction(e -> handleLoadNewSimulation(newSimulationButtonBox));
+    newSimulationButton.getStyleClass().add("button-text");
     newSimulationButtonBox.getChildren().add(newSimulationButton);
     masterLayout.add(newSimulationButtonBox, 0,rowIndex);
 
@@ -151,6 +171,18 @@ public class CellularAutomatonView {
     }
     else{
       pauseResumeButton.setText(bundle.getString("PauseButtonLabel"));
+    }
+    if(largefont){
+      fontButton.setText(bundle.getString("DecreaseFontButtonLabel"));
+    }
+    else{
+      fontButton.setText(bundle.getString("IncreaseFontButtonLabel"));
+    }
+    if(dark){
+      colorButton.setText(bundle.getString("LightButtonLabel"));
+    }
+    else{
+      colorButton.setText(bundle.getString("DarkButtonLabel"));
     }
   }
 
@@ -211,6 +243,31 @@ public class CellularAutomatonView {
     }
     started = true;
     paused = false;
+    updateButtonLabels();
+  }
+
+  private void fontButtonClick() {
+    masterLayout.getScene().getStylesheets().clear();
+    if(largefont){
+      masterLayout.getScene().getStylesheets().add(NORMALFONT_CSS);
+      largefont = false;
+    }
+    else{
+      masterLayout.getScene().getStylesheets().add(LARGEFONT_CSS);
+      largefont = true;
+    }
+    updateButtonLabels();
+  }
+
+  private void colorButtonClick() {
+    if(dark){
+      masterLayout.setStyle("-fx-background-color: #CCCCCC");
+      dark = false;
+    }
+    else{
+      masterLayout.setStyle("-fx-background-color: #696969");
+      dark = true;
+    }
     updateButtonLabels();
   }
 

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static final String TITLE = "Cellular Automaton";
-    public static final String CSS_FILE = "cellsociety/resources/game.css";
+    public static final String CSS_FILE = "cellsociety/resources/normalfont.css";
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
 
