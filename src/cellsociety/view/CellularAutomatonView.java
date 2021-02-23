@@ -236,6 +236,7 @@ public class CellularAutomatonView {
       }
       started = true;
       paused = false;
+      updateButtonLabels();
     }
     else {
       pauseAllSims();
