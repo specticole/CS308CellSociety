@@ -1,13 +1,11 @@
 package cellsociety.test;
 
-import cellsociety.CellularAutomatonConfiguration;
+import cellsociety.controller.CellularAutomatonConfiguration;
 import cellsociety.model.CellState;
 import cellsociety.model.CellularAutomaton;
 import cellsociety.model.grids.Dense2DCellGrid;
 import cellsociety.view.Graph;
-import cellsociety.xml.XMLException;
 import java.io.File;
-import java.security.Key;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

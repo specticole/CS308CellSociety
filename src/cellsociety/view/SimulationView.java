@@ -1,9 +1,10 @@
 package cellsociety.view;
 
-import cellsociety.CellularAutomatonConfiguration;
-import cellsociety.CellularAutomatonController;
+import cellsociety.controller.CellularAutomatonConfiguration;
+import cellsociety.controller.CellularAutomatonController;
 import cellsociety.view.grids.HexagonalGridStyle;
 import cellsociety.view.grids.RectangularGridStyle;
+import cellsociety.xml.XMLException;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +139,12 @@ public class SimulationView {
 
   private void saveXML(){
     parentView.pauseAllSims();
-    controller.saveConfigFile(masterLayout);
+    try {
+      controller.saveConfigFile(masterLayout);
+    }
+    catch (XMLException e) {
+      parentView.makeAlert("No file selected");
+    }
   }
 
   private ParameterBox createParameterBox() {
@@ -157,6 +163,10 @@ public class SimulationView {
 
   public void updateParameters(Map<String, String> parameterList) {
     controller.updateParameters(parameterList);
+  }
+
+  public void makeAlert(String errorMessage) {
+    parentView.makeAlert(errorMessage);
   }
 
 }

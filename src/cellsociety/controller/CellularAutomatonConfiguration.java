@@ -1,4 +1,4 @@
-package cellsociety;
+package cellsociety.controller;
 
 import cellsociety.model.CellGrid;
 import cellsociety.model.CellState;
@@ -7,6 +7,7 @@ import cellsociety.view.SimulationView;
 import cellsociety.xml.XMLConfigurationParser;
 import cellsociety.xml.XMLException;
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.paint.Color;
@@ -58,9 +59,10 @@ public class CellularAutomatonConfiguration {
     makeRules(simulationType, simulationParameters);
   }
 
+  // returns subclass of CellState using reflection
   private CellState makeState(String simulationType, String contents) {
     try {
-      return (CellState)cellsociety.model.states.Index.allStates
+      return cellsociety.model.states.Index.allStates
           .get(simulationType)
           .getConstructor(String.class)
           .newInstance(contents);
@@ -69,6 +71,7 @@ public class CellularAutomatonConfiguration {
     }
   }
 
+  // returns subclass of CellularAutomatonRule using reflection
   private void makeRules(String simulationType, Map<String, String> simulationParameters) throws XMLException {
     try {
       ruleSet = (CellularAutomatonRule)cellsociety.model.rules.Index.allRules
@@ -80,6 +83,7 @@ public class CellularAutomatonConfiguration {
     }
   }
 
+  // initialize grid using values read in from configuration file
   private void makeGrid(String simulationType, String gridType, List<List<String>> initialStates) throws XMLException {
     switch(gridType) {
       case "rectangular":
@@ -96,11 +100,11 @@ public class CellularAutomatonConfiguration {
         for(int y = 0; y < gridHeight; y++) {
           for(int x = 0; x < gridWidth; x++ ) {
             CellState state = makeState(simulationType, initialStates.get(y).get(x));
-            if (state != null) {
+            if (state != null && getCellStyles().containsKey(initialStates.get(y).get(x))) {
               initialState[y][x] = state;
             }
             else {
-              throw new XMLException(new IllegalArgumentException());
+              throw new XMLException(new IllegalArgumentException(), "Invalid cell state");
             }
           }
         }
@@ -113,42 +117,66 @@ public class CellularAutomatonConfiguration {
     }
   }
 
-  // getters
+  /**
+   * Returns the rule set
+   * @return - a subclass of CellularAutomatonRule for the specified simulation
+   */
   public CellularAutomatonRule getRuleSet() {
     return ruleSet;
   }
 
+  /**
+   * Returns the grid object tied to the current simulation
+   * @return - a grid that holds the Cells for the current simulation
+   */
   public CellGrid getGrid() {
     return grid;
   }
 
+  /**
+   * Returns read-only copy of the metadata
+   * @return - unmodifiable map of metadata names and values
+   */
   public Map<String, String> getSimulationMetadata() {
-    return simulationMetadata;
+    return Collections.unmodifiableMap(simulationMetadata);
   }
 
+  /**
+   * Returns the grid type
+   * @return - the name of the grid type
+   */
   public String getGridType(){
     return gridType;
   }
 
+  /**
+   * Returns the width of the grid in cells
+   * @return - the number of cells per row
+   */
   public int getGridWidth() {
     return gridWidth;
   }
 
+  /**
+   * Returns the height of the grid in cells
+   * @return - the number of cells per column
+   */
   public int getGridHeight() {
     return gridHeight;
   }
 
   /**
-   * Returns mappings from cell states to colors for display
+   * Returns read-only mappings from cell states to colors for display
    *
-   * @return - Map from Strings representing states to Color objects
+   * @return - unmodifiable map from Strings representing states to Color objects
    */
   public Map<String, Color> getCellStyles() {
-    return cellStyles;
+    return Collections.unmodifiableMap(cellStyles);
   }
 
   /**
-   * Returns the initial configuration of states for display
+   * Returns the initial configuration of states for display. This list
+   * is not read-only, since it is continuously updated in the Controller.
    *
    * @return - 2D ArrayList of cell states as Strings
    */
@@ -156,12 +184,20 @@ public class CellularAutomatonConfiguration {
     return initialStates;
   }
 
+  /**
+   * Returns the simulation type
+   * @return - the name of the simulation type
+   */
   public String getSimulationType(){
     return simulationType;
   }
 
+  /**
+   * Returns read-only map of the simulation-specific parameters
+   * @return - unmodifiable map of parameter names and values
+   */
   public Map<String, String> getSimulationParameters(){
-    return simulationParameters;
+    return Collections.unmodifiableMap(simulationParameters);
   }
 
 

@@ -73,18 +73,19 @@ public class XMLStyleParser extends XMLGenericParser {
 
   /**
    * Returns whether the cells should be outlined, if specified
+   * If not specified, the cells will default to having outlines
    *
-   * @return - true if the outline attribute is "y" or "Y," false otherwise
+   * @return - false if the outline attribute is "y" or "Y," false otherwise
    */
   public boolean getCellOutlines() {
     if (root.getElementsByTagName("cell") != null
         && root.getElementsByTagName("cell").getLength() > 0) {
       Element cellElement = (Element) root.getElementsByTagName("cell").item(0);
       if (cellElement.hasAttribute("outline")) {
-        return getAttribute(root,"cell", "outline").toUpperCase().equals("Y");
+        return !getAttribute(root,"cell", "outline").toUpperCase().equals("N");
       }
     }
-    return false;
+    return true;
   }
 
   /**

@@ -100,12 +100,14 @@ public class XMLGenericParser {
    * @throws XMLException - if the node or attribute does not exist
    */
   protected String getAttribute(Element parent, String tagName, String attributeName) throws XMLException {
-    try {
-      return getElement(parent, tagName).getAttribute(attributeName);
-    }
-    catch (IllegalArgumentException e) {
-      throw new XMLException(e, "Missing " + attributeName + " attribute");
-    }
+   String attributeValue = getElement(parent, tagName).getAttribute(attributeName);
+   if (attributeValue != "") {
+     return attributeValue;
+   }
+   else {
+     throw new XMLException(new IllegalArgumentException(), "Missing " + attributeName + " attribute");
+
+   }
   }
 
   /**
