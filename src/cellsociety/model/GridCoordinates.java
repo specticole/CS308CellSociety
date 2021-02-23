@@ -53,4 +53,27 @@ public class GridCoordinates {
     return new GridCoordinates(this.getX() + rhs.getX(),
                                this.getY() + rhs.getY());
   }
+
+  /**
+   * Subtract a GridCoordinates vector from this vector
+   * component-wise.
+   *
+   * @param rhs Other coordinates.
+   * @return Difference rhs - this.
+   */
+  public GridCoordinates subtract(GridCoordinates rhs) {
+    return new GridCoordinates(this.getX() - rhs.getX(),
+                               this.getY() - rhs.getY());
+  }
+
+  /**
+   * Return the (integer) dot product of this vector with rhs.
+   *
+   * @param rhs Other vector.
+   * @return this \cdot rhs
+   */
+  public int dot(GridCoordinates rhs) {
+    return this.getX() * rhs.getX() +
+           this.getY() * rhs.getY();
+  }
 }

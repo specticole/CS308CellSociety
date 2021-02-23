@@ -110,10 +110,10 @@ public class CellularAutomatonView {
     masterLayout.add(newSimulationButtonBox, 0,rowIndex);
 
   }
-  public void handleLoadNewSimulation(HBox newSimulationButtonBox) {
+  private void handleLoadNewSimulation(HBox newSimulationButtonBox) {
     try {
       File configFile = loadConfigFile();
-      SimulationView simulationView = new SimulationView(configFile, bundle);
+      SimulationView simulationView = new SimulationView(configFile, bundle, this);
       masterLayout.getChildren().remove(newSimulationButtonBox);
       Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
       masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
@@ -172,6 +172,17 @@ public class CellularAutomatonView {
     updateButtonLabels();
   }
 
+  /**
+   * Used by SimulationView to pause all simulations when one is saved
+   */
+  public void pauseAllSims(){
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.pauseSimulation();
+    }
+    paused = true;
+    updateButtonLabels();
+  }
+
   private void pauseResumeButtonClick() {
     if(paused){
       for (CellularAutomatonController controller: simulationControllers) {
@@ -180,13 +191,9 @@ public class CellularAutomatonView {
       started = true;
       paused = false;
     }
-    else{
-      for (CellularAutomatonController controller: simulationControllers) {
-        controller.pauseSimulation();
-      }
-      paused = true;
+    else {
+      pauseAllSims();
     }
-    updateButtonLabels();
   }
 
   private void stepButtonClick() {
