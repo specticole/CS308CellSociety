@@ -70,7 +70,7 @@ Features implemented:
 * Extensive XML error checking.
 * Ability to load a style file when loading a configuration file
 * Features that can be styled: 
-  * [ADD WHEN DONE]
+  * Disabling outlines
 * Localizable user interface.
   * English
   * Pig Latin
