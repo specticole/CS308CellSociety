@@ -1,6 +1,6 @@
 package cellsociety.view;
 
-import cellsociety.CellularAutomatonController;
+import cellsociety.controller.CellularAutomatonController;
 import cellsociety.xml.XMLException;
 import java.io.File;
 import java.util.ArrayList;
@@ -224,7 +224,13 @@ public class CellularAutomatonView {
     return configFile;
   }
 
-  private void makeAlert(String errorMessage) {
+  /**
+   * Displays alert message, used to handle errors that occur
+   * during the loading or parsing of a configuration file
+   *
+   * @param errorMessage - the message displayed to the user
+   */
+  public void makeAlert(String errorMessage) {
     Alert alert = new Alert(AlertType.ERROR, errorMessage);
     alert.showAndWait().filter(response -> response == ButtonType.OK);
   }

@@ -1,4 +1,4 @@
-package cellsociety;
+package cellsociety.controller;
 
 import cellsociety.model.CellGrid;
 import cellsociety.model.CellState;

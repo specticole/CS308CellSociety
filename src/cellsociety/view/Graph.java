@@ -1,6 +1,6 @@
 package cellsociety.view;
 
-import cellsociety.CellularAutomatonConfiguration;
+import cellsociety.controller.CellularAutomatonConfiguration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

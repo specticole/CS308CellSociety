@@ -1,11 +1,11 @@
-package cellsociety;
+package cellsociety.controller;
 
+import cellsociety.controller.CellularAutomatonConfiguration;
 import cellsociety.model.CellState;
 import cellsociety.model.CellularAutomaton;
 import cellsociety.model.CellularAutomatonRule;
 import cellsociety.model.GridCoordinates;
 import cellsociety.model.grids.Dense2DCellGrid;
-import cellsociety.view.CellularAutomatonView;
 import cellsociety.view.SimulationView;
 import cellsociety.xml.XMLConfigurationParser;
 import cellsociety.xml.XMLException;
@@ -21,8 +21,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.GridPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 
 /**
@@ -66,9 +64,14 @@ public class CellularAutomatonController {
     this();
     this.mySimulationView = mySimulationView;
     currentConfigFile = configFile;
-    config = new CellularAutomatonConfiguration(configFile);
-    currentStates = config.getInitialStates();
-    myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
+    try {
+      config = new CellularAutomatonConfiguration(configFile);
+      currentStates = config.getInitialStates();
+      myModel = new CellularAutomaton(config.getGrid(), config.getRuleSet());
+    }
+    catch (Exception e) {
+      mySimulationView.makeAlert("Invalid XML file");
+    }
   }
 
   /**
@@ -77,20 +80,25 @@ public class CellularAutomatonController {
    *
    * @param masterLayout - GridPane where directory chooser should be displayed
    */
-  public void saveConfigFile(GridPane masterLayout) {
+  public void saveConfigFile(GridPane masterLayout) throws XMLException {
     pauseSimulation();
     DirectoryChooser directoryChooser = new DirectoryChooser();
     File saveConfigFileLocation = directoryChooser.showDialog(masterLayout.getScene().getWindow());
-    String saveFileName = currentConfigFile.getName().replaceAll(".xml", "")
-        .concat("copy.xml"); // todo: allow user to change name
-    try {
-      Path storeConfigFilePath = Paths.get(saveConfigFileLocation.getPath() + "/" + saveFileName);
-      Path storedConfigFilePath = Files.copy(currentConfigFile.toPath(), storeConfigFilePath,
-          StandardCopyOption.REPLACE_EXISTING);
-      File storedConfigFile = storedConfigFilePath.toFile();
-      updateStoredConfigFile(storedConfigFile);
-    } catch (IOException e) {
-      e.printStackTrace();
+    if (saveConfigFileLocation != null) {
+      String saveFileName = currentConfigFile.getName().replaceAll(".xml", "")
+          .concat("copy.xml"); // todo: allow user to change name
+      try {
+        Path storeConfigFilePath = Paths.get(saveConfigFileLocation.getPath() + "/" + saveFileName);
+        Path storedConfigFilePath = Files.copy(currentConfigFile.toPath(), storeConfigFilePath,
+            StandardCopyOption.REPLACE_EXISTING);
+        File storedConfigFile = storedConfigFilePath.toFile();
+        updateStoredConfigFile(storedConfigFile);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    else {
+      throw new XMLException(new IllegalArgumentException());
     }
   }
 
