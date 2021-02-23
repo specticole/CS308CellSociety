@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simulation rules="percolation">
+  <meta>
+    <title>Percolation 7</title>
+    <author>Patrick Liu</author>
+    <description>Random initial states, even distribution</description>
+  </meta>
+  <grid type="rectangular" width="5" height="5" neighbors="4" wrapping="false" distribution="randomtotal">
+  </grid>
+  <cellstyle>
+    <cellstate type="OPEN"><r>255</r><g>255</g><b>255</b></cellstate>
+    <cellstate type="BLOCKED"><r>0</r><g>0</g><b>0</b></cellstate>
+    <cellstate type="PERCOLATED"><r>0</r><g>0</g><b>255</b></cellstate>
+  </cellstyle>
+  <config_parameters></config_parameters>
+</simulation>
