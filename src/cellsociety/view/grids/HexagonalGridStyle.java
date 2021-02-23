@@ -42,7 +42,8 @@ public class HexagonalGridStyle extends GridStyle {
   }
 
   private Polygon createHexagonalCell (double radius, int xPositionInGrid,
-      int yPositionInGrid, double xPositionInPane, double yPositionInPane, Color color){
+      int yPositionInGrid, double xPositionInPane, double yPositionInPane, Color color,
+      boolean outlines){
     Polygon cell = new Polygon();
     cell.getPoints().addAll(
         xPositionInPane, yPositionInPane - radius,
@@ -52,6 +53,9 @@ public class HexagonalGridStyle extends GridStyle {
         xPositionInPane-radius * Math.sin(HEX_ANGLE), yPositionInPane+radius * Math.cos(HEX_ANGLE),
         xPositionInPane-radius * Math.sin(HEX_ANGLE), yPositionInPane-radius * Math.cos(HEX_ANGLE));
     cell.setFill(color);
+    if(outlines){
+      cell.setStroke(Color.BLACK);
+    }
     cell.setOnMouseClicked(e -> handleClick(xPositionInGrid, yPositionInGrid));
     return cell;
   }
@@ -66,7 +70,7 @@ public class HexagonalGridStyle extends GridStyle {
    */
 
   @Override
-  public Pane createGrid(int numCols, int numRows) {
+  public Pane createGrid(int numCols, int numRows, boolean outlines) {
     grid = new Polygon[numCols][numRows];
     double radius = calculateHexagonRadius(numCols, numRows);
     System.out.println(radius);
@@ -77,7 +81,7 @@ public class HexagonalGridStyle extends GridStyle {
         double yPosition = calculateYPosition(rowNumber, radius);
         System.out.println("y: " + yPosition);
         grid[colNumber][rowNumber] = createHexagonalCell(radius, rowNumber, colNumber, xPosition,
-            yPosition, Color.WHITE);
+            yPosition, Color.WHITE, outlines);
         pane.getChildren().add(grid[colNumber][rowNumber]);
       }
     }

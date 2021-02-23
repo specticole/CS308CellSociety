@@ -16,7 +16,7 @@ public abstract class GridStyle {
     simulationView = currentSimulationView;
   }
 
-  public abstract Pane createGrid(int numCols, int numRows);
+  public abstract Pane createGrid(int numCols, int numRows, boolean outlines);
 
   public abstract void updateGrid(List<List<String>> listOfCells, Map<String, Color> stateToColor);
 
