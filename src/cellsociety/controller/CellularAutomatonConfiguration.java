@@ -100,11 +100,11 @@ public class CellularAutomatonConfiguration {
         for(int y = 0; y < gridHeight; y++) {
           for(int x = 0; x < gridWidth; x++ ) {
             CellState state = makeState(simulationType, initialStates.get(y).get(x));
-            if (state != null) {
+            if (state != null && getCellStyles().containsKey(initialStates.get(y).get(x))) {
               initialState[y][x] = state;
             }
             else {
-              throw new XMLException(new IllegalArgumentException());
+              throw new XMLException(new IllegalArgumentException(), "Invalid cell state");
             }
           }
         }

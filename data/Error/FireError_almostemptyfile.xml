@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simulation rules="fire">
+  <meta>
+    <title>Fire Test: file is almost empty</title>
+    <author>Patrick Liu</author>
+    <description>9x9 grid with one burning tree in the center, probCatch = 0.2</description>
+  </meta>
+  <config_parameters>
+    <parameter name="probCatch" value="20"></parameter>
+  </config_parameters>
+</simulation>
