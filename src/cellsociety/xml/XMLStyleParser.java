@@ -109,7 +109,7 @@ public class XMLStyleParser extends XMLGenericParser {
    *
    * @return - map of alternative colors, if specified
    */
-  public Map<String, Color> getAltColors() throws XMLException {
+  public Map<String, Color> getAltColors() {
     Map<String, Color> altColors = new HashMap<>();
     NodeList colorNodes = root.getElementsByTagName("altcolor");
     if (colorNodes != null && colorNodes.getLength() > 0) {
@@ -117,12 +117,12 @@ public class XMLStyleParser extends XMLGenericParser {
         Element altColor = (Element) colorNodes.item(i);
         try {
           altColors
-              .put(altColor.getTextContent(), new Color(Integer.valueOf(altColor.getAttribute("r")),
-                  Integer.valueOf(altColor.getAttribute("g")),
-                  Integer.valueOf(altColor.getAttribute("b")),
+              .put(altColor.getTextContent(), new Color(Integer.parseInt(altColor.getAttribute("r")),
+                  Integer.parseInt(altColor.getAttribute("g")),
+                  Integer.parseInt(altColor.getAttribute("b")),
                   1.0));
-        } catch (IllegalArgumentException e) {
-          throw new XMLException(e, "Alternative color invalid");
+        } catch (Exception ignored) {
+
         }
       }
     }
