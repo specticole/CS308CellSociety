@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.controller.CellularAutomatonController;
+import cellsociety.controller.CellularAutomatonStyle;
 import cellsociety.xml.XMLException;
 import java.io.File;
 import java.util.ArrayList;
@@ -132,7 +133,9 @@ public class CellularAutomatonView {
   }
   private void handleLoadNewSimulation(HBox newSimulationButtonBox) {
     try {
-      File configFile = loadConfigFile();
+      File configFile = loadXMLFile();
+      Alert styleAlert = new Alert(AlertType.CONFIRMATION, "Would you like to load a style file?");
+      styleAlert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> loadStyleFile());
       SimulationView simulationView = new SimulationView(configFile, bundle, this);
       masterLayout.getChildren().remove(newSimulationButtonBox);
       Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
@@ -155,6 +158,17 @@ public class CellularAutomatonView {
       else {
         makeAlert("Invalid XML file");
       }
+    }
+
+  }
+
+  private void loadStyleFile() {
+    try {
+      File styleFile = loadXMLFile();
+      CellularAutomatonStyle styleParameters = new CellularAutomatonStyle(styleFile);
+    }
+    catch (Exception e) {
+      makeAlert("Invalid style file");
     }
 
   }
@@ -271,7 +285,7 @@ public class CellularAutomatonView {
     updateButtonLabels();
   }
 
-  private File loadConfigFile() throws XMLException {
+  private File loadXMLFile() throws XMLException {
     FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
     File configFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
