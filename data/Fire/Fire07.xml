@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <simulation rules="fire">
   <meta>
-    <title>Fire Test 7</title>
+    <title>Fire Test 7: random distribution of states</title>
     <author>Patrick Liu</author>
     <description>9x9 grid with one burning tree in the center, probCatch = 0.2</description>
   </meta>

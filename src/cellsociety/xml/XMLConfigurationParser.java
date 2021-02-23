@@ -183,7 +183,7 @@ public class XMLConfigurationParser extends XMLGenericParser {
           return makeRandomTotalInitialStates();
       }
     }
-    return makeRandomTotalInitialStates();
+    return makeSpecifiedInitialStates();
   }
 
   // reads states from the XML file and assigns to each grid location
