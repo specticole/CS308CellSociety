@@ -22,21 +22,21 @@ public class SplashScreen {
     this.stage = stage;
     masterLayout = new GridPane();
     masterLayout.getStyleClass().add("splash-gridpane");
-    bundle = ResourceBundle.getBundle("splashLabels");
+    bundle = ResourceBundle.getBundle("cellsociety/resources/splashLabels");
   }
 
   public GridPane initialize(){
     Text title = new Text();
-    title.setText(bundle.getString("title"));
+    title.setText(bundle.getString("Title"));
     title.getStyleClass().add("splash-button");
     masterLayout.add(title,0,0);
 
-    Button englishButton = new Button(bundle.getString("englishButtonLabel"));
+    Button englishButton = new Button(bundle.getString("EnglishButtonLabel"));
     englishButton.getStyleClass().add("splash-button");
     englishButton.setOnAction(e -> handleEnglishButton());
     masterLayout.add(englishButton,0,1);
 
-    Button pigLatinButton = new Button(bundle.getString("pigLatinButtonLabel"));
+    Button pigLatinButton = new Button(bundle.getString("PigLatinButtonLabel"));
     pigLatinButton.getStyleClass().add("splash-button");
     pigLatinButton.setOnAction(e -> handlePigLatinButton());
     masterLayout.add(pigLatinButton,0,2);
@@ -46,20 +46,20 @@ public class SplashScreen {
 
   private void handleEnglishButton(){
     Locale locale = new Locale("en", "US");
-    ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+    ResourceBundle bundle = ResourceBundle.getBundle("cellsociety/resources/labels", locale);
     switchToSimulation(bundle);
   }
 
   private void handlePigLatinButton(){
     Locale locale = new Locale("pl", "US");
-    ResourceBundle bundle = ResourceBundle.getBundle("labels", locale);
+    ResourceBundle bundle = ResourceBundle.getBundle("cellsociety/resources/labels", locale);
     switchToSimulation(bundle);
   }
 
   private void switchToSimulation(ResourceBundle newBundle){
     Parent root = new CellularAutomatonView(new GridPane(), newBundle).initialize();
     Scene scene = new Scene(root, WIDTH, HEIGHT);
-    scene.getStylesheets().add("game.css");
+    scene.getStylesheets().add("cellsociety/resources/game.css");
     stage.setScene(scene);
 
   }

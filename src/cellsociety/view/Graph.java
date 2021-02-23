@@ -27,7 +27,7 @@ public class Graph {
     NumberAxis yAxis = new NumberAxis();
     lineChart = new LineChart<>(xAxis, yAxis);
     lineChart.setTitle(config.getSimulationMetadata().get("title"));
-    lineChart.setMaxHeight(MAX_HEIGHT);
+    lineChart.getStyleClass().add("graph");
     dataMap = new HashMap<>();
     for (String cellState : config.getCellStyles().keySet()) {
       XYChart.Series tempSeries = new XYChart.Series();

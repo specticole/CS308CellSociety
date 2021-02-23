@@ -87,7 +87,13 @@ public class CellularAutomatonConfiguration {
   private void makeGrid(String simulationType, String gridType, List<List<String>> initialStates) throws XMLException {
     switch(gridType) {
       case "rectangular":
-        RectangularCellGrid rectGrid = new RectangularCellGrid(gridWidth, gridHeight, gridWrapping, gridNeighbors);
+      case "hexagonal":
+        Dense2DCellGrid denseGrid = null;
+
+        if(gridType.equals("rectangular"))
+          denseGrid = new RectangularCellGrid(gridWidth, gridHeight, gridWrapping, gridNeighbors);
+        else if(gridType.equals("hexagonal"))
+          denseGrid = new HexagonalCellGrid(gridWidth, gridHeight, gridWrapping);
 
         // populate our new grid
         CellState initialState[][] = new CellState[gridHeight][gridWidth];
@@ -103,9 +109,9 @@ public class CellularAutomatonConfiguration {
           }
         }
 
-        rectGrid.appendStates(initialState);
+        denseGrid.appendStates(initialState);
 
-        grid = rectGrid;
+        grid = denseGrid;
 
         break;
     }
