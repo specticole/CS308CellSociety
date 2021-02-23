@@ -113,6 +113,7 @@ Known Bugs:
 
 We took some liberties in our interpretation of the Wa-Tor
 specification, so our implementation shows some interesting behavior.
+Changing the font size or color removes the labels on the speed slider.
 
 Extra credit:
 
