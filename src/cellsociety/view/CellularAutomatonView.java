@@ -18,6 +18,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Pair;
 
+/**
+ * Displays the overall simulation.
+ *
+ * The overall view is made up of the control buttons at the top of the screen
+ * and multiple simulations underneath that can be added at will.
+ * The controls affect all simulations simultaneously by calling the same command on each
+ * controller per simulation.
+ * Handles the changing of button labels as well.
+ * Handles loading both simulation xml files and style xml files.
+ *
+ * @author Bill Guo
+ */
 
 public class CellularAutomatonView {
 
@@ -44,7 +56,14 @@ public class CellularAutomatonView {
   ArrayList<CellularAutomatonController> simulationControllers;
   CellularAutomatonStyle styleParameters;
 
-
+  /**
+   * Constructor to create a CellularAutomatonView.
+   * Initialize the starting labels of the buttons, as well as the row index of the next new
+   * simulation.
+   *
+   * @param gridPane GridPane to be shown to the user
+   * @param resourceBundle language of the labels
+   */
   public CellularAutomatonView(GridPane gridPane, ResourceBundle resourceBundle){
     masterLayout = gridPane;
     masterLayout.getStyleClass().add("master-gridpane");
@@ -58,6 +77,10 @@ public class CellularAutomatonView {
     newRowIndex = 2;
   }
 
+  /**
+   * Creates the title, buttons, and new simulation button on the GridPane
+   * @return the GridPane that displays the above.
+   */
   public GridPane initialize(){
     createTitle();
     createSimulationControlButtons();

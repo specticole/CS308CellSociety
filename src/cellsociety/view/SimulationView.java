@@ -19,6 +19,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 
+
+/**
+ * The controls and display the all correspond to one created simulation.
+ * Each simulation has a display of the grid of the simulation, a graph that represents the
+ * counts of each state in the simulation, a control panel to hide the aforementioned views,
+ * save/delete the current state, and change the parameters of the simulation.
+ *
+ * @author Bill Guo
+ */
+
+
 public class SimulationView {
 
   private GridPane masterLayout;
@@ -39,6 +50,15 @@ public class SimulationView {
   private boolean graphShown;
   private boolean gridShown;
 
+  /**
+   * Constructor of a SimulationView.
+   * Each simulation has a controller that communicates information to and from the model.
+   *
+   * @param configFile XML file to be read by the parser to create the CellularAut
+   * @param currentBundle language of the labels
+   * @param parent parent CellularAutomatonView to pause all simulations from one
+   * @param styleParameters the style settings of this simulation
+   */
   public SimulationView(File configFile, ResourceBundle currentBundle,
       CellularAutomatonView parent, CellularAutomatonStyle styleParameters){
     masterLayout = new GridPane();
@@ -53,6 +73,12 @@ public class SimulationView {
     gridShown = true;
   }
 
+  /**
+   * Handles the creation of the JavaFX UI elements for each simulation, such as the title,
+   * buttons, parameter changing, grid, and the graph.
+   * @return a pair that contains the controller and the corresponding view so that the parent
+   * CellularAutomatonView can control and display the simulation
+   */
   public Pair<CellularAutomatonController, GridPane> initialize(){
     HBox titleBox = createTitle();
     VBox buttonBox = createButtons();
@@ -162,19 +188,38 @@ public class SimulationView {
         config.getSimulationParameters(), config.getCellStyles().keySet());
   }
 
+  /**
+   * Communicates to the controller what cell has be clicked and changes that cell to the state
+   * in the ParameterBox
+   * @param columnNumber column number of the cell
+   * @param rowNumber row number of the cell
+   */
   public void changeCell(int columnNumber, int rowNumber){
     controller.changeCell(parameterBox.getState(), columnNumber, rowNumber);
   }
 
+  /**
+   * Updates the two views based on the current list of new states sent from the controller
+   * @param myStates list of new states to be displayed
+   */
   public void updateView(List<List<String>> myStates){
     mainGrid.updateGrid(myStates, config.getCellStyles());
     graph.updateGraph(myStates);
   }
 
+  /**
+   * Communicates to the controller what parameters should be changed
+   * @param parameterList a map that contains the name of the parameter in the keyset and the new
+   *                     parameter in the value set
+   */
   public void updateParameters(Map<String, String> parameterList) {
     controller.updateParameters(parameterList);
   }
 
+  /**
+   * Displays an error message from the simulation to the CellularAutomatonView
+   * @param errorMessage message to be displayed
+   */
   public void makeAlert(String errorMessage) {
     parentView.makeAlert(errorMessage);
   }

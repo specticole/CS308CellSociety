@@ -12,6 +12,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Creates a rectangular grid for the SimulationView to display.
+ *
+ * Rectangular grids use a GridPane object to handle position of the cell automatically.
+ * Handles the math behind calculating the size of each cell based on the grid dimensions.
+ * Also takes into account the spacing of the GridPane when calculating rectangle dimensions.
+ *
+ * @author Bill Guo
+ */
+
 public class RectangularGridStyle extends GridStyle {
 
   public static final double SPACING = 1;
@@ -33,6 +43,15 @@ public class RectangularGridStyle extends GridStyle {
     return cell;
   }
 
+  /**
+   * Creates the Pane object that is added to the SimulationView.
+   * Used by the SimulationView to show the grid on the UI.
+   *
+   * @param numCols number of columns specified by the config file
+   * @param numRows number of rows specified by the config file
+   * @param outlines whether or not outlines are drawn around the rectangle in createRectangleCell
+   * @return Pane object to be added to the SimulationView main GridPane
+   */
   @Override
   public GridPane createGrid(int numCols, int numRows, boolean outlines) {
     grid = new Rectangle[numCols][numRows];
@@ -66,6 +85,14 @@ public class RectangularGridStyle extends GridStyle {
     return totalHeight / numRows;
   }
 
+
+  /**
+   * Updates the grid to show the next set of states.
+   * Used by SimulationView to send the information from the controller to the grid.
+   *
+   * @param listOfStates 2D list of the new states from the controller
+   * @param stateToColor Map that converts a state to a specific color
+   */
   @Override
   public void updateGrid(List<List<String>> listOfStates, Map<String, Color> stateToColor) {
     for (int rowNumber = 0; rowNumber < listOfStates.size(); rowNumber++) {

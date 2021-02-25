@@ -66,6 +66,7 @@ public class HexagonalGridStyle extends GridStyle {
    *
    * @param numCols number of columns specified by the config file
    * @param numRows number of rows specified by the config file
+   * @param outlines whether or not outlines are drawn around the hexagons in createHexagonalCell
    * @return Pane object to be added to the SimulationView main GridPane
    */
 

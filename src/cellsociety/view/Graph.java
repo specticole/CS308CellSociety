@@ -8,6 +8,15 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+/**
+ * Creates the Graph view that can be shown alongside the grid simulation.
+ * Graphs take in the CellularAutomatonConfiguration object that pertains to the current
+ * simulation in order to determine what the states are so they can be displayed.
+ * The number of each state are shown on the graph as the simulation progresses through time.
+ *
+ * @author Patrick Liu
+ */
+
 public class Graph {
 
   public static final int MAX_HEIGHT = 250;
@@ -17,10 +26,21 @@ public class Graph {
   private int time;
   private Map<String, XYChart.Series> dataMap;
 
+  /**
+   * Constructor of a Graph object.
+   * Takes in a configuration to determine what to graph.
+   *
+   * @param config configuration that determines states and amount of initial states
+   */
   public Graph(CellularAutomatonConfiguration config){
     this.config = config;
   }
 
+  /**
+   * Initializes the LineChart to be shown as a part of a SimulationView.
+   *
+   * @return the LineChart that represents the graph of the simulation
+   */
   public LineChart initialize(){
     time = 0;
     NumberAxis xAxis = new NumberAxis();
@@ -39,6 +59,12 @@ public class Graph {
     return lineChart;
   }
 
+  /**
+   * Updates the Graph to show the next counts of each states.
+   * Used by SimulationView to send the information from the controller to the Graph.
+   *
+   * @param currentStates 2D list of the new states from the controller
+   */
   public void updateGraph(List<List<String>> currentStates) {
     Map<String, Integer> stateCounts = getStateCounts(currentStates);
     for (String state : stateCounts.keySet()) {

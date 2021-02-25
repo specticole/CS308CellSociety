@@ -9,6 +9,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Creates the initial or splash screen. On the splash screen, users can choose the language of
+ * the simulation.
+ *
+ * @author Bill Guo
+ *
+ */
 public class SplashScreen {
 
   public static final int WIDTH = 1280;
@@ -18,6 +25,11 @@ public class SplashScreen {
   private GridPane masterLayout;
   private ResourceBundle bundle;
 
+  /**
+   * Constructor of the SplashScreen. Needs the stage that the screen will be displayed upon. The
+   * stage is created in the Main.
+   * @param stage from the Main to be used as the display
+   */
   public SplashScreen(Stage stage){
     this.stage = stage;
     masterLayout = new GridPane();
@@ -25,6 +37,11 @@ public class SplashScreen {
     bundle = ResourceBundle.getBundle("cellsociety/resources/splashLabels");
   }
 
+  /**
+   * Creates the JavaFX UI elements of the splash screen. Users can choose between two languages,
+   * pig latin and english, using the created buttons.
+   * @return the GridPane that is displayed and created by the Main
+   */
   public GridPane initialize(){
     Text title = new Text();
     title.setText(bundle.getString("Title"));

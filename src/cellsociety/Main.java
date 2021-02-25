@@ -7,6 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Driver to run the Cellular Automaton Simulation.
+ *
+ * @author Bill Guo
+ */
 public class Main extends Application {
 
     public static final String TITLE = "Cellular Automaton";
@@ -14,8 +19,11 @@ public class Main extends Application {
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
 
+    /**
+     * Creates the splash screen and displays it on the stage
+     */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
 
         Parent root = new SplashScreen(stage).initialize();
 
