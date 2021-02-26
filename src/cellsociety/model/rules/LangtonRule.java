@@ -5,6 +5,9 @@ import cellsociety.model.CellularAutomatonRule;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Incomplete implementation of Langton's Loop.
+ */
 public class LangtonRule extends CellularAutomatonRule {
 
   /**

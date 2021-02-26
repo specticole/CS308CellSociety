@@ -43,7 +43,7 @@ public class ElementaryRule extends CellularAutomatonRule {
   /**
    * This method is called every step, and updates the cell's state under certain conditions
    *
-   * @param cell this is the cell which's state will be updated
+   * @param center this is the cell which's state will be updated
    * @param neighbors this is all 8 neighbors of cell
    */
   @Override

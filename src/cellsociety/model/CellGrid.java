@@ -29,7 +29,7 @@ public abstract class CellGrid implements java.lang.Iterable<Cell> {
   /**
    * Retrieve a list of the adjacent neighbors of `cell'.
    *
-   * @param cell Central cell.
+   * @param center Central cell.
    * @return List of neighbors of `cell'
    */
   public List<Cell> getNeighbors(Cell center) {
