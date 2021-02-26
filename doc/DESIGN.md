@@ -1,5 +1,9 @@
 # Cell Society Design Final
 ### Names
+Franklin Wei
+Cole Spector
+Bill Guo
+Patrick Liu
 
 ## Team Roles and Responsibilities
 
