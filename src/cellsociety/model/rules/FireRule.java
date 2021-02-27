@@ -9,9 +9,36 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Implementation of Fire's time evolution rule.
  *
  * @author Cole Spector
+ *
+ *
+ * Implementation of CellularAutomatonRule for the Fire simulation.
+ * This class will be called for every step of the simulation, and is used
+ * to update its CellState (FireState.java) and decides if a TREE becomes BURNING,
+ * or if a BURNING tree dies out (becomes EMPTY).
+ *
+ * This method assumes that it is passed a Map, with a key: "probCatch" -> an integer representing the percent chance of
+ * fire.
+ *
+ * This class relies on Cell.java and FireState.java
+ *
+ * Example:
+ *
+ * CellGrid grid = new CellGrid(...);
+ *
+ * Map<String, String> params = new Map();
+ * String fireChance = "50";
+ * String rules = "probCatch";
+ * params.set(rules, fireChance);
+ * FireRule fireRule = new FireRule(params);
+ * grid.copyState();
+ *
+ * for(Cell c : grid)
+ * fireRule.advanceCellState(c, grid.getNeighbors(c));
+ *
+ * grid.advanceCurrentTime();
+ *
  */
 public class FireRule extends CellularAutomatonRule {
 
@@ -53,7 +80,7 @@ public class FireRule extends CellularAutomatonRule {
   }
 
   private void dieOut(Cell cell){
-    cell.setState(Cell.NEXT_TIME, new FireState(States.BURNING));
+    cell.setState(Cell.NEXT_TIME, new FireState(States.EMPTY));
   }
 
   private void burn(Cell cell){
