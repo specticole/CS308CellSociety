@@ -4,9 +4,23 @@ package cellsociety.model.states;
 import cellsociety.model.CellState;
 
 /**
- * A Segregation cell state.
+ *
  *
  * @author Cole Spector
+ *
+ * This is an immutible class, white stores a Cell.java's SegregationState at a certain time.
+ *
+ * This class expects an enumerated type, States, as a parameter, which must be one of the following:
+ * X,
+ * O,
+ * OPEN,
+ *
+ *
+ * Example:
+ *
+ * StateList<SegregationState> stateList = new StateList<>();
+ * SegregationState segregationState(stateList) = new SegregationState();
+ *
  */
 public class SegregationState extends CellState<SegregationState.States> {
 

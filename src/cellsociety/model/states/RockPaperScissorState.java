@@ -7,7 +7,7 @@ import cellsociety.model.CellState;
  *
  * @author Cole Spector
  *
- * This is an immutible class, white stores a Cell.java's state at a current time.
+ * This is an immutible class, white stores a Cell.java's RockPaperScissorState at a certain time.
  *
  * This class expects an enumerated type, States, as a parameter, which must be one of the following:
  * Rock,
@@ -18,8 +18,8 @@ import cellsociety.model.CellState;
  *
  * Example:
  *
- * StateList<FireState> stateList = new StateList<>();
- * FireState fireState(stateList) = new FireState();
+ * StateList<RockPaperScissorState> stateList = new StateList<>();
+ * RockPaperScissorState rockPaperScissorState(stateList) = new RockPaperScissorState();
  *
  */
 public class RockPaperScissorState extends CellState<RockPaperScissorState.States> {

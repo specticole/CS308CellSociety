@@ -3,9 +3,23 @@ package cellsociety.model.states;
 import cellsociety.model.CellState;
 
 /**
- * Wa-Tor cell state.
+ *
  *
  * @author Cole Spector
+ *
+ * This is an immutible class, white stores a Cell.java's WaTorWorldState at a certain time.
+ *
+ * This class expects an enumerated type, States, as a parameter, which must be one of the following:
+ * X,
+ * O,
+ * OPEN,
+ *
+ *
+ * Example:
+ *
+ * StateList<WaTorWorldState> stateList = new StateList<>();
+ * WaTorWorldState waTorWorldState(stateList) = new WaTorWorldState();
+ *
  */
 public class WaTorWorldState extends CellState<WaTorWorldState.States> {
 
