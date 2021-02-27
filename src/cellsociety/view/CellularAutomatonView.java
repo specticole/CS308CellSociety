@@ -1,62 +1,199 @@
 package cellsociety.view;
 
-import cellsociety.CellularAutomatonConfiguration;
-import cellsociety.CellularAutomatonController;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import cellsociety.controller.CellularAutomatonController;
+import cellsociety.controller.CellularAutomatonStyle;
+import cellsociety.xml.XMLException;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Pair;
 
+/**
+ * Displays the overall simulation.
+ *
+ * The overall view is made up of the control buttons at the top of the screen
+ * and multiple simulations underneath that can be added at will.
+ * The controls affect all simulations simultaneously by calling the same command on each
+ * controller per simulation.
+ * Handles the changing of button labels as well.
+ * Handles loading both simulation xml files and style xml files.
+ *
+ * @author Bill Guo
+ */
 
 public class CellularAutomatonView {
 
-  @FXML
+  public static final String LARGEFONT_CSS = "cellsociety/resources/largefont.css";
+  public static final String NORMALFONT_CSS = "cellsociety/resources/normalfont.css";
+
   private GridPane masterLayout;
-  @FXML
-  private GridPane mainGrid;
-  @FXML
-  private Text title;
-  @FXML
   private Button startResetButton;
-  @FXML
   private Button pauseResumeButton;
-  @FXML
+  private Button stepButton;
   private Slider speedSlider;
+  private Button applySpeedButton;
+  private Button fontButton;
+  private Button colorButton;
 
   private boolean started;
   private boolean paused;
+  private boolean largefont;
+  private boolean dark;
+
+  private int newRowIndex;
 
   ResourceBundle bundle;
-  CellularAutomatonController controller;
-  Map<String, Color> cellStyles;
-  RectangularGridStyle grid;
+  ArrayList<CellularAutomatonController> simulationControllers;
+  CellularAutomatonStyle styleParameters;
 
-  public void initialize(){
-    Locale locale = new Locale("en", "US");
-    bundle = ResourceBundle.getBundle("labels", locale);
+  /**
+   * Constructor to create a CellularAutomatonView.
+   * Initialize the starting labels of the buttons, as well as the row index of the next new
+   * simulation.
+   *
+   * @param gridPane GridPane to be shown to the user
+   * @param resourceBundle language of the labels
+   */
+  public CellularAutomatonView(GridPane gridPane, ResourceBundle resourceBundle){
+    masterLayout = gridPane;
+    masterLayout.getStyleClass().add("master-gridpane");
+    bundle = resourceBundle;
+    simulationControllers = new ArrayList<>();
 
-    controller = new CellularAutomatonController(this);
-    //CellularAutomatonConfiguration config = new CellularAutomatonConfiguration("GameOfLife/GameOfLife01" + ".xml");
-    //updateXML(config);
-
+    largefont = false;
+    dark = false;
     started = false;
     paused = true;
+    newRowIndex = 2;
   }
 
-  public void updateXML(CellularAutomatonConfiguration config){
-    controller.initializeForConfig(config);
-    title.setText(config.getSimulationMetadata().get("title"));
-    mainGrid.getChildren().clear();
-    grid = new RectangularGridStyle(mainGrid);
-    cellStyles = config.getCellStyles();
-    grid.createGrid(config.getGridHeight(),config.getGridWidth());
-    grid.updateGrid(config.getInitialStates(), cellStyles);
+  /**
+   * Creates the title, buttons, and new simulation button on the GridPane
+   * @return the GridPane that displays the above.
+   */
+  public GridPane initialize(){
+    createTitle();
+    createSimulationControlButtons();
+    createNewSimulationButton(newRowIndex);
+    incrementRowIndex();
+
+    return masterLayout;
+  }
+
+  private void incrementRowIndex() {
+    newRowIndex += 2;
+  }
+
+  private void createTitle() {
+    HBox titleBox = new HBox();
+    titleBox.getStyleClass().add("title-box");
+    Text titleText = new Text();
+    titleText.setText(bundle.getString("Title"));
+    titleText.getStyleClass().add("title-text");
+
+    titleBox.getChildren().add(titleText);
+    masterLayout.add(titleBox,0,0, 3,1);
+  }
+
+  private void createSimulationControlButtons() {
+    HBox controlsBox = new HBox();
+    controlsBox.getStyleClass().add("controls-box");
+
+    startResetButton = new Button(bundle.getString("StartButtonLabel"));
+    startResetButton.setOnAction(e -> startResetButtonClick());
+    startResetButton.getStyleClass().add("button-text");
+    pauseResumeButton = new Button(bundle.getString("ResumeButtonLabel"));
+    pauseResumeButton.setOnAction(e -> pauseResumeButtonClick());
+    pauseResumeButton.getStyleClass().add("button-text");
+    stepButton = new Button(bundle.getString("StepButtonLabel"));
+    stepButton.setOnAction(e -> stepButtonClick());
+    stepButton.getStyleClass().add("button-text");
+    fontButton = new Button(bundle.getString("IncreaseFontButtonLabel"));
+    fontButton.setOnAction(e -> fontButtonClick());
+    fontButton.getStyleClass().add("button-text");
+    colorButton = new Button(bundle.getString("DarkButtonLabel"));
+    colorButton.setOnAction(e -> colorButtonClick());
+    colorButton.getStyleClass().add("button-text");
+
+    Text speedText = new Text();
+    speedText.setText(bundle.getString("SpeedLabel"));
+    createSpeedSlider();
+    applySpeedButton = new Button(bundle.getString("ApplyButtonLabel"));
+    applySpeedButton.setOnAction(e -> speedButtonClick());
+    applySpeedButton.getStyleClass().add("button-text");
+
+    controlsBox.getChildren().addAll(startResetButton, pauseResumeButton, stepButton, speedText,
+        speedSlider, applySpeedButton, fontButton, colorButton);
+    masterLayout.add(controlsBox,0,1, 3,1);
+  }
+
+  private void createSpeedSlider(){
+    speedSlider = new Slider();
+    speedSlider.adjustValue(3);
+    speedSlider.setMin(1);
+    speedSlider.setMax(5);
+    speedSlider.getStyleClass().add("speed-slider");
+  }
+
+  private void createNewSimulationButton(int rowIndex){
+    HBox newSimulationButtonBox = new HBox();
+    newSimulationButtonBox.getStyleClass().add("button-box");
+    Button newSimulationButton = new Button(bundle.getString("NewSimulationButtonLabel"));
+    newSimulationButton.setOnAction(e -> handleLoadNewSimulation(newSimulationButtonBox));
+    newSimulationButton.getStyleClass().add("button-text");
+    newSimulationButtonBox.getChildren().add(newSimulationButton);
+    masterLayout.add(newSimulationButtonBox, 0,rowIndex);
+
+  }
+  private void handleLoadNewSimulation(HBox newSimulationButtonBox) {
+    try {
+      File configFile = loadXMLFile();
+      Alert styleAlert = new Alert(AlertType.CONFIRMATION, bundle.getString("StyleFilePrompt"));
+      styleAlert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> loadStyleFile());
+      SimulationView simulationView = new SimulationView(configFile, bundle, this, styleParameters);
+      masterLayout.getChildren().remove(newSimulationButtonBox);
+      Pair<CellularAutomatonController, GridPane> simulationPair = simulationView.initialize();
+      masterLayout.add(simulationPair.getValue(), 0, newRowIndex - 2, 3,2);
+      simulationControllers.add(simulationPair.getKey());
+      createNewSimulationButton(newRowIndex);
+      incrementRowIndex();
+
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.pauseSimulation();
+      }
+      started = false;
+      paused = true;
+      updateButtonLabels();
+    }
+    catch (XMLException e) {
+      if (e.getMessage() != null) {
+        makeAlert(e.getMessage());
+      }
+      else {
+        makeAlert("Invalid XML file");
+      }
+    }
+
+  }
+
+  private void loadStyleFile() {
+    try {
+      File styleFile = loadXMLFile();
+      styleParameters = new CellularAutomatonStyle(styleFile);
+    }
+    catch (Exception e) {
+      makeAlert("Invalid style file");
+    }
   }
 
   private void updateButtonLabels(){
@@ -72,61 +209,125 @@ public class CellularAutomatonView {
     else{
       pauseResumeButton.setText(bundle.getString("PauseButtonLabel"));
     }
+    if(largefont){
+      fontButton.setText(bundle.getString("DecreaseFontButtonLabel"));
+    }
+    else{
+      fontButton.setText(bundle.getString("IncreaseFontButtonLabel"));
+    }
+    if(dark){
+      colorButton.setText(bundle.getString("LightButtonLabel"));
+    }
+    else{
+      colorButton.setText(bundle.getString("DarkButtonLabel"));
+    }
   }
 
-  public void startResetButtonClick() {
+  private void startResetButtonClick() {
     if(started){
-      controller.resetSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.resetSimulation();
+      }
       started = false;
       paused = true;
     }
     else{
-      controller.playSimulation();
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.playSimulation();
+      }
       started = true;
       paused = false;
     }
     updateButtonLabels();
   }
 
-  public void pauseResumeButtonClick() {
-    if(paused){
-      controller.playSimulation();
-      started = true;
-      paused = false;
-    }
-    else{
+  /**
+   * Used by SimulationView to pause all simulations when one is saved
+   */
+  public void pauseAllSims(){
+    for (CellularAutomatonController controller: simulationControllers) {
       controller.pauseSimulation();
-      paused = true;
     }
+    paused = true;
     updateButtonLabels();
   }
 
-  public void stepButtonClick() {
-    controller.stepOnce();
+  private void pauseResumeButtonClick() {
+    if(paused){
+      for (CellularAutomatonController controller: simulationControllers) {
+        controller.playSimulation();
+      }
+      started = true;
+      paused = false;
+      updateButtonLabels();
+    }
+    else {
+      pauseAllSims();
+    }
+  }
+
+  private void stepButtonClick() {
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.stepOnce();
+    }
     started = true;
     paused = true;
     updateButtonLabels();
   }
 
-  public void speedButtonClick() {
-    controller.changeRateSlider((int) speedSlider.getValue());
+  private void speedButtonClick() {
+    for (CellularAutomatonController controller: simulationControllers) {
+      controller.changeRateSlider((int) speedSlider.getValue());
+    }
     started = true;
     paused = false;
     updateButtonLabels();
   }
 
-  public void loadFileClick() {
-    CellularAutomatonConfiguration config = controller.loadConfigFile(masterLayout);
-    if(config != null){
-      updateXML(config);
-      controller.pauseSimulation();
-      started = false;
-      paused = true;
-      updateButtonLabels();
+  private void fontButtonClick() {
+    masterLayout.getScene().getStylesheets().clear();
+    if(largefont){
+      masterLayout.getScene().getStylesheets().add(NORMALFONT_CSS);
+      largefont = false;
     }
+    else{
+      masterLayout.getScene().getStylesheets().add(LARGEFONT_CSS);
+      largefont = true;
+    }
+    updateButtonLabels();
   }
 
-  public void updateView(List<List<String>> myStates){
-    grid.updateGrid(myStates, cellStyles);
+  private void colorButtonClick() {
+    if(dark){
+      masterLayout.setStyle("-fx-background-color: #CCCCCC");
+      dark = false;
+    }
+    else{
+      masterLayout.setStyle("-fx-background-color: #696969");
+      dark = true;
+    }
+    updateButtonLabels();
   }
+
+  private File loadXMLFile() throws XMLException {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Document", "*.xml"));
+    File configFile = fileChooser.showOpenDialog(masterLayout.getScene().getWindow());
+    if (configFile == null) {
+      throw new XMLException(new IllegalArgumentException(), "No file selected");
+    }
+    return configFile;
+  }
+
+  /**
+   * Displays alert message, used to handle errors that occur
+   * during the loading or parsing of a configuration file
+   *
+   * @param errorMessage - the message displayed to the user
+   */
+  public void makeAlert(String errorMessage) {
+    Alert alert = new Alert(AlertType.ERROR, errorMessage);
+    alert.showAndWait().filter(response -> response == ButtonType.OK);
+  }
+
 }

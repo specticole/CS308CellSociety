@@ -1,12 +1,8 @@
 package cellsociety.xml;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import javafx.scene.paint.Color;
-import java.util.HashMap;
-import java.util.Map;
 
 import static java.util.Map.entry;
 
@@ -32,14 +28,10 @@ public class XMLConfigurationParser extends XMLGenericParser {
 
   private static final List<String> META_FIELDS = new ArrayList<>(
       Arrays.asList("title", "author", "description"));
-  private static final List<String> SUPPORTED_SIMULATIONS = new ArrayList<>(
-      Arrays.asList("fire", "gameoflife", "percolation",
-          "segregation",
-          "wator"));
-  private static final List<String> SUPPORTED_GRID_TYPES = new ArrayList<>(
-      Arrays.asList("rectangular"));
+  private static final Set<String> SUPPORTED_SIMULATIONS = cellsociety.model.rules.Index.allRules.keySet();
   private static final Map<String, ArrayList<Integer>> SUPPORTED_GRIDS = Map.ofEntries(
-      entry("rectangular", new ArrayList<>(Arrays.asList(4, 8)))
+      entry("rectangular", new ArrayList<>(Arrays.asList(4, 8))),
+      entry("hexagonal", new ArrayList<>(Arrays.asList(6)))
   );
 
   /**
@@ -50,6 +42,9 @@ public class XMLConfigurationParser extends XMLGenericParser {
    */
   public XMLConfigurationParser(File file) throws XMLException {
     super(file);
+    if (! root.getNodeName().equals("simulation")) {
+      throw new XMLException(new IllegalArgumentException(), "Root node must be named simulation");
+    }
   }
 
   /**
@@ -57,7 +52,7 @@ public class XMLConfigurationParser extends XMLGenericParser {
    *
    * @return - map of metadata, with keys of "title," "author," and "description"
    */
-  public Map<String, String> getMetadata() {
+  public Map<String, String> getMetadata() throws XMLException {
     Map<String, String> simulationMetadata = new HashMap<>();
     Element metaElement = getElement(root, "meta");
     for (String field : META_FIELDS) {
@@ -110,8 +105,8 @@ public class XMLConfigurationParser extends XMLGenericParser {
   public int getGridWidth() throws XMLException {
     int gridWidth;
     try {
-      gridWidth = Integer.valueOf(getAttribute(root, "grid", "width"));
-    } catch (IllegalArgumentException e) {
+      gridWidth = Integer.parseInt(getAttribute(root, "grid", "width"));
+    } catch (NumberFormatException e) {
       throw new XMLException(e, "Grid width must be an integer");
     }
     if (gridWidth > 0) {
@@ -130,8 +125,8 @@ public class XMLConfigurationParser extends XMLGenericParser {
   public int getGridHeight() {
     int gridHeight;
     try {
-      gridHeight = Integer.valueOf(getAttribute(root, "grid", "height"));
-    } catch (IllegalArgumentException e) {
+      gridHeight = Integer.parseInt(getAttribute(root, "grid", "height"));
+    } catch (NumberFormatException e) {
       throw new XMLException(e, "Grid height must be an integer");
     }
     if (gridHeight > 0) {
@@ -150,13 +145,14 @@ public class XMLConfigurationParser extends XMLGenericParser {
   public int getGridNeighbors() throws XMLException {
     int gridNeighbors;
     try {
-      gridNeighbors = Integer.valueOf(getAttribute(root, "grid", "neighbors"));
-    } catch (IllegalArgumentException e) {
+      gridNeighbors = Integer.parseInt(getAttribute(root, "grid", "neighbors"));
+    } catch (NumberFormatException e) {
       throw new XMLException(e, "Neighbors must be an integer");
     }
     if (SUPPORTED_GRIDS.get(getGridType()).contains(gridNeighbors)) {
       return gridNeighbors;
-    } else {
+    }
+    else {
       throw new XMLException(new IllegalArgumentException(), "Number of neighbors not supported");
     }
   }
@@ -164,44 +160,48 @@ public class XMLConfigurationParser extends XMLGenericParser {
   /**
    * Returns whether the grid should wrap around in a toroidal fashion
    *
-   * @return - boolean indicating whether the grid should wrap, or an error
-   * @throws XMLException - if attribute value is not "true" or "false"
+   * @return - true if attribute is "true" (not case-sensitive), false for any other attribute value
+   * @throws XMLException - if wrapping attribute is missing
    */
   public boolean getGridWrapping() throws XMLException {
-    try {
-      return Boolean.valueOf(getAttribute("grid", "wrapping"));
-    } catch (IllegalArgumentException e) {
-      throw new XMLException(e, "Wrapping attribute must be true or false");
-    }
+    return Boolean.parseBoolean(getAttribute(root, "grid", "wrapping"));
   }
 
   /**
    * Generates initial configuration of states depending on format specified in configuration file
-   *
+   * If no format specified or format is not supported, makes even distribution of states
    * @return - 2D List of cell states represented as Strings
+   * @throws XMLException - if number of specified states is incorrect
    */
-  public List<List<String>> getInitialStates() {
+  public List<List<String>> getInitialStates() throws XMLException {
     Element gridElement = getElement(root, "grid");
     if (gridElement.hasAttribute("distribution")) {
       switch (getAttribute(root, "grid", "distribution").toLowerCase()) {
         case "specified":
           return makeSpecifiedInitialStates();
-        case "randomspecified":
-          break; // todo: randomly pick state at specified locations, with or without desired distribution
         case "randomtotal":
-          return makeRandomTotalInitialStates(); // todo: randomly pick state based on total locations to occupy, with or without desired distribution
+          return makeRandomTotalInitialStates();
       }
     }
     return makeSpecifiedInitialStates();
   }
 
-  private List<List<String>> makeSpecifiedInitialStates() {
+  // reads states from the XML file and assigns to each grid location
+  // throws exception if number of tags doesn't match specified width or height
+  // does NOT throw exception for incorrect cell state (handled by the Model)
+  private List<List<String>> makeSpecifiedInitialStates() throws XMLException {
     List<List<String>> gridInitialStates = new ArrayList<>();
     Element gridElement = getElement(root, "grid");
     NodeList gridList = getNodes(gridElement, "gridrow");
+    if (gridList.getLength() != getGridHeight()) {
+      throw new XMLException(new IllegalArgumentException(), "Given number of rows incorrect");
+    }
     for (int row = 0; row < gridList.getLength(); row++) {
       Element rowElement = (Element) gridList.item(row);
       NodeList rowList = getNodes(rowElement, "gridcell");
+      if (rowList.getLength() != getGridWidth()) {
+        throw new XMLException(new IllegalArgumentException(), "Given number of columns incorrect");
+      }
       ArrayList<String> rowInitialStates = new ArrayList<>();
       for (int col = 0; col < rowList.getLength(); col++) {
         Element cellElement = (Element) rowList.item(col);
@@ -212,6 +212,9 @@ public class XMLConfigurationParser extends XMLGenericParser {
     return gridInitialStates;
   }
 
+  // randomly assigns a state to each cell location
+  // uses distribution if specified in the XML file
+  // otherwise splits evenly between the states
   private List<List<String>> makeRandomTotalInitialStates() {
     List<List<String>> gridInitialStates = new ArrayList<>();
     List<String> possibleCellStates = getCellStates();
@@ -275,32 +278,38 @@ public class XMLConfigurationParser extends XMLGenericParser {
       String cellType = getCurrentAttribute(stateElement,"type");
       try {
         cellStyleMap.put(cellType, new Color(
-            Integer.valueOf(stateElement.getElementsByTagName("r").item(0).getTextContent())
+            Integer.parseInt(stateElement.getElementsByTagName("r").item(0).getTextContent())
                 / 255.0,
-            Integer.valueOf(stateElement.getElementsByTagName("g").item(0).getTextContent())
+            Integer.parseInt(stateElement.getElementsByTagName("g").item(0).getTextContent())
                 / 255.0,
-            Integer.valueOf(stateElement.getElementsByTagName("b").item(0).getTextContent())
+            Integer.parseInt(stateElement.getElementsByTagName("b").item(0).getTextContent())
                 / 255.0,
             1.0));
       }
-      catch (IllegalArgumentException e) {
+      catch (IllegalArgumentException | NullPointerException e) {
         throw new XMLException(e, "Invalid RGB value given");
       }
     }
     return cellStyleMap;
   }
 
-  private List<String> getCellStateDistribution() {
+  // creates list where each state appears a certain number of times
+  // as specified in the configuration file.
+  // this list is used in randomly generating states for the initial grid
+  private List<String> getCellStateDistribution() throws XMLException {
     Element gridElement = getElement(root, "grid");
     Element distributionElement = getElement(gridElement, "distribution");
     NodeList nodeList = getNodes(distributionElement, "cellstate");
+    if (nodeList.getLength() != getCellStates().size()) {
+      throw new XMLException(new IllegalArgumentException(), "Distribution must include all cell states");
+    }
     List<String> distributionList = new ArrayList<>();
     for (int state = 0; state < nodeList.getLength(); state++) {
       Element stateElement = (Element) nodeList.item(state);
       int numDistribution;
       try {
-        numDistribution = Integer.valueOf(stateElement.getTextContent());
-      } catch (IllegalArgumentException e) {
+        numDistribution = Integer.parseInt(stateElement.getTextContent());
+      } catch (NumberFormatException e) {
         throw new XMLException(e);
       }
       if (numDistribution < 0) {
@@ -308,7 +317,13 @@ public class XMLConfigurationParser extends XMLGenericParser {
             "Distribution number cannot be negative");
       }
       for (int i = 0; i < numDistribution; i++) {
-        distributionList.add(getCurrentAttribute(stateElement, "type"));
+        String stateAttribute = getCurrentAttribute(stateElement, "type");
+        if (getCellStates().contains(stateAttribute)) {
+          distributionList.add(getCurrentAttribute(stateElement, "type"));
+        }
+        else {
+          throw new XMLException(new IllegalArgumentException(), "Distribution must match specified cell states");
+        }
       }
     }
     return distributionList;
@@ -321,18 +336,18 @@ public class XMLConfigurationParser extends XMLGenericParser {
    * invalid parameter values by offering default values.
    * @return - map with parameter names as keys. 
    */
-  public Map<String, String> getParameters() {
+  public Map<String, String> getParameters() throws XMLException {
     Element configElement = getElement(root, "config_parameters");
     Map<String, String> parameterMap = new HashMap<>();
-    if (configElement.hasChildNodes()) {
-      NodeList parameterList = getNodes(configElement, "parameter");
-      for (int count = 0; count < parameterList.getLength(); count++) {
-        Element parameterElement = (Element) parameterList.item(count);
-        parameterMap
-            .put(getCurrentAttribute(parameterElement, "name"),
-                getCurrentAttribute(parameterElement, "value"));
+      NodeList parameterList = configElement.getElementsByTagName("parameter");
+      if (parameterList != null && parameterList.getLength() > 0) {
+        for (int count = 0; count < parameterList.getLength(); count++) {
+          Element parameterElement = (Element) parameterList.item(count);
+          parameterMap
+              .put(getCurrentAttribute(parameterElement, "name"),
+                  getCurrentAttribute(parameterElement, "value"));
+        }
       }
-    }
     return parameterMap;
   }
 

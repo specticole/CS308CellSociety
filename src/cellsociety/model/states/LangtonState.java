@@ -8,10 +8,16 @@ import cellsociety.model.CellState;
  * @author Cole Spector
  */
 public class LangtonState extends CellState<LangtonState.States> {
+
+  protected LangtonState(States s) {
+    super(s);
+  }
+
   /**
    * Possible states.
    */
   public enum States {
+
     //No cell data
     OPEN,
 
@@ -39,7 +45,29 @@ public class LangtonState extends CellState<LangtonState.States> {
     MESSENGER,
 
     //IF loops collide, sets end of loop to killer, killing all TURN and ADVANCE in loop.
-    KILLER
+
+
+    /**
+     * If hits a SHEATH, and no other path is OPEN, sets SHEATH to
+     * HOLD If hits a HOLD, and no other path is open, extends 90
+     * deg. clockwise one.  If hits a SHEATH, and two paths are OPEN,
+     * sets SHEATH to MESSENGER.
+     */
+    TURN,
+
+    /**
+     * Tells turn whether or not to create a new turn.
+     */
+    HOLD,
+
+    /**
+     * Sets branching PATH to SHEATH-OPEN-SHEATH, with OPEN above and
+     * below middle OPEN
+     */
+    MESSENGER,
+
+    /**
+     * IF loops collide, sets end of loop to killer, killing all TURN and ADVANCE in loop.
   }
 
   /**
@@ -47,9 +75,7 @@ public class LangtonState extends CellState<LangtonState.States> {
    *
    * @param s State.
    */
-  public LangtonState(States s) {
-    super(s);
-  }
+
 
   /**
    * Construct an OPEN PercolationState.

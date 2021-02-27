@@ -10,10 +10,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * This class creates an XML document parser and provides several generic methods that can
+ * obtain attributes or values or throw an error if the desired property is non-existent
+ *
+ * @author Patrick Liu
+ */
 public class XMLGenericParser {
 
-  // Readable error message that can be displayed by the GUI
-  public static final String ERROR_MESSAGE = "XML file does not represent %s";
   // keep only one documentBuilder because it is expensive to make and can reset it before parsing
   protected final DocumentBuilder DOCUMENT_BUILDER;
   protected Element root;
@@ -24,7 +28,7 @@ public class XMLGenericParser {
    * Create parser for any XML file input
    *
    * @param file - XML configuration file
-   * @throws XMLException
+   * @throws XMLException - if an XML parser is unable to be created
    */
   public XMLGenericParser(File file) throws XMLException {
     configFile = file;
@@ -32,6 +36,13 @@ public class XMLGenericParser {
     root = getRootElement(file);
   }
 
+  /**
+   * Returns the root element of the given XML file
+   *
+   * @param xmlFile - the input XML file
+   * @return - an Element representing the root node
+   * @throws XMLException - if the file is empty or is unable to be read
+   */
   protected Element getRootElement(File xmlFile) throws XMLException {
     try {
       DOCUMENT_BUILDER.reset();
@@ -42,6 +53,15 @@ public class XMLGenericParser {
     }
   }
 
+  /**
+   * Returns the first element in the parent element's child nodes whose tag
+   * matches the input String
+   *
+   * @param parent - Element whose children nodes should be searched
+   * @param elementName - desired tag name
+   * @return - the first child Element that matches the desired tag name
+   * @throws XMLException - if no node matches the desired tag name
+   */
   protected Element getElement(Element parent, String elementName) throws XMLException {
     NodeList nodeList = parent.getElementsByTagName(elementName);
     if (nodeList != null && nodeList.getLength() > 0) {
@@ -52,6 +72,14 @@ public class XMLGenericParser {
     }
   }
 
+  /**
+   * Returns all children nodes whose tags match the input String
+   *
+   * @param parent - Element whose children nodes should be searched
+   * @param tagName - desired tag name
+   * @return - a list of all children nodes that match the desired tag name
+   * @throws XMLException - if no node matches the desired tag name
+   */
   protected NodeList getNodes(Element parent, String tagName) throws XMLException {
     NodeList nodes = parent.getElementsByTagName(tagName);
     if (nodes != null && nodes.getLength() > 0) {
@@ -62,26 +90,34 @@ public class XMLGenericParser {
     }
   }
 
-  // get value of Element's attribute
-  protected String getAttribute(String tagName, String attributeName) {
-    NodeList nodeList = root.getElementsByTagName(tagName);
-    if (nodeList != null && nodeList.getLength() > 0) {
-      Element e = (Element) nodeList.item(0);
-      return e.getAttribute(attributeName);
-    } else {
-      return "";
-    }
-  }
-
+  /**
+   * Returns the value of a given attribute
+   *
+   * @param parent - Element whose children nodes should be searched for instances of the tag name
+   * @param tagName - desired tag name
+   * @param attributeName - desired attribute name
+   * @return - the value of the desired attribute
+   * @throws XMLException - if the node or attribute does not exist
+   */
   protected String getAttribute(Element parent, String tagName, String attributeName) throws XMLException {
-    try {
-      return getElement(parent, tagName).getAttribute(attributeName);
-    }
-    catch (IllegalArgumentException e) {
-      throw new XMLException(e, "Missing " + attributeName + " attribute");
-    }
+   String attributeValue = getElement(parent, tagName).getAttribute(attributeName);
+   if (attributeValue != "") {
+     return attributeValue;
+   }
+   else {
+     throw new XMLException(new IllegalArgumentException(), "Missing " + attributeName + " attribute");
+
+   }
   }
 
+  /**
+   * Returns the value of an attribute in one specific Element
+   *
+   * @param element - the Element that should contain the desired attribute
+   * @param attributeName - desired attribute name
+   * @return - the value of the desired attribute
+   * @throws XMLException - if the attribute does not exist
+   */
   protected String getCurrentAttribute(Element element, String attributeName) throws XMLException {
     try {
       return element.getAttribute(attributeName);
@@ -91,7 +127,14 @@ public class XMLGenericParser {
     }
   }
 
-  // get value of Element's text
+  /**
+   * Returns value of an Element's text
+   *
+   * @param e - the Element whose children nodes should be search
+   * @param tagName - desired tag name
+   * @return - the value of the found Element's text
+   * @throws XMLException - if no matching children nodes are found or the text value is empty
+   */
   protected String getTextValue(Element e, String tagName) throws XMLException {
     NodeList nodeList = e.getElementsByTagName(tagName);
     if (nodeList != null && nodeList.getLength() > 0) {

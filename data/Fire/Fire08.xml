@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <simulation rules="fire">
   <meta>
-    <title>Fire Test 8</title>
+    <title>Fire Test 8: random assignment of initial states with specified distribution</title>
     <author>Patrick Liu</author>
     <description>9x9 grid with one burning tree in the center, probCatch = 0.2</description>
   </meta>
@@ -11,105 +11,6 @@
       <cellstate type="EMPTY">5</cellstate>
       <cellstate type="BURNING">1</cellstate>
     </distribution>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>BURNING</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
-    <gridrow>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-      <gridcell>TREE</gridcell>
-    </gridrow>
   </grid>
   <cellstyle>
     <cellstate type="TREE"><r>0</r><g>255</g><b>0</b></cellstate>

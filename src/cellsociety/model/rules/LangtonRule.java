@@ -5,6 +5,10 @@ import cellsociety.model.CellularAutomatonRule;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * Incomplete implementation of Langton's Loop.
+ */
 public class LangtonRule extends CellularAutomatonRule {
 
   /**
@@ -20,4 +24,8 @@ public class LangtonRule extends CellularAutomatonRule {
   public void advanceCellState(Cell cell, List<Cell> neighbors) {
 
   }
-}
+
+  @Override
+  public void setGameSpecifics(Map<String, String> params) {
+  }
+
