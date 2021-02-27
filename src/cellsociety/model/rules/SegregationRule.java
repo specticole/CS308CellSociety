@@ -11,9 +11,35 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Implementation of Segregation's time evolution rule.
  *
  * @author Cole Spector
+ *
+ *
+ * Implementation of CellularAutomatonRule for Conway's Game of Life simulation.
+ * This class will be called for every step of the simulation, and is used
+ * to update its GameOfLife state accordingly.
+ *
+ * This method assumes that it is passed a Map, with a key: "rules" ->
+ * a string "B(int)(int).../S(int)(int)..."
+ *
+ * This class relies on Cell.java and FireState.java
+ *
+ * Example:
+ *
+ * CellGrid grid = new CellGrid(...);
+ *
+ * Map<String, String> params = new Map();
+ * String threshold = "0.2";
+ * String rules = "neighborsNeeded";
+ * params.set(rules, threshold);
+ * SegregationRule segregationRule = new SegregationRule(params);
+ * grid.copyState();
+ *
+ * for(Cell c : grid)
+ * segregationRule.advanceCellState(c, grid.getNeighbors(c));
+ *
+ * grid.advanceCurrentTime();
+ *
  */
 public class SegregationRule extends CellularAutomatonRule {
 
