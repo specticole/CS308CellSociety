@@ -3,7 +3,7 @@ package cellsociety.model.states;
 import cellsociety.model.CellState;
 
 /**
- * Percolation cell state.
+ * An incomplete langton state
  *
  * @author Cole Spector
  */

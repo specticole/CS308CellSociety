@@ -3,9 +3,24 @@ package cellsociety.model.states;
 import cellsociety.model.CellState;
 
 /**
- * A RPS cell state.
+ *
  *
  * @author Cole Spector
+ *
+ * This is an immutible class, white stores a Cell.java's state at a current time.
+ *
+ * This class expects an enumerated type, States, as a parameter, which must be one of the following:
+ * Rock,
+ * Paper,
+ * SCISSOR,
+ * Empty
+ *
+ *
+ * Example:
+ *
+ * StateList<FireState> stateList = new StateList<>();
+ * FireState fireState(stateList) = new FireState();
+ *
  */
 public class RockPaperScissorState extends CellState<RockPaperScissorState.States> {
 

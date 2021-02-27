@@ -3,9 +3,23 @@ package cellsociety.model.states;
 import cellsociety.model.CellState;
 
 /**
- * A Fire cell state.
+ *
  *
  * @author Cole Spector
+ *
+ * This is an immutible class, white stores a Cell.java's state at a current time.
+ *
+ * This class expects an enumerated type, States, as a parameter, which must be one of the following:
+ * Burning,
+ * Tree,
+ * Empty
+ *
+ *
+ * Example:
+ *
+ * StateList<FireState> stateList = new StateList<>();
+ * FireState fireState(stateList) = new FireState();
+ *
  */
 public class FireState extends CellState<FireState.States> {
 
