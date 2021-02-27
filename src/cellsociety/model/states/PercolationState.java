@@ -3,9 +3,23 @@ package cellsociety.model.states;
 import cellsociety.model.CellState;
 
 /**
- * Percolation cell state.
  *
  * @author Franklin Wei
+ * @author Cole Spector
+ *
+ * This is an immutible class, white stores a Cell.java's PercolationState at a certain time.
+ *
+ * This class expects an enumerated type, States, as a parameter, which must be one of the following:
+ * BLOCKED,
+ * OPEN,
+ * PERCOLATED,
+ *
+ *
+ * Example:
+ *
+ * StateList<PercolationState> stateList = new StateList<>();
+ * PercolationState percolationState(stateList) = new PercolationState();
+ *
  */
 public class PercolationState extends CellState<PercolationState.States> {
   /**
