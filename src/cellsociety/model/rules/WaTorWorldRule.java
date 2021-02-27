@@ -11,10 +11,36 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of Wa-Tor World's time evolution rule.
  *
  * @author Cole Spector
  * @author Franklin Wei
+ *
+ *
+ * Implementation of CellularAutomatonRule for Wa-Tor-World simulation.
+ * This class will be called for every step of the simulation, and is used
+ * to update its WaTorWorldState accordingly.
+ *
+ * This method assumes that it is passed a Map, with a key: "rules" ->
+ * a string "F(int)/S(int)/X(int)"
+ *
+ * This class relies on Cell.java and WaTorWorldRule.java
+ *
+ * Example:
+ *
+ * CellGrid grid = new CellGrid(...);
+ *
+ * Map<String, String> params = new Map();
+ * String threshold = "0.2";
+ * String rules = "neighborsNeeded";
+ * params.set(rules, threshold);
+ * WaTorWorldRule waTorWorldRule = new WaTorWorldRule(params);
+ * grid.copyState();
+ *
+ * for(Cell c : grid)
+ * waTorWorldRule.advanceCellState(c, grid.getNeighbors(c));
+ *
+ * grid.advanceCurrentTime();
+ *
  */
 public class WaTorWorldRule extends CellularAutomatonRule {
   private int sharkRoundsToBreed;

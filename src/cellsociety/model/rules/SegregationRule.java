@@ -15,14 +15,14 @@ import java.util.Random;
  * @author Cole Spector
  *
  *
- * Implementation of CellularAutomatonRule for Conway's Game of Life simulation.
+ * Implementation of CellularAutomatonRule for Segregation simulation.
  * This class will be called for every step of the simulation, and is used
- * to update its GameOfLife state accordingly.
+ * to update its SegregationState accordingly.
  *
- * This method assumes that it is passed a Map, with a key: "rules" ->
- * a string "B(int)(int).../S(int)(int)..."
+ * This method assumes that it is passed a Map, with a key: "neighborsNeeded" ->
+ * a string "(int)"
  *
- * This class relies on Cell.java and FireState.java
+ * This class relies on Cell.java and SegregationRule.java
  *
  * Example:
  *

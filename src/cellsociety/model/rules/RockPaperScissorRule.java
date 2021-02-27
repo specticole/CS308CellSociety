@@ -14,14 +14,14 @@ import java.util.Map;
  * @author Cole Spector
  *
  *
- * Implementation of CellularAutomatonRule for Conway's Game of Life simulation.
+ * Implementation of CellularAutomatonRule for Rock Paper Scissors simulation.
  * This class will be called for every step of the simulation, and is used
- * to update its GameOfLife state accordingly.
+ * to update its RockPaperScissorState accordingly.
  *
- * This method assumes that it is passed a Map, with a key: "rules" ->
- * a string "B(int)(int).../S(int)(int)..."
+ * This method assumes that it is passed a Map, with a key: "threshold" ->
+ * a string "(int)"
  *
- * This class relies on Cell.java and FireState.java
+ * This class relies on Cell.java and RockPaperScissorRule.java
  *
  * Example:
  *
