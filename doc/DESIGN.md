@@ -1,9 +1,9 @@
 # Cell Society Design Final
 ### Names
-Franklin Wei
-Cole Spector
-Bill Guo
-Patrick Liu
+Franklin Wei  
+Cole Spector  
+Bill Guo  
+Patrick Liu  
 
 ## Team Roles and Responsibilities
 
@@ -61,6 +61,24 @@ intentionally limited API that only exposes essential operations, thus
 hiding unneccesary functionality from the View and Controller and
 maintaining encapsulation.
 
+The Controller has one primary class, CellularAutomatonController, that has an instance
+of a CellularAutomaton and CellularAutomatonView object. This class mediates between
+the Model and the View, ensuring that they are completely separate from one another. 
+In essence, each cycle of a simulation, the Controller calls the Model's step method,
+translates the grid of CellStates into a 2D ArrayList of Strings, and then passes the
+updated grid to the View. 
+
+Elsewhere in the Controller jurisdiction, there are CellularAutomatonConfiguration and 
+CellularAutomatonStyle classes, which primarily hold relevant information read in from 
+the configuration and style files, respectively. These classes mainly consist of getters,
+but Collections objects are returned as unmodifiable to mitigate breaches of trust from other
+classes. These classes separate the Controller from the file format of the configuration files. 
+
+Finally, the XML parsing consists of three classes: XMLGenericParser, XMLConfigurationParser, 
+and XMLStyleParser. Configuration and Style inherit basic parsing methods from Generic but 
+implement methods that look for specific tags or perform specific tasks, such as creating 
+the grid of initial states. 
+
 ## Assumptions that Affect the Design
 
 We assumed that all grids have coordinates that can be described with
@@ -70,6 +88,14 @@ impede the implementation of any features.
 
 We also assumed that all grids were finite (i.e. we can iterate over
 all Cells in a finite amount of time).
+
+Another assumption we made was that all simulations pause/play at the same time.
+This simplification allowed us to only have one Controller for the entire
+GridPane, instead of having separate Controller objects for each SimulationView. 
+
+Finally, we made the assumption that the style file must be read in at the same time
+as a configuration file, preventing some elements from being "styled" mid-simulation
+and simplifying how SimulationViews are constructed.
 
 #### Features Affected by Assumptions
 
@@ -101,7 +127,10 @@ classes to suit your new game rule. The most import bit of code to
 write is the advanceCellState method of the CellularAutomatonRule
 class -- this method needs to know all the details of the particular
 simulation, and apply them appropriately to a given central cell of a
-Moore neighborhood. Once these classes are written, add them to the
+Moore neighborhood. In addition, if there are simulation-specific parameters,
+those will be read in as Strings from the XML file, so the setGameSpecifics 
+method in CellularAutomatonRule is responsible for parsing that String.
+Once these classes are written, add them to the
 cellsociety.model.rules.Index class and they will be automatically
 loaded by the Controller's XML loader.
 
@@ -111,3 +140,11 @@ We have a partial implementation of Langton's Loop that was left
 unfinished due to time constraints. Additionally, we did not have
 sufficient time to implement tiled triangular grids, although this is
 technically very straightforward.
+
+For styling, we implemented the ability to change the language of the
+GUI and to turn outlines on or off based on a style file. The other possible
+features that can be styled are all in the test style files in the doc folder, 
+but have not been implemented in the View yet. However, since these parameters
+are all stored in a CellularAutomatonStyle object that the View receives, 
+implementing additional styling options solely requires writing additional 
+methods in SimulationView that perform the corresponding styling actions. 
