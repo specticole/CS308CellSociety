@@ -7,7 +7,35 @@ import cellsociety.model.CellularAutomatonRule;
 import java.util.*;
 
 /**
- * Implementation of Conway's Game of Life's next state logic.
+ *
+ * @author Cole Spector
+ *
+ *
+ * Implementation of CellularAutomatonRule for Conway's Game of Life simulation.
+ * This class will be called for every step of the simulation, and is used
+ * to update its GameOfLife state accordingly.
+ *
+ * This method assumes that it is passed a Map, with a key: "rules" ->
+ * a string "B(int)(int).../S(int)(int)..."
+ *
+ * This class relies on Cell.java and FireState.java
+ *
+ * Example:
+ *
+ * CellGrid grid = new CellGrid(...);
+ *
+ * Map<String, String> params = new Map();
+ * String chance = "B12/S12";
+ * String rules = "rules";
+ * params.set(rules, chance);
+ * GameOfLifeRule gameOfLifeRule = new GameOfLifeRule(params);
+ * grid.copyState();
+ *
+ * for(Cell c : grid)
+ * gameOfLifeRule.advanceCellState(c, grid.getNeighbors(c));
+ *
+ * grid.advanceCurrentTime();
+ *
  */
 public class GameOfLifeRule extends CellularAutomatonRule {
 
