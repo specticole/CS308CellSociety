@@ -3,9 +3,23 @@ package cellsociety.model.states;
 import cellsociety.model.CellState;
 
 /**
- * A Game of Life cell state.
  *
  * @author Franklin Wei
+ * @author Cole Spector
+ *
+ * This is an immutible class, white stores a Cell.java's GameOfLifeState at a certain time.
+ *
+ * This class expects an enumerated type, States, as a parameter, which must be one of the following:
+ * DEAD,
+ * ALIVE
+ *
+ *
+ *
+ * Example:
+ *
+ * StateList<GameOfLifeState> stateList = new StateList<>();
+ * GameOfLifeState gameOfLifeState(stateList) = new GameOfLifeState();
+ *
  */
 public class GameOfLifeState extends CellState<GameOfLifeState.States> {
 
