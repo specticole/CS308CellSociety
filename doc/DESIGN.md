@@ -79,6 +79,19 @@ and XMLStyleParser. Configuration and Style inherit basic parsing methods from G
 implement methods that look for specific tags or perform specific tasks, such as creating 
 the grid of initial states. 
 
+The View is primarly made up of the CellularAutomatonView class. The class is responsible for 
+creating control buttons such as play, pause, step, and speed up that affect all the simulations 
+created. This class is also responsible for creating individual simulations from an xml file and 
+an optional style xml file. Each simulation is represented by the SimulationView class, which is 
+made up of multiple GUI elements that pertain to an individual simulation. 
+
+Each simulation has a grid that represents the model, a graph that shows the number of states 
+over time, a title of the simulation, multiple buttons to show/hide UI elements, buttons to save 
+and delete the current simulation, and textfields to change the current parameters of the 
+simulation in real time. These components do not have knowledge of the controller and must give 
+all their information to their parent SimulationView in order to update the model through each 
+simulation's controller.
+
 ## Assumptions that Affect the Design
 
 We assumed that all grids have coordinates that can be described with
